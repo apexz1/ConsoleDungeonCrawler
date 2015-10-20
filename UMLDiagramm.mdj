@@ -25561,7 +25561,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Pickup",
+					"name": "PickUp",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
