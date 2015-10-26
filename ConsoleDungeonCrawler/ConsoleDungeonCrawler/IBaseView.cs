@@ -6,7 +6,5 @@ using System.Text;
 
 public interface IBaseView
 {
-
     void Execute();
-
 }

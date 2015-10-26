@@ -7,7 +7,5 @@ using System.Text;
 
 public interface IBaseController
 {
-
     void Execute();
-
 }

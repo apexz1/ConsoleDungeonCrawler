@@ -12,11 +12,6 @@ public class Application
 
     private static GameData data;
     private static IBaseState currentState;
-
-    /**
-     * TKey = GameStates
-     * TValue = IBaseState
-     */
     private static Dictionary<GameStates, IBaseState> STATE_ARCHIVE;
 
     public static void Load(string filename)

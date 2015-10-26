@@ -6,11 +6,7 @@ using System.Text;
 
 public interface IBaseState
 {
-
     void Enter();
-
     void Exit();
-
     void Execute();
-
 }
