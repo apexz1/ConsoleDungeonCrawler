@@ -14,12 +14,12 @@ namespace ConsoleDungeonCrawler
             ConsoleMenuController menuController = new ConsoleMenuController();
             ConsoleView view = new ConsoleView();
 
+            Console.WriteLine("\n" + MCP.ToString());
+            MCP.Run();
+            Console.WriteLine("\n" + menuController.ToString());
+            Console.WriteLine("\n" + view.ToString());
 
-            Console.WriteLine(MCP.ToString());
-            Console.WriteLine(menuController.ToString());
-            Console.WriteLine(view.ToString());
-
-            Console.WriteLine("\n" + "Testing build, press any key to quit");
+            Console.WriteLine("\n\n\n" + "Testing build, press any key to quit");
             Console.ReadKey();
             return;
         }

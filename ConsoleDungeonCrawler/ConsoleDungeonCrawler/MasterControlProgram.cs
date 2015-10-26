@@ -16,7 +16,8 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
     public void Run()
     {
-        // TODO implement here
+        Console.WriteLine("MCP initating...");
+        Console.WriteLine("MCP; initiation completed.");
     }
 
     public void Save()
