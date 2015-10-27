@@ -12,6 +12,14 @@ public class PickUp : GameObject
     {
     }
 
+    public PickUp(Item item, string type, int count)
+    {
+        this.item = item;
+        this.type = type;
+        this.count = count;
+    }
+
+    public Item item;
     public string type;
     public int count;
     public void OnPickup()

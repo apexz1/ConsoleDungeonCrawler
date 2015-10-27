@@ -55,6 +55,7 @@
     <Compile Include="ConsolePlayerController.cs" />
     <Compile Include="ConsoleUI.cs" />
     <Compile Include="ConsoleView.cs" />
+    <Compile Include="Direction.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameObject.cs" />

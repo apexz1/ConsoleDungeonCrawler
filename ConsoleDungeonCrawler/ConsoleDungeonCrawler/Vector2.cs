@@ -22,7 +22,7 @@ public class Vector2
     public float x;
     public float y;
 
-    public Vector2 AddVectors(Vector2 a, Vector2 b)
+    public static Vector2 AddVectors(Vector2 a, Vector2 b)
     {
         Vector2 result = new Vector2();
 

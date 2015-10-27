@@ -13,6 +13,7 @@ public class GameObject
     }
 
     public string name;
+    public Vector2 position;
 
     public void Destroy()
     {

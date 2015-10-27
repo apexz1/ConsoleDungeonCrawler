@@ -12,6 +12,7 @@ public class Application
 
     private static GameData data;
     private static IBaseState currentState;
+    private static readonly HashSet<IGameDataChangeListener> GAMEDATA_CHANGE_LISTENERS = new HashSet<IGameDataChangeListener>();
     private static Dictionary<GameStates, IBaseState> STATE_ARCHIVE;
 
     public static void Load(string filename)
@@ -26,12 +27,23 @@ public class Application
 
     public static void NewGame()
     {
-        // TODO implement here
+        data = new GameData();
+        currentState = new GameState();
+        EnemyController enemyController = new EnemyController();
+        LevelGenerator generator = new LevelGenerator();
+
+        data.level = generator.Generate();
+        data.SpawnPlayer();
+        
+        foreach (IGameDataChangeListener listener in GAMEDATA_CHANGE_LISTENERS)
+        {
+            listener.OnGameDataChange(data);
+        }
     }
 
     public static void Add(IGameDataChangeListener listener)
     {
-        // TODO implement here
+        GAMEDATA_CHANGE_LISTENERS.Add(listener);
     }
 
     public static void Remove(IGameDataChangeListener listener)
@@ -56,7 +68,15 @@ public class Application
 
     public static void ChangeGameData(GameData data)
     {
-        // TODO implement here
+
+    }
+    public static GameData GetData()
+    {
+        return data;
+    }
+    public static void SetData(GameData value)
+    {
+        data = value;
     }
 
 }

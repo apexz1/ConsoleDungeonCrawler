@@ -12,15 +12,14 @@ namespace ConsoleDungeonCrawler
         {
             MasterControlProgram MCP = new MasterControlProgram();
             ConsoleMenuController menuController = new ConsoleMenuController();
+            ConsolePlayerController playerController = new ConsolePlayerController();
             ConsoleView view = new ConsoleView();
 
-            Console.WriteLine("\n" + MCP.ToString());
+            //Console.SetWindowSize(240, 84);
+            MCP.controller = playerController;
+            Console.WriteLine(MCP.controller.ToString());
+            MCP.view = view;
             MCP.Run();
-            Console.WriteLine("\n" + menuController.ToString());
-            Console.WriteLine("\n" + view.ToString());
-
-            Console.WriteLine("\n\n\n" + "Testing build, press any key to quit");
-            Console.ReadKey();
             return;
         }
     }

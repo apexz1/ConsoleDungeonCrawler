@@ -8,16 +8,23 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
     public MasterControlProgram()
     {
+        Application.Add((IGameDataChangeListener)this);
     }
 
-    public GameData model;
+    public static bool control = true;
+    public GameData data;
     public IBaseView view;
     public IBaseController controller;
 
     public void Run()
     {
-        Console.WriteLine("MCP initating...");
-        Console.WriteLine("MCP; initiation completed.");
+        Application.NewGame();
+
+        while(control)
+        {
+            controller.Execute();
+            view.Execute();
+        }
     }
 
     public void Save()
@@ -37,11 +44,13 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
     public void OnGameDataChange(GameData data)
     {
-        throw new NotImplementedException();
+        this.data = data;
     }
 
     public void OnGameStateChange()
     {
         throw new NotImplementedException();
     }
+
+
 }
