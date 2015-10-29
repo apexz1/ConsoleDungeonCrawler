@@ -10,6 +10,15 @@ public class PickUp : GameObject
 
     public PickUp()
     {
+        this.item = new Item();
+        this.count = 1;
+    }
+
+    public PickUp(Item item, int count)
+    {
+        this.item = item;
+        this.count = count;
+        this.type = item.type;
     }
 
     public PickUp(Item item, string type, int count)
@@ -24,7 +33,12 @@ public class PickUp : GameObject
     public int count;
     public void OnPickup()
     {
-        // TODO implement here
+        GameData data = Application.GetData();
+
+        data.inventory.Add(this.item, this.count);
+        data.level.pickUps.Remove(this);
+
+        Console.WriteLine("item picked up " + item.name);
     }
 
 }

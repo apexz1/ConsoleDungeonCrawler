@@ -8,6 +8,7 @@ public class LevelGenerator : ILevelBuilder
 {
 
     int pickUpCount = 5;
+    Random rng = new Random();
 
     public LevelGenerator()
     {
@@ -21,8 +22,7 @@ public class LevelGenerator : ILevelBuilder
         levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
 
         for (int i = 0; i < pickUpCount; i++)
-        {
-            Random rng = new Random();
+        {         
             int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
             levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
             levelGen.pickupSpawnPoints.RemoveAt(current);
@@ -48,9 +48,8 @@ public class LevelGenerator : ILevelBuilder
 
     private PickUp SpawnPickup(Vector2 pos)
     {
-        PickUp pickUp = new PickUp();
+        PickUp pickUp = new PickUp(ItemLibrary.Get().items[rng.Next(0, ItemLibrary.Get().items.Count)], rng.Next(1,3));
         pickUp.position = pos;
-
 
         return pickUp;
     }

@@ -7,10 +7,13 @@ using System.Text;
 public class ItemWrapper
 {
 
-    public ItemWrapper()
+    public ItemWrapper(Item item, int count)
     {
+        this.item = item;
+        this.count = count;
     }
 
+    public Item item;
     public int count;
     public int maxstack;
 
@@ -20,5 +23,4 @@ public class ItemWrapper
         // TODO implement here
         return null;
     }
-
 }

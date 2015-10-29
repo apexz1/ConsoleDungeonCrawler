@@ -73,6 +73,15 @@ public class Actor : GameObject
 
                 break;
         }
+
+        for (int i = 0; i < data.level.pickUps.Count; i++)
+        {
+            //Console.WriteLine("move to pickup debug: " + position.x + " " + data.level.pickUps[i].position.y);
+            if (position.x == data.level.pickUps[i].position.x && position.y == data.level.pickUps[i].position.y)
+            {
+                data.level.pickUps[i].OnPickup();
+            }
+        }
     }
 
     public void TakeDamage(int value)

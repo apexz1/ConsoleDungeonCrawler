@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ConsoleDungeonCrawler</RootNamespace>
     <AssemblyName>ConsoleDungeonCrawler</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -71,6 +72,7 @@
     <Compile Include="ImpactBehaviour.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="ItemLibrary.cs" />
     <Compile Include="ItemWrapper.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelFromImage.cs" />

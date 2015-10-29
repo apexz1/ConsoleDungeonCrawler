@@ -9,7 +9,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public ConsoleView()
     {
-        REP_CHARS.Add("floor", 'X');
+        TILE_CHARS.Add("floor", 'X');
         Application.Add((IGameDataChangeListener)this);
     }
 
@@ -17,17 +17,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     public bool score;
     public bool hud;
     public IConsoleRenderer currentRenderer;
-    private readonly Dictionary<string, char> REP_CHARS = new Dictionary<string, char>();
-
-    public void Build()
-    {
-        // TODO implement here
-    }
-
-    public void BuildInvetory()
-    {
-        // TODO implement here
-    }
+    private readonly Dictionary<string, char> TILE_CHARS = new Dictionary<string, char>();
+    private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
 
     public void Execute()
     {
@@ -39,7 +30,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         {
             for (int j = 0; j < data.level.structure.GetLength(1); j++)
             {
-                REP_CHARS.TryGetValue(data.level.structure[i, j].terrain, out repChar);
+                TILE_CHARS.TryGetValue(data.level.structure[i, j].terrain, out repChar);
                 for (int x = 0; x < data.level.pickUps.Count; x++)
                 {
                     if ((i == data.level.pickUps[x].position.x) && (j == data.level.pickUps[x].position.y))
@@ -60,9 +51,17 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
             Console.WriteLine();
-        }
+        }   
 
-        
+        if(data.inventory != null)
+        {
+            Console.WriteLine("inventory:\n");
+            for (int i = 0; i < data.inventory.content.Count; i++)
+            {
+                Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
+            }
+        }
+        else { Console.WriteLine("no inventory"); }
     }
 
     public void OnGameDataChange(GameData data)
