@@ -11,11 +11,15 @@ public class Actor : GameObject
     {
         this.name = "player";
         this.position = new Vector2();
+        this.selector = new GameObject();
+        this.selector.position = new Vector2(0, 0);
     }
     public Actor(Vector2 position)
     {
         this.name = "player";
         this.position = position;
+        this.selector = new GameObject();
+        this.selector.position = new Vector2(0, 0);
     }
 
     public int health;
@@ -23,9 +27,11 @@ public class Actor : GameObject
     public int actions;
     public float vision;
     private GameData data;
+    public GameObject selector;
 
     public void Move(Direction dir)
     {
+        Vector2 pos = new Vector2();
         data = Application.GetData();
         switch(dir)
         {
@@ -35,7 +41,7 @@ public class Actor : GameObject
                 {
                      return;
                 }
-                position.x -= 1;
+                pos.x -= 1;
                 Console.WriteLine("move up? " + position.x + " " + position.y);
 
                 break;
@@ -46,7 +52,7 @@ public class Actor : GameObject
                 {
                     return;
                 }
-                position.x += 1;
+                pos.x += 1;
                 Console.WriteLine("move down? " + position.x + " " + position.y);
 
                 break;
@@ -57,7 +63,7 @@ public class Actor : GameObject
                 {
                     return;
                 }
-                position.y -= 1;
+                pos.y -= 1;
                 Console.WriteLine("move left? " + position.x + " " + position.y);
 
                 break;
@@ -68,10 +74,20 @@ public class Actor : GameObject
                 {
                     return;
                 }
-                position.y += 1;
+                pos.y += 1;
                 Console.WriteLine("move right? " + position.x + " " + position.y);
 
                 break;
+        }
+
+        if (!data.combat)
+        {
+            position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
+        }
+
+        if (data.combat)
+        {
+            selector.position = new Vector2((int)(selector.position.x + pos.x), (int)(selector.position.y + pos.y));
         }
 
         for (int i = 0; i < data.level.pickUps.Count; i++)
@@ -82,6 +98,14 @@ public class Actor : GameObject
                 data.level.pickUps[i].OnPickup();
             }
         }
+    }
+
+    public void EnterCombat()
+    {
+        selector = new GameObject();
+        selector.position = new Vector2();
+
+        selector.position = this.position;
     }
 
     public void TakeDamage(int value)
