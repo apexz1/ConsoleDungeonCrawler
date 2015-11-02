@@ -14,18 +14,13 @@ public class Actor : GameObject
         this.selector = new GameObject();
         this.selector.position = new Vector2(0, 0);
     }
-    public Actor(Vector2 position)
-    {
-        this.name = "player";
-        this.position = position;
-        this.selector = new GameObject();
-        this.selector.position = new Vector2(0, 0);
-    }
 
     public int health;
     public int speed;
     public int actions;
     public float vision;
+    public Slot Weapon;
+    public Slot Armour;
     private GameData data;
     public GameObject selector;
 

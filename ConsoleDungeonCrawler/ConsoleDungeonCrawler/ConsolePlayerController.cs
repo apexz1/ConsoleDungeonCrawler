@@ -39,6 +39,12 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Switch();
                 data.player.EnterCombat();
                 break;
+            case 'q':
+                Console.WriteLine("\nq");
+                break;
+            case 'e':
+                Console.WriteLine("\ne");
+                break;
         }
 
         Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);

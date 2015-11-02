@@ -8,6 +8,7 @@ public class Weapon : Item
 {
     public Weapon()
     {
+        damage = 3;
     }
 
     public int damage;

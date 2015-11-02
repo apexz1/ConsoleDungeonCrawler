@@ -53,6 +53,12 @@ public class LevelGenerator : ILevelBuilder
 
         return pickUp;
     }
+    
+    private Actor SpawnEnemy(Vector2 pos)
+    {
+        Actor enemy = new Actor();
+        return enemy;
+    }
 
     private List<Vector2> SetPlayerSpawnPoints()
     {
@@ -78,6 +84,12 @@ public class LevelGenerator : ILevelBuilder
         spawns.Add(new Vector2(10, 5));
         spawns.Add(new Vector2(10, 10));
 
+        return spawns;
+    }
+
+    private List<Vector2> SetEnemySpawnPoints()
+    {
+        List<Vector2> spawns = new List<Vector2>();
         return spawns;
     }
 }
