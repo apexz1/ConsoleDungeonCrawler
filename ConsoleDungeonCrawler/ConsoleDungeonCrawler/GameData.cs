@@ -7,6 +7,7 @@ public class GameData
 {
     public Actor player;
     public Inventory inventory;
+    public bool combat;
     public Score score;
     public Level level;
 
@@ -16,6 +17,7 @@ public class GameData
         this.inventory = new Inventory();
         this.score = new Score();
         this.level = new Level();
+        this.combat = new bool();
     }
 
     public void SpawnPlayer()

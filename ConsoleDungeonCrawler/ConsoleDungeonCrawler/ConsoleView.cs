@@ -46,9 +46,21 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     repChar = 'O';
                     Console.ForegroundColor = ConsoleColor.Green;
                 }
+                //if (data.combat)
+                {
+                    if ((i == data.player.selector.position.x) && (j == data.player.selector.position.y))
+                    {
+                        repChar = ' ';
+                        //Console.Write("selector position = " + data.player.selector.position.x + data.player.selector.position.y);
+                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                    }
+
+                }
+
 
                 Console.Write(repChar);
                 Console.ForegroundColor = ConsoleColor.Gray;
+                Console.BackgroundColor = ConsoleColor.Black;
             }
             Console.WriteLine();
         }   

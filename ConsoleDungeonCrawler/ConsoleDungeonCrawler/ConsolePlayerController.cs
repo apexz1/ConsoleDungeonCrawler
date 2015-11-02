@@ -34,8 +34,20 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Console.WriteLine("\nd");               
                 data.player.Move(Direction.RIGHT);
                 break;
+            case 'c':
+                Console.WriteLine("\nc");
+                Switch();
+                data.player.EnterCombat();
+                break;
         }
 
+        Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);
+
+    }
+
+    private void Switch()
+    {
+        data.combat = !(data.combat);
     }
 
     public void OnGameDataChange(GameData data)
