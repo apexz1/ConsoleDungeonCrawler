@@ -155,4 +155,16 @@ public class Actor : GameObject
         }
     }
 
+    public void Undo()
+    {
+        if (actions == maxActions)
+        {
+            return;
+        }
+
+        position = path[path.Count-1];
+        path.RemoveAt(path.Count-1);
+        actions += 1;
+    }
+
 }

@@ -47,6 +47,10 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Console.WriteLine("\nq");
                 data.player.Weapon.content.Attack();
                 break;
+            case 'u':
+                Console.WriteLine("\nu");
+                data.player.Undo();
+                break;
             case 'e':
                 Console.WriteLine("\ne");
                 break;
@@ -67,6 +71,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
     private void End()
     {
         data.player.actions = 0;
+        data.player.path.Clear();
         Application.GetEnemyController().Execute();
 
         done = true;
