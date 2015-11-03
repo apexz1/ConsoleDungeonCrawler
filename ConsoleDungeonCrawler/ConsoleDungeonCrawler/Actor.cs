@@ -47,7 +47,7 @@ public class Actor : GameObject
         switch(dir)
         {
             case Direction.UP:
-
+                //SMARTGIT DEMONSTRATION COMMENT
                 //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
                 if (!(data.combat) && position.x-1 < 0)
                 {
