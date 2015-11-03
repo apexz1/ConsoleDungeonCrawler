@@ -54,6 +54,11 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     //Console.WriteLine("Player Found");
                     repChar = 'O';
                     Console.ForegroundColor = ConsoleColor.Green;
+
+                    if (data.player.actions <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    }
                 }
                 if (data.combat)
                 {

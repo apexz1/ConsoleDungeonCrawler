@@ -16,16 +16,18 @@ public class Actor : GameObject
 
         this.actions = maxActions;
         this.Weapon = new Slot<Weapon>();
+        this.Armor = new Slot<Armor>();
         Weapon.content = new Weapon();
+        Armor.content = new Armor();
     }
 
     public int health;
     public int speed;
-    public int maxActions = 50;
+    public int maxActions = 5000;
     public int actions;
     public float vision;
     public Slot<Weapon> Weapon;
-    public Slot<Armor> Armour;
+    public Slot<Armor> Armor;
     private GameData data;
     public GameObject selector;
 
@@ -55,6 +57,13 @@ public class Actor : GameObject
                 {
                     return;
                 }
+                for (int i = 0; i < data.level.enemies.Count; i++)
+                {
+                    if (data.level.enemies[i].position.x == position.x-1 && data.level.enemies[i].position.y == position.y)
+                    {
+                        return;
+                    }
+                }
                 pos.x -= 1;
                 Console.WriteLine("move up? " + position.x + " " + position.y);
 
@@ -69,6 +78,13 @@ public class Actor : GameObject
                 if (data.combat && (selector.position.x + 1 > position.x + 5 || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
                     return;
+                }
+                for (int i = 0; i < data.level.enemies.Count; i++)
+                {
+                    if (data.level.enemies[i].position.x == position.x + 1 && data.level.enemies[i].position.y == position.y)
+                    {
+                        return;
+                    }
                 }
                 pos.x += 1;
                 Console.WriteLine("move down? " + position.x + " " + position.y);
@@ -85,6 +101,13 @@ public class Actor : GameObject
                 {
                     return;
                 }
+                for (int i = 0; i < data.level.enemies.Count; i++)
+                {
+                    if (data.level.enemies[i].position.y == position.y - 1 && data.level.enemies[i].position.x == position.x)
+                    {
+                        return;
+                    }
+                }
                 pos.y -= 1;
                 Console.WriteLine("move left? " + position.x + " " + position.y);
 
@@ -99,6 +122,13 @@ public class Actor : GameObject
                 if (data.combat && (selector.position.y + 1 > position.y + 5 || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
                     return;
+                }
+                for (int i = 0; i < data.level.enemies.Count; i++)
+                {
+                    if (data.level.enemies[i].position.y == position.y + 1 && data.level.enemies[i].position.x == position.x)
+                    {
+                        return;
+                    }
                 }
                 pos.y += 1;
                 Console.WriteLine("move right? " + position.x + " " + position.y);
