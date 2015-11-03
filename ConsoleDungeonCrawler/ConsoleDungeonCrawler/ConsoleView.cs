@@ -40,6 +40,15 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         Console.ForegroundColor = ConsoleColor.Yellow;
                     }
                 }
+                for (int x = 0; x < data.level.enemies.Count; x++)
+                {
+                    if ((i == data.level.enemies[x].position.x) && (j == data.level.enemies[x].position.y))
+                    {
+                        //Console.WriteLine("askjhbdfuisdjrpfejgz#PechConsole");
+                        repChar = 'O';
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
+                }
                 if ((i == data.player.position.x) && (j == data.player.position.y))
                 {
                     //Console.WriteLine("Player Found");
@@ -50,9 +59,9 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 {
                     if ((i == data.player.selector.position.x) && (j == data.player.selector.position.y))
                     {
-                        repChar = ' ';
+                        //repChar = ' ';
                         //Console.Write("selector position = " + data.player.selector.position.x + data.player.selector.position.y);
-                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                        Console.BackgroundColor = ConsoleColor.Magenta;
                     }
 
                 }

@@ -13,14 +13,17 @@ public class Actor : GameObject
         this.position = new Vector2();
         this.selector = new GameObject();
         this.selector.position = new Vector2(0, 0);
+
+        this.Weapon = new Slot<Weapon>();
+        Weapon.content = new Weapon();
     }
 
     public int health;
     public int speed;
     public int actions;
     public float vision;
-    public Slot Weapon;
-    public Slot Armour;
+    public Slot<Weapon> Weapon;
+    public Slot<Armor> Armour;
     private GameData data;
     public GameObject selector;
 
@@ -32,9 +35,14 @@ public class Actor : GameObject
         {
             case Direction.UP:
 
-                if (position.x-1 < 0)
+                //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
+                if (!(data.combat) && position.x-1 < 0)
                 {
                      return;
+                }
+                if (data.combat && selector.position.x - 1 < position.x - 5)
+                {
+                    return;
                 }
                 pos.x -= 1;
                 Console.WriteLine("move up? " + position.x + " " + position.y);
@@ -43,7 +51,11 @@ public class Actor : GameObject
 
             case Direction.DOWN:
 
-                if (position.x+1 > data.level.structure.GetLength(0)-1)
+                if (!(data.combat) && position.x+1 > data.level.structure.GetLength(0)-1)
+                {
+                    return;
+                }
+                if (data.combat && selector.position.x + 1 > position.x + 5)
                 {
                     return;
                 }
@@ -54,7 +66,11 @@ public class Actor : GameObject
 
             case Direction.LEFT:
 
-                if (position.y - 1 < 0)
+                if (!(data.combat) && position.y - 1 < 0)
+                {
+                    return;
+                }
+                if (data.combat && selector.position.y - 1 < position.y - 5)
                 {
                     return;
                 }
@@ -65,7 +81,11 @@ public class Actor : GameObject
 
             case Direction.RIGHT:
 
-                if (position.y + 1 > data.level.structure.GetLength(1) - 1)
+                if (!(data.combat) && position.y + 1 > data.level.structure.GetLength(1) - 1)
+                {
+                    return;
+                }
+                if (data.combat && selector.position.y + 1 > position.y + 5)
                 {
                     return;
                 }
@@ -105,7 +125,14 @@ public class Actor : GameObject
 
     public void TakeDamage(int value)
     {
-        // TODO implement here
+        data = Application.GetData();
+        Console.WriteLine("DAMAGE TAKEN!");
+        health -= value;
+
+        if (this != data.player && health <= 0)
+        {
+            data.level.enemies.Remove(this);
+        }
     }
 
 }

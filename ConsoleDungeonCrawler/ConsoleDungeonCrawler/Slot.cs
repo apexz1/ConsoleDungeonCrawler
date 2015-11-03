@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Slot
+public class Slot<T> where T : Item
 {
 
     public Slot()
@@ -12,18 +12,19 @@ public class Slot
     }
 
     private string TYPE;
+    public T content;
 
-    public Item Equip(Item item)
+    public T Equip(T item)
     {
         // TODO implement here
         return null;
     }
-    public Item Unequip()
+    public T Unequip()
     {
         // TODO implement here
         return null;
     }
-    public Item Get()
+    public T Get()
     {
         // TODO implement here
         return null;

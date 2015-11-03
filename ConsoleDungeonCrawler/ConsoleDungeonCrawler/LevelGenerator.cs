@@ -8,6 +8,8 @@ public class LevelGenerator : ILevelBuilder
 {
 
     int pickUpCount = 5;
+    int enemyCount = 3;
+
     Random rng = new Random();
 
     public LevelGenerator()
@@ -20,13 +22,24 @@ public class LevelGenerator : ILevelBuilder
         levelGen.structure = BuildStructure();
         levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
         levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
+        levelGen.enemySpawnPoints = SetEnemySpawnPoints();
 
+        /*
         for (int i = 0; i < pickUpCount; i++)
         {         
             int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
             levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
             levelGen.pickupSpawnPoints.RemoveAt(current);
         }
+        /**/
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            int current = rng.Next(0, levelGen.enemySpawnPoints.Count);
+            levelGen.enemies.Add(SpawnEnemy(levelGen.enemySpawnPoints[current], 1));
+            levelGen.enemySpawnPoints.RemoveAt(current);
+        }
+        /**/
 
         return levelGen;
     }
@@ -54,9 +67,14 @@ public class LevelGenerator : ILevelBuilder
         return pickUp;
     }
     
-    private Actor SpawnEnemy(Vector2 pos)
+    private Actor SpawnEnemy(Vector2 pos, int h)
     {
         Actor enemy = new Actor();
+
+        enemy.position = pos;
+        enemy.health = h;
+        enemy.Weapon.content = new Weapon();
+
         return enemy;
     }
 
@@ -90,6 +108,11 @@ public class LevelGenerator : ILevelBuilder
     private List<Vector2> SetEnemySpawnPoints()
     {
         List<Vector2> spawns = new List<Vector2>();
+
+        spawns.Add(new Vector2(15, 3));
+        spawns.Add(new Vector2(15, 6));
+        spawns.Add(new Vector2(15, 9));
+
         return spawns;
     }
 }

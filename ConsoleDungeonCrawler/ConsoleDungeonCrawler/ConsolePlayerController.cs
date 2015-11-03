@@ -41,6 +41,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 break;
             case 'q':
                 Console.WriteLine("\nq");
+                data.player.Weapon.content.Attack();
                 break;
             case 'e':
                 Console.WriteLine("\ne");
