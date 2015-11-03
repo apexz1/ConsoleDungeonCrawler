@@ -14,12 +14,14 @@ public class Actor : GameObject
         this.selector = new GameObject();
         this.selector.position = new Vector2(0, 0);
 
+        this.actions = maxActions;
         this.Weapon = new Slot<Weapon>();
         Weapon.content = new Weapon();
     }
 
     public int health;
     public int speed;
+    public int maxActions = 50;
     public int actions;
     public float vision;
     public Slot<Weapon> Weapon;
@@ -27,10 +29,19 @@ public class Actor : GameObject
     private GameData data;
     public GameObject selector;
 
+    public List<Vector2> path = new List<Vector2>();
+
     public void Move(Direction dir)
     {
         Vector2 pos = new Vector2();
         data = Application.GetData();
+
+        if (actions <= 0)
+        {
+            return;
+        }
+
+
         switch(dir)
         {
             case Direction.UP:
@@ -40,7 +51,7 @@ public class Actor : GameObject
                 {
                      return;
                 }
-                if (data.combat && selector.position.x - 1 < position.x - 5)
+                if (data.combat && (selector.position.x - 1 < position.x - 5 || selector.position.x-1 < 0))
                 {
                     return;
                 }
@@ -55,7 +66,7 @@ public class Actor : GameObject
                 {
                     return;
                 }
-                if (data.combat && selector.position.x + 1 > position.x + 5)
+                if (data.combat && (selector.position.x + 1 > position.x + 5 || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
                     return;
                 }
@@ -70,7 +81,7 @@ public class Actor : GameObject
                 {
                     return;
                 }
-                if (data.combat && selector.position.y - 1 < position.y - 5)
+                if (data.combat && (selector.position.y - 1 < position.y - 5 || selector.position.y - 1 < 0))
                 {
                     return;
                 }
@@ -85,7 +96,7 @@ public class Actor : GameObject
                 {
                     return;
                 }
-                if (data.combat && selector.position.y + 1 > position.y + 5)
+                if (data.combat && (selector.position.y + 1 > position.y + 5 || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
                     return;
                 }
@@ -97,7 +108,9 @@ public class Actor : GameObject
 
         if (!data.combat)
         {
+            path.Add(position); 
             position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
+            actions -= 1;
         }
 
         if (data.combat)
@@ -115,12 +128,19 @@ public class Actor : GameObject
         }
     }
 
-    public void EnterCombat()
+    public bool EnterCombat()
     {
+        if (actions <= 0)
+        {
+            return false;
+        }
+
         selector = new GameObject();
         selector.position = new Vector2();
 
         selector.position = this.position;
+
+        return true;
     }
 
     public void TakeDamage(int value)

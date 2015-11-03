@@ -8,21 +8,30 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
     public MasterControlProgram()
     {
+        turn = 0;
         Application.Add((IGameDataChangeListener)this);
     }
 
-    public static bool control = true;
+    public static bool running = true;
     public GameData data;
     public IBaseView view;
     public IBaseController controller;
+
+    private int turn = -1;
 
     public void Run()
     {
         Application.NewGame();
 
-        while(control)
+        while (running)
         {
             controller.Execute();
+
+            if (ConsolePlayerController.done && EnemyController.done)
+            {
+                EndTurn();
+            }
+
             view.Execute();
         }
     }
@@ -50,6 +59,14 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
     public void OnGameStateChange()
     {
         throw new NotImplementedException();
+    }
+    public void EndTurn()
+    {
+        turn++;
+        data.player.actions = data.player.maxActions;
+
+        ConsolePlayerController.done = false;
+        EnemyController.done = false;
     }
 
 

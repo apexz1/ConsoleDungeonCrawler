@@ -24,6 +24,11 @@ public class Weapon : Item
     {
         GameData data = Application.GetData();
 
+        if (data.player.actions <= 0)
+        {
+            return;
+        }
+
         for (int i = 0; i < data.level.structure.GetLength(0); i++)
         {
             for (int j = 0; j < data.level.structure.GetLength(1); j++)
@@ -33,6 +38,7 @@ public class Weapon : Item
                     if (CheckTarget(new Vector2(i, j)) != null)
                     {
                         CheckTarget(new Vector2(i, j)).TakeDamage(damage);
+                        data.player.actions -= 1;
                     }
                 }
             }

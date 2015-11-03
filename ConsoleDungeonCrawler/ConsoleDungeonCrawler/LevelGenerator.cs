@@ -24,7 +24,7 @@ public class LevelGenerator : ILevelBuilder
         levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
         levelGen.enemySpawnPoints = SetEnemySpawnPoints();
 
-        /*
+        
         for (int i = 0; i < pickUpCount; i++)
         {         
             int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);

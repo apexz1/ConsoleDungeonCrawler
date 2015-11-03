@@ -12,6 +12,7 @@ public class Application
 
     private static GameData data;
     private static IBaseState currentState;
+    private static EnemyController enemyController;
     private static readonly HashSet<IGameDataChangeListener> GAMEDATA_CHANGE_LISTENERS = new HashSet<IGameDataChangeListener>();
     private static Dictionary<GameStates, IBaseState> STATE_ARCHIVE;
 
@@ -29,7 +30,7 @@ public class Application
     {
         data = new GameData();
         currentState = new GameState();
-        EnemyController enemyController = new EnemyController();
+        enemyController = new EnemyController();
         LevelGenerator generator = new LevelGenerator();
 
         data.level = generator.Generate();
@@ -73,6 +74,10 @@ public class Application
     public static GameData GetData()
     {
         return data;
+    }
+    public static IBaseController GetEnemyController()
+    {
+        return enemyController;
     }
     public static void SetData(GameData value)
     {

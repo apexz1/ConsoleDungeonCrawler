@@ -7,6 +7,7 @@ using System.Text;
 public class ConsolePlayerController : IBaseController, IGameDataChangeListener, IGameStateChangeListener
 {
     public GameData data;
+    public static bool done = false;
 
     public ConsolePlayerController()
     {
@@ -16,6 +17,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
     public void Execute()
     {
         char input = Console.ReadKey().KeyChar;
+
         switch (input)
         {
             case 'w':
@@ -36,8 +38,10 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 break;
             case 'c':
                 Console.WriteLine("\nc");
-                Switch();
-                data.player.EnterCombat();
+                if (data.player.EnterCombat())
+                {
+                    Switch();
+                }
                 break;
             case 'q':
                 Console.WriteLine("\nq");
@@ -46,15 +50,26 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
             case 'e':
                 Console.WriteLine("\ne");
                 break;
+            case 'r':
+                Console.WriteLine("\nr");
+                End();
+                break;
         }
 
-        Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);
-
+        //Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);
     }
 
     private void Switch()
     {
         data.combat = !(data.combat);
+    }
+
+    private void End()
+    {
+        data.player.actions = 0;
+        Application.GetEnemyController().Execute();
+
+        done = true;
     }
 
     public void OnGameDataChange(GameData data)
