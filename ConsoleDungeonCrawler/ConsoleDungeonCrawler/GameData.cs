@@ -10,6 +10,7 @@ public class GameData
     public bool combat;
     public Score score;
     public Level level;
+    public List<Actor> collision = new List<Actor>();
 
     public GameData()
     {
@@ -28,9 +29,8 @@ public class GameData
 
         Random rng = new Random();
         this.player.position = level.playerSpawnPoints[2];
+
+
+        Application.GetData().collision.Add(player);
     }
-
-
-
-
 }

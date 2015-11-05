@@ -45,7 +45,7 @@ public class Actor : GameObject
             return false;
         }
 
-        switch(dir)
+        switch (dir)
         {
             case Direction.VOID:
                 return true;
@@ -53,17 +53,17 @@ public class Actor : GameObject
             case Direction.UP:
                 //SMARTGIT DEMONSTRATION COMMENT
                 //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
-                if (!(data.combat) && position.x-1 < 0)
+                if (!(data.combat) && position.x - 1 < 0)
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.x - 1 < position.x - 5 || selector.position.x-1 < 0))
+                if (data.combat && (selector.position.x - 1 < position.x - 5 || selector.position.x - 1 < 0))
                 {
                     return false;
                 }
-                for (int i = 0; i < data.level.enemies.Count; i++)
+                for (int i = 0; i < data.collision.Count; i++)
                 {
-                    if (data.level.collision[i].position.x == position.x-1 && data.level.collision[i].position.y == position.y)
+                    if (data.collision[i].position.x == position.x - 1 && data.collision[i].position.y == position.y)
                     {
                         return false;
                     }
@@ -75,7 +75,7 @@ public class Actor : GameObject
 
             case Direction.DOWN:
 
-                if (!(data.combat) && position.x+1 > data.level.structure.GetLength(0)-1)
+                if (!(data.combat) && position.x + 1 > data.level.structure.GetLength(0) - 1)
                 {
                     return false;
                 }
@@ -85,7 +85,7 @@ public class Actor : GameObject
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.collision[i].position.x == position.x + 1 && data.level.collision[i].position.y == position.y)
+                    if (data.collision[i].position.x == position.x + 1 && data.collision[i].position.y == position.y)
                     {
                         return false;
                     }
@@ -107,7 +107,7 @@ public class Actor : GameObject
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.collision[i].position.y == position.y - 1 && data.level.collision[i].position.x == position.x)
+                    if (data.collision[i].position.y == position.y - 1 && data.collision[i].position.x == position.x)
                     {
                         return false;
                     }
@@ -129,7 +129,7 @@ public class Actor : GameObject
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.collision[i].position.y == position.y + 1 && data.level.collision[i].position.x == position.x)
+                    if (data.collision[i].position.y == position.y + 1 && data.collision[i].position.x == position.x)
                     {
                         return false;
                     }
@@ -142,7 +142,7 @@ public class Actor : GameObject
 
         if (!data.combat)
         {
-            path.Add(position); 
+            path.Add(position);
             position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
             actions -= 1;
             moved = true;
@@ -194,6 +194,14 @@ public class Actor : GameObject
         {
             data.level.enemies.Remove(this);
         }
+        if (this == data.player && health <= 0)
+        {
+            data.collision.Remove(data.player);
+            data.player = new Actor();
+            data.SpawnPlayer();
+
+            Console.WriteLine("YOU DIED");
+        }
     }
 
     public void Undo()
@@ -203,8 +211,8 @@ public class Actor : GameObject
             return;
         }
 
-        position = path[path.Count-1];
-        path.RemoveAt(path.Count-1);
+        position = path[path.Count - 1];
+        path.RemoveAt(path.Count - 1);
         actions += 1;
     }
 

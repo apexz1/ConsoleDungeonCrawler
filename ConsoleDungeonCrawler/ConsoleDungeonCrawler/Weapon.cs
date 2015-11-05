@@ -45,6 +45,17 @@ public class Weapon : Item
         }
     }
 
+    public void Attack(Vector2 target)
+    {
+        GameData data = Application.GetData();
+
+        if (CheckTarget(target) != null)
+        {
+            CheckTarget(target).TakeDamage(damage);
+            data.player.actions -= 1;
+        }
+    }
+
     public void Reload()
     {
         // TODO implement here
@@ -53,23 +64,23 @@ public class Weapon : Item
     public Actor CheckTarget(Vector2 target)
     {
         GameData data = Application.GetData();
-        Actor enemy = new Actor();
+        Actor actor = new Actor();
         bool targetExists = false;
 
-        for (int i = 0; i < data.level.enemies.Count; i++)
+        for (int i = 0; i < data.collision.Count; i++)
         {
-            if (data.level.enemies[i].position.x == target.x && data.level.enemies[i].position.y == target.y)
+            if (data.collision[i].position.x == target.x && data.collision[i].position.y == target.y)
             {
                 targetExists = true;
-                enemy = data.level.enemies[i];
+                actor = data.collision[i];
             }
         }
 
         if (targetExists)
         {
-            return enemy;
+            return actor;
         }
-        return null;       
+        return null;
     }
 
 }

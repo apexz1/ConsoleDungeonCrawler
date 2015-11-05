@@ -41,7 +41,6 @@ public class LevelGenerator : ILevelBuilder
         }
         /**/
 
-        levelGen.InitCollision();
         return levelGen;
     }
 
@@ -75,6 +74,8 @@ public class LevelGenerator : ILevelBuilder
         enemy.position = pos;
         enemy.health = h;
         enemy.Weapon.content = new Weapon();
+
+        Application.GetData().collision.Add(enemy);
 
         return enemy;
     }

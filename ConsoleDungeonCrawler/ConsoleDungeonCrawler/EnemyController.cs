@@ -25,10 +25,21 @@ public void Execute()
         List<Actor> enemies = data.level.enemies;
         Direction dir;
 
+        Vector2 p_pos = data.player.position;
+
         for (int i = 0; i < enemies.Count; i++)
         {
-            DIR_LIB.TryGetValue(rng.Next(0, 5), out dir);
-            enemies[i].Move(dir);
+            if (enemies[i].position.x == p_pos.x || enemies[i].position.y == p_pos.y)
+            {
+                Console.WriteLine("PLAYER DETECTED");
+                enemies[i].Weapon.content.Attack(data.player.position);
+            }
+            else
+            {
+                DIR_LIB.TryGetValue(rng.Next(0, 5), out dir);
+                enemies[i].Move(dir);
+            }
+
         }
 
         End();

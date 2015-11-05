@@ -22,6 +22,13 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public void Execute()
     {
+        /*
+        for (int i = 0; i < data.level.collision.Count; i++)
+        {
+            Console.WriteLine("" + data.level.collision[i].position.x + " " + data.level.collision[i].position.y);
+        }
+        /**/
+
         //Console.Clear();
         Console.WriteLine(data.level.pickUps.Count);
         char repChar = ' ';

@@ -35,7 +35,7 @@ public class Application
 
         data.level = generator.Generate();
         data.SpawnPlayer();
-        
+
         foreach (IGameDataChangeListener listener in GAMEDATA_CHANGE_LISTENERS)
         {
             listener.OnGameDataChange(data);
