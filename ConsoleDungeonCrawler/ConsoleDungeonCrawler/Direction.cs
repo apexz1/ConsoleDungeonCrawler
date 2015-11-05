@@ -3,5 +3,6 @@
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    VOID,
 }

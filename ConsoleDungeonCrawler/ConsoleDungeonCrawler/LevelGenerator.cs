@@ -41,6 +41,7 @@ public class LevelGenerator : ILevelBuilder
         }
         /**/
 
+        levelGen.InitCollision();
         return levelGen;
     }
 
@@ -61,7 +62,7 @@ public class LevelGenerator : ILevelBuilder
 
     private PickUp SpawnPickup(Vector2 pos)
     {
-        PickUp pickUp = new PickUp(ItemLibrary.Get().items[rng.Next(0, ItemLibrary.Get().items.Count)], rng.Next(1,3));
+        PickUp pickUp = new PickUp(ItemLibrary.Get().items[rng.Next(0, ItemLibrary.Get().items.Count)], 1); //rng.Next(1,3));
         pickUp.position = pos;
 
         return pickUp;

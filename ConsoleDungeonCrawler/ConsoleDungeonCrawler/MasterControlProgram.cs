@@ -64,6 +64,10 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
     {
         turn++;
         data.player.actions = data.player.maxActions;
+        for (int i = 0; i < data.level.collision.Count; i++)
+        {
+            data.level.collision[i].actions = data.level.collision[i].maxActions;
+        }
 
         ConsolePlayerController.done = false;
         EnemyController.done = false;

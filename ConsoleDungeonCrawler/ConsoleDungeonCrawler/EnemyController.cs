@@ -7,16 +7,28 @@ using System.Text;
 public class EnemyController : IBaseController
 {
     public static bool done = false;
+    private Random rng = new Random();
+    private readonly Dictionary<int, Direction> DIR_LIB = new Dictionary<int, Direction>(); 
+
     public EnemyController()
     {
+        DIR_LIB.Add(0, Direction.UP);
+        DIR_LIB.Add(1, Direction.DOWN);
+        DIR_LIB.Add(2, Direction.LEFT);
+        DIR_LIB.Add(3, Direction.RIGHT);
+        DIR_LIB.Add(4, Direction.VOID);
     }
 
-    public void Execute()
+public void Execute()
     {
         GameData data = Application.GetData();
-        for (int i = 0; i < data.level.enemies.Count; i++)
+        List<Actor> enemies = data.level.enemies;
+        Direction dir;
+
+        for (int i = 0; i < enemies.Count; i++)
         {
-            data.level.enemies[i].position = Vector2.AddVectors(data.level.enemies[i].position, new Vector2(0, 1));
+            DIR_LIB.TryGetValue(rng.Next(0, 5), out dir);
+            enemies[i].Move(dir);
         }
 
         End();

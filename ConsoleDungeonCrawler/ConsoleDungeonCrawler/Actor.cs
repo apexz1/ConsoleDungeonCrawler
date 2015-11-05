@@ -22,9 +22,10 @@ public class Actor : GameObject
     }
 
     public int health;
+    public int maxHealth;
     public int speed;
-    public int maxActions = 5000;
     public int actions;
+    public int maxActions = 2;
     public float vision;
     public Slot<Weapon> Weapon;
     public Slot<Armor> Armor;
@@ -33,35 +34,38 @@ public class Actor : GameObject
 
     public List<Vector2> path = new List<Vector2>();
 
-    public void Move(Direction dir)
+    public bool Move(Direction dir)
     {
         Vector2 pos = new Vector2();
         data = Application.GetData();
+        bool moved = false;
 
         if (actions <= 0)
         {
-            return;
+            return false;
         }
-
 
         switch(dir)
         {
+            case Direction.VOID:
+                return true;
+
             case Direction.UP:
                 //SMARTGIT DEMONSTRATION COMMENT
                 //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
                 if (!(data.combat) && position.x-1 < 0)
                 {
-                     return;
+                    return false;
                 }
                 if (data.combat && (selector.position.x - 1 < position.x - 5 || selector.position.x-1 < 0))
                 {
-                    return;
+                    return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.enemies[i].position.x == position.x-1 && data.level.enemies[i].position.y == position.y)
+                    if (data.level.collision[i].position.x == position.x-1 && data.level.collision[i].position.y == position.y)
                     {
-                        return;
+                        return false;
                     }
                 }
                 pos.x -= 1;
@@ -73,17 +77,17 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.x+1 > data.level.structure.GetLength(0)-1)
                 {
-                    return;
+                    return false;
                 }
                 if (data.combat && (selector.position.x + 1 > position.x + 5 || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
-                    return;
+                    return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.enemies[i].position.x == position.x + 1 && data.level.enemies[i].position.y == position.y)
+                    if (data.level.collision[i].position.x == position.x + 1 && data.level.collision[i].position.y == position.y)
                     {
-                        return;
+                        return false;
                     }
                 }
                 pos.x += 1;
@@ -95,17 +99,17 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.y - 1 < 0)
                 {
-                    return;
+                    return false;
                 }
                 if (data.combat && (selector.position.y - 1 < position.y - 5 || selector.position.y - 1 < 0))
                 {
-                    return;
+                    return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.enemies[i].position.y == position.y - 1 && data.level.enemies[i].position.x == position.x)
+                    if (data.level.collision[i].position.y == position.y - 1 && data.level.collision[i].position.x == position.x)
                     {
-                        return;
+                        return false;
                     }
                 }
                 pos.y -= 1;
@@ -117,17 +121,17 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.y + 1 > data.level.structure.GetLength(1) - 1)
                 {
-                    return;
+                    return false;
                 }
                 if (data.combat && (selector.position.y + 1 > position.y + 5 || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
-                    return;
+                    return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.level.enemies[i].position.y == position.y + 1 && data.level.enemies[i].position.x == position.x)
+                    if (data.level.collision[i].position.y == position.y + 1 && data.level.collision[i].position.x == position.x)
                     {
-                        return;
+                        return false;
                     }
                 }
                 pos.y += 1;
@@ -141,11 +145,13 @@ public class Actor : GameObject
             path.Add(position); 
             position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
             actions -= 1;
+            moved = true;
         }
 
         if (data.combat)
         {
             selector.position = new Vector2((int)(selector.position.x + pos.x), (int)(selector.position.y + pos.y));
+            moved = true;
         }
 
         for (int i = 0; i < data.level.pickUps.Count; i++)
@@ -153,9 +159,14 @@ public class Actor : GameObject
             //Console.WriteLine("move to pickup debug: " + position.x + " " + data.level.pickUps[i].position.y);
             if (position.x == data.level.pickUps[i].position.x && position.y == data.level.pickUps[i].position.y)
             {
-                data.level.pickUps[i].OnPickup();
+                if (this == data.player)
+                {
+                    data.level.pickUps[i].OnPickup();
+                }
             }
         }
+
+        return moved;
     }
 
     public bool EnterCombat()

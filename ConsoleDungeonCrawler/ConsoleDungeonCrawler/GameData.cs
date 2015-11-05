@@ -23,6 +23,9 @@ public class GameData
     public void SpawnPlayer()
     {
         this.player = new Actor();
+        player.health = 1;
+        player.maxHealth = 10;
+
         Random rng = new Random();
         this.player.position = level.playerSpawnPoints[2];
     }
