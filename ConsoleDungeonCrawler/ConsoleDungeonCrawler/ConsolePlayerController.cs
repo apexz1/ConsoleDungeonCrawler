@@ -40,7 +40,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Console.WriteLine("\nc");
                 if (data.player.EnterCombat())
                 {
-                    Switch();
+                    CombatSwitch();
                 }
                 break;
             case 'q':
@@ -63,9 +63,13 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
         //Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);
     }
 
-    private void Switch()
+    private void CombatSwitch()
     {
         data.combat = !(data.combat);
+    }
+    private void InventorySwitch()
+    {
+        //STUFF THAT OPENS THE INVENTORY GOES HERE; MAKE MAGIC HAPPEN MATE
     }
 
     private void End()

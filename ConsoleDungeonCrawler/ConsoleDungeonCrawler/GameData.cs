@@ -24,7 +24,7 @@ public class GameData
     public void SpawnPlayer()
     {
         this.player = new Actor();
-        player.health = 1;
+        player.health = 10;
         player.maxHealth = 10;
 
         Random rng = new Random();

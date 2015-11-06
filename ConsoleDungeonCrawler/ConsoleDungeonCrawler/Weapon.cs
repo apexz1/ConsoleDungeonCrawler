@@ -39,6 +39,11 @@ public class Weapon : Item
                     {
                         CheckTarget(new Vector2(i, j)).TakeDamage(damage);
                         data.player.actions -= 1;
+
+                        if(data.player.actions <= 0)
+                        {
+                            data.combat = false;
+                        }
                     }
                 }
             }

@@ -33,6 +33,33 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         Console.WriteLine(data.level.pickUps.Count);
         char repChar = ' ';
 
+        ///*
+        //Player Health stuff
+        int counter = 0;
+        for (int i = 0; i < data.player.maxHealth; i++ )
+        {
+
+            if (i < data.player.health)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else
+                Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write("[]");
+            counter++;
+
+            if (counter >= 10 && i != data.player.maxHealth-1)
+            {
+                counter = 0;
+                Console.Write("\n");
+            }
+        }
+        /**/
+
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.Write(" " + data.player.health + "/" + data.player.maxHealth + "\n");
+
+
+        //Level Stuff
         for (int i = 0; i < data.level.structure.GetLength(0); i++)
         {
             for (int j = 0; j < data.level.structure.GetLength(1); j++)

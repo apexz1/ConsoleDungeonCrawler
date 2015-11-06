@@ -210,6 +210,10 @@ public class Actor : GameObject
         {
             return;
         }
+        if (data.combat)
+        {
+            return;
+        }
 
         position = path[path.Count - 1];
         path.RemoveAt(path.Count - 1);
