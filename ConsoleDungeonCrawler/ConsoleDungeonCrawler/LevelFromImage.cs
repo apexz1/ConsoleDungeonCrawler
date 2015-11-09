@@ -39,7 +39,16 @@ public class LevelFromImage : ILevelBuilder {
 
         //Console.ReadKey();
         levelGen.structure = levelGenStructure;
+        levelGen.pickUps.Add(SpawnPickup(new Vector2(1, 2)));
         return levelGen;
      
+    }
+
+    private PickUp SpawnPickup(Vector2 pos)
+    {
+        PickUp pickUp = new PickUp(ItemLibrary.Get().items[0], 1); //rng.Next(1,3));
+        pickUp.position = pos;
+
+        return pickUp;
     }
 }

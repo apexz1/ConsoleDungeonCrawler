@@ -26,7 +26,6 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
         while (running)
         {
             controller.Execute();
-
             if (ConsolePlayerController.done && EnemyController.done)
             {
                 EndTurn();

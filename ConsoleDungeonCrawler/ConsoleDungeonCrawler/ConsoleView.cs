@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public ConsoleView()
     {
-        TILE_CHARS.Add("floor", 'X');
-        TILE_CHARS.Add("wall", 'I');
+        TILE_CHARS.Add("floor", '▒');
+        TILE_CHARS.Add("wall", '▓');
         Application.Add((IGameDataChangeListener)this);
     }
 
@@ -21,23 +21,26 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     private readonly Dictionary<string, char> TILE_CHARS = new Dictionary<string, char>();
     private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
 
+    public ConsolePixel[,] uiContent = new ConsolePixel[36, 72];
+
     public void Execute()
     {
-        /*
-        for (int i = 0; i < data.level.collision.Count; i++)
-        {
-            Console.WriteLine("" + data.level.collision[i].position.x + " " + data.level.collision[i].position.y);
-        }
-        /**/
-
         //Console.Clear();
-        Console.WriteLine(data.level.pickUps.Count);
-        char repChar = ' ';
+        char symbol = ' ';
+        ConsoleColor f = ConsoleColor.Gray;
+        ConsoleColor b = ConsoleColor.Black;
 
-        ///*
+        for (int i = 0; i < uiContent.GetLength(0); i++)
+        {
+            for (int j = 0; j < uiContent.GetLength(1); j++)
+            {
+                uiContent[i, j] = new ConsolePixel();
+            }
+        }
+
+
         //Player Health stuff
-        int counter = 0;
-        for (int i = 0; i < data.player.maxHealth; i++ )
+        for (int i = 0; i < data.player.maxHealth; i++)
         {
 
             if (i < data.player.health)
@@ -45,34 +48,22 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             else
                 Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.Write("[]");
-            counter++;
-
-            if (counter >= 10 && i != data.player.maxHealth-1)
-            {
-                counter = 0;
-                Console.Write("\n");
-            }
+            uiContent[0, 0 + i] = new ConsolePixel('♥', ConsoleColor.Red, ConsoleColor.Black);
         }
-        /**/
-
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write(" " + data.player.health + "/" + data.player.maxHealth + "\n");
-
 
         //Level Stuff
         for (int i = 0; i < data.level.structure.GetLength(0); i++)
         {
             for (int j = 0; j < data.level.structure.GetLength(1); j++)
             {
-                TILE_CHARS.TryGetValue(data.level.structure[i, j].terrain, out repChar);
+                TILE_CHARS.TryGetValue(data.level.structure[i, j].terrain, out symbol);
                 for (int x = 0; x < data.level.pickUps.Count; x++)
                 {
                     if ((i == data.level.pickUps[x].position.x) && (j == data.level.pickUps[x].position.y))
                     {
                         //Console.WriteLine("askjhbdfuisdjrpfejgz#PechConsole");
-                        repChar = 'P';
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        symbol = 'P';
+                        f = ConsoleColor.Yellow;
                     }
                 }
                 for (int x = 0; x < data.level.enemies.Count; x++)
@@ -80,19 +71,20 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     if ((i == data.level.enemies[x].position.x) && (j == data.level.enemies[x].position.y))
                     {
                         //Console.WriteLine("askjhbdfuisdjrpfejgz#PechConsole");
-                        repChar = 'O';
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        symbol = 'O';
+                        f = ConsoleColor.Red;
                     }
                 }
                 if ((i == data.player.position.x) && (j == data.player.position.y))
                 {
                     //Console.WriteLine("Player Found");
-                    repChar = 'O';
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    symbol = 'O';
+                    f = ConsoleColor.Green;
+                    b = ConsoleColor.DarkGray;
 
                     if (data.player.actions <= 0)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        f = ConsoleColor.DarkGreen;
                     }
                 }
                 if (data.combat)
@@ -101,28 +93,68 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     {
                         //repChar = ' ';
                         //Console.Write("selector position = " + data.player.selector.position.x + data.player.selector.position.y);
-                        Console.BackgroundColor = ConsoleColor.Magenta;
+                        b = ConsoleColor.Magenta;
                     }
 
                 }
 
-
-                Console.Write(repChar);
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.BackgroundColor = ConsoleColor.Black;
-            }
-            Console.WriteLine();
-        }   
-
-        if(data.inventory != null)
-        {
-            Console.WriteLine("inventory:\n");
-            for (int i = 0; i < data.inventory.content.Count; i++)
-            {
-                Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
+                //?+i/?+j for the level position offset
+                uiContent[1 + i, j] = new ConsolePixel(symbol, f, b);
+                f = ConsoleColor.Gray;
+                b = ConsoleColor.Black;
             }
         }
-        else { Console.WriteLine("no inventory"); }
+
+        #region inventory stuff
+        //Inventory Stuff
+        if (data.inventory != null)
+        {
+            char[] label;
+            string content = "Inventory:";
+            label = content.ToCharArray();
+            for (int i = 0; i < label.Length; i++)
+            {
+                uiContent[1, (data.level.structure.GetLength(1) + 1) + i] = new ConsolePixel(label[i]);
+            }
+
+            if (data.inventory.content.Count > 0)
+            {
+                for (int i = 0; i < data.inventory.content.Count; i++)
+                {
+                    content = data.inventory.content[i].item.name + " " + data.inventory.content[i].count.ToString();
+                    label = content.ToCharArray();
+                    for (int j = 0; j < label.Length; j++)
+                    {
+                        uiContent[i+2, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j]);
+                    }
+                    Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
+                }
+            }
+            else
+            {
+                content = "empty inventory";
+                label = content.ToCharArray();
+
+                for (int i = 0; i < label.Length; i++)
+                {
+                    uiContent[1, (data.level.structure.GetLength(1) + 1) + i] = new ConsolePixel(label[i]);
+                }
+            }
+        }
+        /**/
+        #endregion
+
+        //RENDERS THE CURRENT UICONTENT
+        for (int i = 0; i < uiContent.GetLength(0); i++)
+        {
+            for (int j = 0; j < uiContent.GetLength(1); j++)
+            {
+                Console.ForegroundColor = uiContent[i, j].foreground;
+                Console.BackgroundColor = uiContent[i, j].background;
+                Console.Write(uiContent[i, j].symbol);
+            }
+            Console.WriteLine();
+        }
     }
 
     public void OnGameDataChange(GameData data)

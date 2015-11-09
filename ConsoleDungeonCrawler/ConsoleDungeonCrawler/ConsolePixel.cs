@@ -8,10 +8,25 @@ public class ConsolePixel
 {
     public ConsolePixel()
     {
+        this.symbol = ' ';
+        this.background = ConsoleColor.Black;
+        this.foreground = ConsoleColor.Gray;
     }
-    private char symbol;
-    private ConsoleColor foreground;
-    private ConsoleColor background;
+    public ConsolePixel(char symbol)
+    {
+        this.symbol = symbol;
+        this.background = ConsoleColor.Black;
+        this.foreground = ConsoleColor.Gray;
+    }
 
+    public ConsolePixel(char symbol, ConsoleColor f, ConsoleColor b)
+    {
+        this.symbol = symbol;
+        foreground = f;
+        background = b;
+    }
 
+    public char symbol;
+    public ConsoleColor foreground;
+    public ConsoleColor background;
 }
