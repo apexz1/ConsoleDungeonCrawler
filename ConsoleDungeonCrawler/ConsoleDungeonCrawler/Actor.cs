@@ -25,7 +25,7 @@ public class Actor : GameObject
     public int maxHealth;
     public int speed;
     public int actions;
-    public int maxActions = 2;
+    public int maxActions = 10000;
     public float vision;
     public Slot<Weapon> Weapon;
     public Slot<Armor> Armor;
@@ -53,14 +53,20 @@ public class Actor : GameObject
             case Direction.UP:
                 //SMARTGIT DEMONSTRATION COMMENT
                 //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
+
+                //------------------------------------------------------------
                 if (!(data.combat) && position.x - 1 < 0)
                 {
                     return false;
+                }
+                {
+                    //------------------------------------------------------------
                 }
                 if (data.combat && (selector.position.x - 1 < position.x - 5 || selector.position.x - 1 < 0))
                 {
                     return false;
                 }
+                //------------------------------------------------------------
                 for (int i = 0; i < data.collision.Count; i++)
                 {
                     if (data.collision[i].position.x == position.x - 1 && data.collision[i].position.y == position.y)
@@ -68,10 +74,19 @@ public class Actor : GameObject
                         return false;
                     }
                 }
+                //------------------------------------------------------------              
+                if (data.level.structure[(int)position.x - 1, (int)position.y].substance == ClipType.WALL)
+                {
+                    return false;
+                }
+
+                //------------------------------------------------------------
                 pos.x -= 1;
                 Console.WriteLine("move up? " + position.x + " " + position.y);
 
                 break;
+            //------------------------------------------------------------
+
 
             case Direction.DOWN:
 
@@ -89,6 +104,10 @@ public class Actor : GameObject
                     {
                         return false;
                     }
+                }
+                if (data.level.structure[(int)position.x + 1, (int)position.y].substance == ClipType.WALL)
+                {
+                    return false;
                 }
                 pos.x += 1;
                 Console.WriteLine("move down? " + position.x + " " + position.y);
@@ -112,6 +131,10 @@ public class Actor : GameObject
                         return false;
                     }
                 }
+                if (data.level.structure[(int)position.x, (int)position.y - 1].substance == ClipType.WALL)
+                {
+                    return false;
+                }
                 pos.y -= 1;
                 Console.WriteLine("move left? " + position.x + " " + position.y);
 
@@ -133,6 +156,10 @@ public class Actor : GameObject
                     {
                         return false;
                     }
+                }
+                if (data.level.structure[(int)position.x, (int)position.y + 1].substance == ClipType.WALL)
+                {
+                    return false;
                 }
                 pos.y += 1;
                 Console.WriteLine("move right? " + position.x + " " + position.y);

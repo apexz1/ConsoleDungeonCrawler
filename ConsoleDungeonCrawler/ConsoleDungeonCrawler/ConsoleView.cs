@@ -10,6 +10,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     public ConsoleView()
     {
         TILE_CHARS.Add("floor", 'X');
+        TILE_CHARS.Add("wall", 'I');
         Application.Add((IGameDataChangeListener)this);
     }
 

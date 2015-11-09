@@ -31,4 +31,18 @@ public class Vector2
 
         return result;
     }
+
+    public static double Distance(Vector2 a, Vector2 b)
+    {
+        double result = 0;
+
+        double x = Math.Abs(a.x - b.x);
+        double y = Math.Abs(b.x - b.y);
+
+        if (x > y) result = x;
+        if (y > x) result = y;
+        else result = -1;
+
+        return result;
+    }
 }

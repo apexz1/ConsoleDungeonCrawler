@@ -28,7 +28,7 @@ public class LevelGenerator : ILevelBuilder
         for (int i = 0; i < pickUpCount; i++)
         {         
             int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
-            levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
+            //levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
             levelGen.pickupSpawnPoints.RemoveAt(current);
         }
         /**/
@@ -36,7 +36,7 @@ public class LevelGenerator : ILevelBuilder
         for (int i = 0; i < enemyCount; i++)
         {
             int current = rng.Next(0, levelGen.enemySpawnPoints.Count);
-            levelGen.enemies.Add(SpawnEnemy(levelGen.enemySpawnPoints[current], 1));
+            //levelGen.enemies.Add(SpawnEnemy(levelGen.enemySpawnPoints[current], 1));
             levelGen.enemySpawnPoints.RemoveAt(current);
         }
         /**/
@@ -56,9 +56,11 @@ public class LevelGenerator : ILevelBuilder
             }
         }
 
+        levelGenStructure[15, 15] = new Tile("wall", ClipType.WALL);
+
         return levelGenStructure;
     }
-
+    /*
     private PickUp SpawnPickup(Vector2 pos)
     {
         PickUp pickUp = new PickUp(ItemLibrary.Get().items[rng.Next(0, ItemLibrary.Get().items.Count)], 1); //rng.Next(1,3));
@@ -66,7 +68,8 @@ public class LevelGenerator : ILevelBuilder
 
         return pickUp;
     }
-    
+    /**/
+    /*
     private Actor SpawnEnemy(Vector2 pos, int h)
     {
         Actor enemy = new Actor();
@@ -79,7 +82,7 @@ public class LevelGenerator : ILevelBuilder
 
         return enemy;
     }
-
+    /**/
     private List<Vector2> SetPlayerSpawnPoints()
     {
         List<Vector2> spawns = new List<Vector2>();
