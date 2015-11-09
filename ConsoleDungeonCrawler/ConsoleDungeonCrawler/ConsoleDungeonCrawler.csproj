@@ -50,6 +50,7 @@
     <Compile Include="Armor.cs" />
     <Compile Include="ClipType.cs" />
     <Compile Include="ConsoleGameRenderer.cs" />
+    <Compile Include="ConsoleInventoryController.cs" />
     <Compile Include="ConsoleMenuActions.cs" />
     <Compile Include="ConsoleMenuController.cs" />
     <Compile Include="ConsoleMenuRenderer.cs" />

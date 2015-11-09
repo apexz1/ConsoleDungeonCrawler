@@ -100,6 +100,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
                 //?+i/?+j for the level position offset
                 uiContent[1 + i, j] = new ConsolePixel(symbol, f, b);
+
                 f = ConsoleColor.Gray;
                 b = ConsoleColor.Black;
             }
@@ -125,7 +126,14 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     label = content.ToCharArray();
                     for (int j = 0; j < label.Length; j++)
                     {
-                        uiContent[i+2, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j]);
+                        if (i == data.currentItem)
+                        {
+                            f = ConsoleColor.Gray;
+                            b = ConsoleColor.Magenta;
+                        }
+                        uiContent[i+2, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j], f, b);
+                        f = ConsoleColor.Gray;
+                        b = ConsoleColor.Black;
                     }
                     Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
                 }

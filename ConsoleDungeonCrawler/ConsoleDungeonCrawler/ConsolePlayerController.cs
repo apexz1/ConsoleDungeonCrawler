@@ -11,6 +11,8 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
 
     public ConsolePlayerController()
     {
+        data = Application.GetData();
+        done = false;
         Application.Add((IGameDataChangeListener)this);
     }
 
@@ -51,8 +53,9 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Console.WriteLine("\nu");
                 data.player.Undo();
                 break;
-            case 'e':
-                Console.WriteLine("\ne");
+            case 'i':
+                Console.WriteLine("\ni");
+                InventorySwitch();
                 break;
             case 'r':
                 Console.WriteLine("\nr");
@@ -69,7 +72,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
     }
     private void InventorySwitch()
     {
-        //STUFF THAT OPENS THE INVENTORY GOES HERE; MAKE MAGIC HAPPEN MATE
+        MasterControlProgram.SetController(new ConsoleInventoryController());
     }
 
     private void End()
