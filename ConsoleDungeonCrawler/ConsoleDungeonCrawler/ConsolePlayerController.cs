@@ -73,6 +73,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
     private void InventorySwitch()
     {
         MasterControlProgram.SetController(new ConsoleInventoryController());
+        data.currentItem = 0;
     }
 
     private void End()

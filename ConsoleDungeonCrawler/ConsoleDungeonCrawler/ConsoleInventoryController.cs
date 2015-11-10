@@ -41,7 +41,7 @@ class ConsoleInventoryController : IBaseController
                 break;
             case 'i':
                 MasterControlProgram.SetController(new ConsolePlayerController());
-
+                current = -1;
                 break;
         }
 
