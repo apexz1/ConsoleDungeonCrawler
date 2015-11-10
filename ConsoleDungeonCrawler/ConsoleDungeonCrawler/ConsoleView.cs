@@ -75,8 +75,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 for (int x = 0; x < data.level.pickUps.Count; x++)
                 {
                     if ((i == data.level.pickUps[x].position.x) && (j == data.level.pickUps[x].position.y))
-                    {
-                        //Console.WriteLine("askjhbdfuisdjrpfejgz#PechConsole");
+                    {                        
                         symbol = 'P';
                         f = ConsoleColor.Yellow;
                     }
@@ -85,7 +84,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 {
                     if ((i == data.level.enemies[x].position.x) && (j == data.level.enemies[x].position.y))
                     {
-                        //Console.WriteLine("askjhbdfuisdjrpfejgz#PechConsole");
                         symbol = 'O';
                         f = ConsoleColor.Red;
                     }
@@ -171,6 +169,17 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         }
         /**/
         #endregion
+
+        if(true)
+        {
+            string content = "Can't use outside of combat";
+            char[] label = content.ToCharArray();
+
+            for (int i = 0; i < label.Length; i++)
+            {
+                uiContent[1, (data.level.structure.GetLength(1) + 1) + i] = new ConsolePixel(label[i]);
+            }
+        }
 
         //RENDERS THE CURRENT UICONTENT
         for (int i = 0; i < uiContent.GetLength(0); i++)
