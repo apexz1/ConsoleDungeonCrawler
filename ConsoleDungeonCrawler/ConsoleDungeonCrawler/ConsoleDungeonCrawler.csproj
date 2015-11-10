@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accuracy.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Armor.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="ConsolePlayerController.cs" />
     <Compile Include="ConsoleUI.cs" />
     <Compile Include="ConsoleView.cs" />
+    <Compile Include="Damage.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="GameData.cs" />

@@ -8,16 +8,57 @@ using System.Drawing;
 
 public class LevelFromImage : ILevelBuilder {
 
-    public LevelFromImage() {
+    public int pickUpCount = 5;
+    public int enemyCount = 3;
+    string path = "layout.bmp";
+    Random rng = new Random();
+
+    public LevelFromImage()
+    {
+    }
+
+    public LevelFromImage(string path)
+    {
+        this.path = path;
     }
 
     public Level Generate()
     {
-        Bitmap btm;
         Level levelGen = new Level();
-        string path = "layout.bmp";
 
-        btm = new Bitmap(new FileStream(path, FileMode.Open));
+        levelGen.structure = BuildStructure();
+        levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
+        levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
+        levelGen.enemySpawnPoints = SetEnemySpawnPoints();
+
+        /*
+        for (int i = 0; i < pickUpCount; i++)
+        {
+            int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
+            //levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
+            levelGen.pickupSpawnPoints.RemoveAt(current);
+        }
+        /**/
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            int current = rng.Next(0, levelGen.enemySpawnPoints.Count);
+            levelGen.enemies.Add(SpawnEnemy(levelGen.enemySpawnPoints[current], 1));
+            levelGen.enemySpawnPoints.RemoveAt(current);
+        }
+
+        /**/
+        levelGen.pickUps.Add(SpawnPickup(new Vector2(1, 2), 0));
+        levelGen.pickUps.Add(SpawnPickup(new Vector2(1, 3), 1));
+        levelGen.pickUps.Add(SpawnPickup(new Vector2(2, 3), 2));
+        levelGen.pickUps.Add(SpawnPickup(new Vector2(3, 3), 3));
+        return levelGen;
+     
+    }
+
+    private Tile[,] BuildStructure()
+    {
+        Bitmap btm = new Bitmap(new FileStream(path, FileMode.Open));
 
         Tile[,] levelGenStructure = new Tile[btm.Width, btm.Height];
 
@@ -37,14 +78,7 @@ public class LevelFromImage : ILevelBuilder {
             }
         }
 
-        //Console.ReadKey();
-        levelGen.structure = levelGenStructure;
-        levelGen.pickUps.Add(SpawnPickup(new Vector2(1, 2), 0));
-        levelGen.pickUps.Add(SpawnPickup(new Vector2(1, 3), 1));
-        levelGen.pickUps.Add(SpawnPickup(new Vector2(2, 3), 2));
-        levelGen.pickUps.Add(SpawnPickup(new Vector2(3, 3), 3));
-        return levelGen;
-     
+        return levelGenStructure;
     }
 
     private PickUp SpawnPickup(Vector2 pos, int i)
@@ -53,5 +87,55 @@ public class LevelFromImage : ILevelBuilder {
         pickUp.position = pos;
 
         return pickUp;
+    }
+    private Actor SpawnEnemy(Vector2 pos, int h)
+    {
+        Actor enemy = new Actor();
+
+        enemy.position = pos;
+        enemy.health = h;
+        enemy.Weapon.content = new Weapon();
+
+        Application.GetData().collision.Add(enemy);
+
+        return enemy;
+    }
+    /**/
+    private List<Vector2> SetPlayerSpawnPoints()
+    {
+        List<Vector2> spawns = new List<Vector2>();
+
+        spawns.Add(new Vector2(0, 0));
+        spawns.Add(new Vector2(0, 19));
+        spawns.Add(new Vector2(19, 0));
+        spawns.Add(new Vector2(19, 19));
+
+        return spawns;
+    }
+
+    private List<Vector2> SetPickupSpawnPoints()
+    {
+        List<Vector2> spawns = new List<Vector2>();
+
+        spawns.Add(new Vector2(5, 5));
+        spawns.Add(new Vector2(5, 15));
+        spawns.Add(new Vector2(15, 5));
+        spawns.Add(new Vector2(15, 15));
+        spawns.Add(new Vector2(5, 10));
+        spawns.Add(new Vector2(10, 5));
+        spawns.Add(new Vector2(10, 10));
+
+        return spawns;
+    }
+
+    private List<Vector2> SetEnemySpawnPoints()
+    {
+        List<Vector2> spawns = new List<Vector2>();
+
+        spawns.Add(new Vector2(15, 3));
+        spawns.Add(new Vector2(15, 6));
+        spawns.Add(new Vector2(15, 9));
+
+        return spawns;
     }
 }

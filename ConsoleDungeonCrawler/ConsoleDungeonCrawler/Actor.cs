@@ -62,7 +62,7 @@ public class Actor : GameObject
                 {
                     //------------------------------------------------------------
                 }
-                if (data.combat && (selector.position.x - 1 < position.x - 5 || selector.position.x - 1 < 0))
+                if (data.combat && (selector.position.x - 1 < position.x - Weapon.content.range || selector.position.x - 1 < 0))
                 {
                     return false;
                 }
@@ -94,7 +94,7 @@ public class Actor : GameObject
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.x + 1 > position.x + 5 || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
+                if (data.combat && (selector.position.x + 1 > position.x + Weapon.content.range || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
                     return false;
                 }
@@ -120,7 +120,7 @@ public class Actor : GameObject
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.y - 1 < position.y - 5 || selector.position.y - 1 < 0))
+                if (data.combat && (selector.position.y - 1 < position.y - Weapon.content.range || selector.position.y - 1 < 0))
                 {
                     return false;
                 }
@@ -146,7 +146,7 @@ public class Actor : GameObject
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.y + 1 > position.y + 5 || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
+                if (data.combat && (selector.position.y + 1 > position.y + Weapon.content.range || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
                     return false;
                 }
@@ -230,6 +230,12 @@ public class Actor : GameObject
             Console.WriteLine("YOU DIED");
         }
     }
+
+    public void EquipWeapon(Weapon r)
+    {
+        Weapon.content = r;
+    }
+
 
     public void Undo()
     {

@@ -8,7 +8,30 @@ public class Weapon : Item
 {
     public Weapon()
     {
-        damage = 3;
+        this.name = "base_weap";
+        this.type = "none";
+        this.damage = 3;
+        this.range = 5;
+        this.accuracy = 1;
+        this.ammo = -1;
+        this.clipsize = -1;
+        this.ammotype = "none";
+        this.damagetype = "none";
+        this.penetration = 0;
+    }
+
+    public Weapon(string n, string t, int d, float r, float a, int ammo, int clip, string ammotype, string damagetype, float pen)
+    {
+        this.name = n;
+        this.type = t;
+        this.damage = d;
+        this.range = r;
+        this.accuracy = a;
+        this.ammo = ammo;
+        this.clipsize = clip;
+        this.ammotype = ammotype;
+        this.damagetype = damagetype;
+        this.penetration = pen;
     }
 
     public int damage;

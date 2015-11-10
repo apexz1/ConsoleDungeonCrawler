@@ -6,15 +6,25 @@ using System.Text;
 
 public class Throwable : Item
 {
+    List<Item> behaviour;
+    float range;
 
-    public Throwable()
+    public void Use()
     {
-    }
+        GameData data = Application.GetData();
+        int index = 0;
+        float rangeStorage = data.player.Weapon.content.range;
 
-    public int mass;
+        if (!data.combat)
+        {
+            data.combat = true;
+        }
 
-    public void Use(Vector2 target)
-    {
-        // TODO implement here
+        data.player.EnterCombat();
+
+        Throwable t = (Throwable)behaviour[index];
+        data.player.Weapon.content.range = t.range;
+        data.player.Weapon.content.range = rangeStorage;
+
     }
 }

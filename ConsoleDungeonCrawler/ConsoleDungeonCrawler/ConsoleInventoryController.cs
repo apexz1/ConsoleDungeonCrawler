@@ -39,12 +39,33 @@ class ConsoleInventoryController : IBaseController
                     current = current + 1;
                 }
                 break;
+            case 'e':
+                Console.WriteLine("\ne");
+                UseItem();
+                break;
+
             case 'i':
+                Console.WriteLine("\ni");
                 MasterControlProgram.SetController(new ConsolePlayerController());
                 current = -1;
                 break;
         }
 
         data.currentItem = current;
+    }
+
+    private void UseItem()
+    {
+        Item item = data.inventory.content[data.currentItem].item;
+
+        if (item is Weapon)
+        {
+            data.player.EquipWeapon((Weapon)item);
+        }
+        if (item is Throwable)
+        {
+            Throwable t = (Throwable)item;
+            t.Use();
+        }
     }
 }

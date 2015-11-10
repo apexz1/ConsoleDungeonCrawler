@@ -50,7 +50,19 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             uiContent[0, 0 + i] = new ConsolePixel('♥', ConsoleColor.Red, ConsoleColor.Black);
         }
-
+        /*
+        if (true)
+        {
+            //Console.WriteLine(data.player.Weapon.content.name);
+            char[] label;
+            string content = data.player.Weapon.content.name;
+            label = content.ToCharArray();
+            for (int i = 0; i < label.Length; i++)
+            {
+                uiContent[1, 0 + i] = new ConsolePixel(label[i], ConsoleColor.Red, ConsoleColor.Black);
+            }
+        }
+        /**/
         //Level Stuff
         for (int i = 0; i < data.level.structure.GetLength(0); i++)
         {
@@ -99,7 +111,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 }
 
                 //?+i/?+j for the level position offset
-                uiContent[1 + i, j] = new ConsolePixel(symbol, f, b);
+                uiContent[2 + i, j] = new ConsolePixel(symbol, f, b);
 
                 f = ConsoleColor.Gray;
                 b = ConsoleColor.Black;
@@ -131,7 +143,12 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                             f = ConsoleColor.Gray;
                             b = ConsoleColor.Magenta;
                         }
-                        uiContent[i+2, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j], f, b);
+                        if (data.inventory.content[i].item == data.player.Weapon.content)
+                        {
+                            f = ConsoleColor.White;
+                            b = b;
+                        }
+                        uiContent[i + 2, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j], f, b);
                         f = ConsoleColor.Gray;
                         b = ConsoleColor.Black;
                     }
