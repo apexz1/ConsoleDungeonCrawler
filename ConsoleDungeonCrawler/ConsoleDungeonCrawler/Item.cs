@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Item
+public class Item : IImpactBehaviour
 {
 
     public Item()
@@ -21,4 +21,9 @@ public class Item
 
     public string type;
     public string name;
+
+    public void Execute()
+    {
+        throw new NotImplementedException();
+    }
 }

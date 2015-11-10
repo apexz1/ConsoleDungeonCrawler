@@ -16,7 +16,7 @@ public class ItemLibrary
         items.Add(new Armor());
         items.Add(new Item("test_ammo", "ammo"));
         items.Add(new Item("infrared_keycard", "key"));
-        items.Add(new Throwable());
+        items.Add(new Throwable("frag_grenade", "frag", new Damage(4.0f, 8.0f)));
     }
 
     public static ItemLibrary Get()

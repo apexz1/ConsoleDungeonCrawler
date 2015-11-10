@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 class Accuracy : Item, IImpactBehaviour
 {
-    public void Use()
+    public void Execute()
     {
         throw new NotImplementedException();
     }

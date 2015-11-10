@@ -6,6 +6,6 @@ using System.Text;
 
 public interface IImpactBehaviour
 {
-    void Use();
+    void Execute();
 }
 

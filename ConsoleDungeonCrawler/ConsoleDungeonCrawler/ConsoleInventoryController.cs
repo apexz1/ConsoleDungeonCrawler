@@ -12,11 +12,11 @@ class ConsoleInventoryController : IBaseController
     public void Execute()
     {
         int current = data.currentItem;
-        char input = Console.ReadKey().KeyChar;
+        ConsoleKey input = Console.ReadKey().Key;
 
         switch (input)
         {
-            case 'w':
+            case ConsoleKey.W:
                 Console.WriteLine("\nw");
                 if (current <= 0)
                 {
@@ -28,7 +28,7 @@ class ConsoleInventoryController : IBaseController
                 }
                 break;
 
-            case 's':
+            case ConsoleKey.S:
                 Console.WriteLine("\ns");
                 if (current >= data.inventory.content.Count() - 1)
                 {
@@ -39,12 +39,12 @@ class ConsoleInventoryController : IBaseController
                     current = current + 1;
                 }
                 break;
-            case 'e':
-                Console.WriteLine("\ne");
+            case ConsoleKey.Enter:
+                Console.WriteLine("\nenter");
                 UseItem();
                 break;
 
-            case 'i':
+            case ConsoleKey.I:
                 Console.WriteLine("\ni");
                 MasterControlProgram.SetController(new ConsolePlayerController());
                 current = -1;

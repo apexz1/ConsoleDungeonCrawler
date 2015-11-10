@@ -44,12 +44,15 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         {
 
             if (i < data.player.health)
-                Console.ForegroundColor = ConsoleColor.Green;
+                f = ConsoleColor.Red;
             else
-                Console.ForegroundColor = ConsoleColor.Red;
+                f = ConsoleColor.DarkGray;
 
-            uiContent[0, 0 + i] = new ConsolePixel('♥', ConsoleColor.Red, ConsoleColor.Black);
+            uiContent[0, 0 + i] = new ConsolePixel('♥', f, b);
         }
+
+        f = ConsoleColor.Gray;
+        b = ConsoleColor.Black;
         /*
         if (true)
         {
@@ -111,7 +114,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 }
 
                 //?+i/?+j for the level position offset
-                uiContent[2 + i, j] = new ConsolePixel(symbol, f, b);
+                uiContent[1 + i, j] = new ConsolePixel(symbol, f, b);
 
                 f = ConsoleColor.Gray;
                 b = ConsoleColor.Black;
@@ -152,7 +155,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         f = ConsoleColor.Gray;
                         b = ConsoleColor.Black;
                     }
-                    Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
+                    //Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
                 }
             }
             else

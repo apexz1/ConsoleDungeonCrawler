@@ -30,7 +30,7 @@ public class GameData
         player.maxHealth = 10;
 
         Random rng = new Random();
-        this.player.position = new Vector2(1,1);
+        this.player.position = new Vector2(19,0);
 
 
         Application.GetData().collision.Add(player);

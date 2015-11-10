@@ -11,7 +11,7 @@ public class Weapon : Item
         this.name = "base_weap";
         this.type = "none";
         this.damage = 3;
-        this.range = 5;
+        this.range = 3;
         this.accuracy = 1;
         this.ammo = -1;
         this.clipsize = -1;

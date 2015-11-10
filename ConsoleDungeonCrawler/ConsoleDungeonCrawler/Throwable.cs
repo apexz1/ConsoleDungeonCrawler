@@ -6,25 +6,42 @@ using System.Text;
 
 public class Throwable : Item
 {
-    List<Item> behaviour;
-    float range;
+    List<IImpactBehaviour> behaviour = new List<IImpactBehaviour>();
+    
+    public Throwable()
+    {
+
+    }
+    public Throwable(string n, string t, IImpactBehaviour b)
+    {
+        name = n;
+        type = t;
+        behaviour.Add(b);
+    }
+    public Throwable(string n, string t, List<IImpactBehaviour> b)
+    {
+        name = n;
+        type = t;
+        behaviour = b;
+    }
 
     public void Use()
     {
         GameData data = Application.GetData();
-        int index = 0;
-        float rangeStorage = data.player.Weapon.content.range;
 
         if (!data.combat)
         {
-            data.combat = true;
+            return;
         }
 
-        data.player.EnterCombat();
+        for (int i = 0; i < behaviour.Count; i++)
+        {
+            behaviour[i].Execute();
+        }
+    }
 
-        Throwable t = (Throwable)behaviour[index];
-        data.player.Weapon.content.range = t.range;
-        data.player.Weapon.content.range = rangeStorage;
-
+    public void AddBehaviour(IImpactBehaviour b)
+    {
+        behaviour.Add(b);
     }
 }

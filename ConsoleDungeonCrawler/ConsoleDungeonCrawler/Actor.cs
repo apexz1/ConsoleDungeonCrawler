@@ -19,6 +19,8 @@ public class Actor : GameObject
         this.Armor = new Slot<Armor>();
         Weapon.content = new Weapon();
         Armor.content = new Armor();
+
+        XselecRange = Weapon.content.range;
     }
 
     public int health;
@@ -31,6 +33,9 @@ public class Actor : GameObject
     public Slot<Armor> Armor;
     private GameData data;
     public GameObject selector;
+
+    public bool usingItem = false;
+    public float XselecRange;
 
     public List<Vector2> path = new List<Vector2>();
 
@@ -62,7 +67,7 @@ public class Actor : GameObject
                 {
                     //------------------------------------------------------------
                 }
-                if (data.combat && (selector.position.x - 1 < position.x - Weapon.content.range || selector.position.x - 1 < 0))
+                if (data.combat && (selector.position.x - 1 < position.x - XselecRange || selector.position.x - 1 < 0))
                 {
                     return false;
                 }
@@ -94,7 +99,7 @@ public class Actor : GameObject
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.x + 1 > position.x + Weapon.content.range || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
+                if (data.combat && (selector.position.x + 1 > position.x + XselecRange || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
                     return false;
                 }
@@ -120,7 +125,7 @@ public class Actor : GameObject
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.y - 1 < position.y - Weapon.content.range || selector.position.y - 1 < 0))
+                if (data.combat && (selector.position.y - 1 < position.y - XselecRange || selector.position.y - 1 < 0))
                 {
                     return false;
                 }
@@ -146,7 +151,7 @@ public class Actor : GameObject
                 {
                     return false;
                 }
-                if (data.combat && (selector.position.y + 1 > position.y + Weapon.content.range || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
+                if (data.combat && (selector.position.y + 1 > position.y + XselecRange || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
                     return false;
                 }
@@ -233,6 +238,11 @@ public class Actor : GameObject
 
     public void EquipWeapon(Weapon r)
     {
+        if (data.combat)
+        {
+            data.combat = false;
+        }
+
         Weapon.content = r;
     }
 

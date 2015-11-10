@@ -31,7 +31,7 @@ public class Application
         data = new GameData();
         currentState = new GameState();
         enemyController = new EnemyController();
-        ILevelBuilder generator = new LevelFromImage();
+        ILevelBuilder generator = new LevelGenerator();
 
         data.level = generator.Generate();
         data.SpawnPlayer();

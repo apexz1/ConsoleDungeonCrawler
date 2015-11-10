@@ -18,46 +18,46 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
 
     public void Execute()
     {
-        char input = Console.ReadKey().KeyChar;
+        ConsoleKey input = Console.ReadKey().Key;
 
         switch (input)
         {
-            case 'w':
+            case ConsoleKey.W:
                 Console.WriteLine("\nw");
                 data.player.Move(Direction.UP);
                 break;
-            case 'a':
+            case ConsoleKey.A:
                 Console.WriteLine("\na");
                 data.player.Move(Direction.LEFT);
                 break;
-            case 's':
+            case ConsoleKey.S:
                 Console.WriteLine("\ns");
                 data.player.Move(Direction.DOWN);
                 break;
-            case 'd':
-                Console.WriteLine("\nd");               
+            case ConsoleKey.D:
+                Console.WriteLine("\nd");
                 data.player.Move(Direction.RIGHT);
                 break;
-            case 'c':
+            case ConsoleKey.C:
                 Console.WriteLine("\nc");
                 if (data.player.EnterCombat())
                 {
                     CombatSwitch();
                 }
                 break;
-            case 'q':
-                Console.WriteLine("\nq");
+            case ConsoleKey.Enter:
+                Console.WriteLine("\nenter");
                 data.player.Weapon.content.Attack();
                 break;
-            case 'u':
-                Console.WriteLine("\nu");
+            case ConsoleKey.Backspace:
+                Console.WriteLine("\nbackspace");
                 data.player.Undo();
                 break;
-            case 'i':
+            case ConsoleKey.I:
                 Console.WriteLine("\ni");
                 InventorySwitch();
                 break;
-            case 'r':
+            case ConsoleKey.R:
                 Console.WriteLine("\nr");
                 End();
                 break;
