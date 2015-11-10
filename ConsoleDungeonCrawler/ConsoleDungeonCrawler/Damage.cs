@@ -53,6 +53,7 @@ class Damage : Item, IImpactBehaviour
             }
         }
 
+        /*
         for (int i = 0; i < Math.Pow((2 * radius) - 1, 2); i++)
         {
             Console.WriteLine(result[i].x + " / " + result[i].y);
@@ -60,8 +61,35 @@ class Damage : Item, IImpactBehaviour
 
         Console.WriteLine(result.Length);
 
-        Console.ReadKey();
-        //(2n -1)^2
+        /*MATH STUFF
+        
+        1,2,3,4,5 <- radius
+        1,9,25,49,81 <- amount of fields covered
+        1,3,5,7,9 <- exp base of ^
+
+        n = radius
+        a = amount of fields
+        b = base
+
+        a = b^2
+        b = n+n-1
+        ??
+
+        25 = 5^2
+        5 = 3+3-1
+
+        49 = 7^2
+        7 = 4+4-1
+
+        > Good enough I guess
+
+        a = (2*n - 1)^2
+
+        (2n-1)^2 
+
+-----------------------------------------------------
+
+        /**/
 
         return result;
     }
