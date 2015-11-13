@@ -57,6 +57,7 @@
     <Compile Include="ConsoleMenuRenderer.cs" />
     <Compile Include="ConsolePixel.cs" />
     <Compile Include="ConsolePlayerController.cs" />
+    <Compile Include="ConsolePseudoRaycast.cs" />
     <Compile Include="ConsoleUI.cs" />
     <Compile Include="ConsoleView.cs" />
     <Compile Include="Damage.cs" />
