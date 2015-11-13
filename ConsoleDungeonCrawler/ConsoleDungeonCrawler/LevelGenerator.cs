@@ -56,6 +56,7 @@ public class LevelGenerator : ILevelBuilder
             }
         }
 
+        //Debugging Wall
         levelGenStructure[15, 15] = new Tile("wall", ClipType.WALL);
 
         return levelGenStructure;

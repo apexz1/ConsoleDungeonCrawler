@@ -6,6 +6,7 @@ using System.Text;
 
 public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeListener
 {
+    public static string errorMessage = "";
 
     public ConsoleView()
     {
@@ -172,12 +173,12 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
         if(true)
         {
-            string content = "Can't use outside of combat";
+            string content = errorMessage;
             char[] label = content.ToCharArray();
 
             for (int i = 0; i < label.Length; i++)
             {
-                uiContent[1, (data.level.structure.GetLength(1) + 1) + i] = new ConsolePixel(label[i]);
+                uiContent[(data.level.structure.GetLength(1)+1), 0+i] = new ConsolePixel(label[i]);
             }
         }
 

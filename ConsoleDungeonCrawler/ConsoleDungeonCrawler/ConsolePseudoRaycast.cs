@@ -49,7 +49,8 @@ public class ConsolePseudoRaycast
                 {
                     hit = true;
                 }
-                Console.WriteLine("WALL DETECTED!!!!; (RayCast)");
+                //Console.WriteLine("WALL DETECTED!!!!; (RayCast)");
+                ConsoleView.errorMessage = "Wall detected";
             }
 
             count++;
