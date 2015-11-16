@@ -44,6 +44,7 @@ public class Actor : GameObject
         Vector2 pos = new Vector2();
         data = Application.GetData();
         bool moved = false;
+        XselecRange = Weapon.content.range;
 
         if (actions <= 0)
         {
@@ -56,6 +57,7 @@ public class Actor : GameObject
                 return true;
 
             case Direction.UP:
+                //Console.WriteLine(XselecRange);
                 //SMARTGIT DEMONSTRATION COMMENT
                 //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
 
@@ -74,13 +76,13 @@ public class Actor : GameObject
                 //------------------------------------------------------------
                 for (int i = 0; i < data.collision.Count; i++)
                 {
-                    if (data.collision[i].position.x == position.x - 1 && data.collision[i].position.y == position.y)
+                    if (!(data.combat) && (data.collision[i].position.x == position.x - 1 && data.collision[i].position.y == position.y))
                     {
                         return false;
                     }
                 }
                 //------------------------------------------------------------              
-                if (data.level.structure[(int)position.x - 1, (int)position.y].substance == ClipType.WALL)
+                if (!(data.combat) && (data.level.structure[(int)position.x - 1, (int)position.y].substance == ClipType.WALL))
                 {
                     return false;
                 }
@@ -105,12 +107,12 @@ public class Actor : GameObject
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.collision[i].position.x == position.x + 1 && data.collision[i].position.y == position.y)
+                    if (!(data.combat) && (data.collision[i].position.x == position.x + 1 && data.collision[i].position.y == position.y))
                     {
                         return false;
                     }
                 }
-                if (data.level.structure[(int)position.x + 1, (int)position.y].substance == ClipType.WALL)
+                if (!(data.combat) && (data.level.structure[(int)position.x + 1, (int)position.y].substance == ClipType.WALL))
                 {
                     return false;
                 }
@@ -131,12 +133,12 @@ public class Actor : GameObject
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.collision[i].position.y == position.y - 1 && data.collision[i].position.x == position.x)
+                    if (!(data.combat) && (data.collision[i].position.y == position.y - 1 && data.collision[i].position.x == position.x))
                     {
                         return false;
                     }
                 }
-                if (data.level.structure[(int)position.x, (int)position.y - 1].substance == ClipType.WALL)
+                if (!(data.combat) && (data.level.structure[(int)position.x, (int)position.y - 1].substance == ClipType.WALL))
                 {
                     return false;
                 }
@@ -157,12 +159,12 @@ public class Actor : GameObject
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
-                    if (data.collision[i].position.y == position.y + 1 && data.collision[i].position.x == position.x)
+                    if (!(data.combat) && (data.collision[i].position.y == position.y + 1 && data.collision[i].position.x == position.x))
                     {
                         return false;
                     }
                 }
-                if (data.level.structure[(int)position.x, (int)position.y + 1].substance == ClipType.WALL)
+                if (!(data.combat) && (data.level.structure[(int)position.x, (int)position.y + 1].substance == ClipType.WALL))
                 {
                     return false;
                 }

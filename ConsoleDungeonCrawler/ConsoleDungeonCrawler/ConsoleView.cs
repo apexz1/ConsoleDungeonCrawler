@@ -22,7 +22,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     private readonly Dictionary<string, char> TILE_CHARS = new Dictionary<string, char>();
     private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
 
-    public ConsolePixel[,] uiContent = new ConsolePixel[36, 72];
+    public ConsolePixel[,] uiContent = new ConsolePixel[44, 72];
 
     public void Execute()
     {
@@ -51,9 +51,19 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             uiContent[0, 0 + i] = new ConsolePixel('♥', f, b);
         }
-
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
+
+        if (true)
+        {
+            string content = data.player.Weapon.content.currentammo.ToString() + "/" + data.player.Weapon.content.ammo;
+            char[] label = content.ToCharArray();
+
+            for (int i = 0; i < label.Length; i++)
+            {
+                uiContent[0, data.level.structure.GetLength(1)-content.Length + i] = new ConsolePixel(label[i]);
+            }
+        }
         /*
         if (true)
         {
@@ -79,6 +89,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     {                        
                         symbol = 'P';
                         f = ConsoleColor.Yellow;
+
+                        //if (data.level.pickUps[x].item.type == "ammo") f = ConsoleColor.Cyan;
                     }
                 }
                 for (int x = 0; x < data.level.enemies.Count; x++)
@@ -171,7 +183,48 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         /**/
         #endregion
 
-        if(true)
+        //ProtoLog
+        if (true)
+        {         
+            char[] label;
+            string content = "";
+            label = content.ToCharArray();
+
+            if (data.combatlog.Count > 0)
+            {
+                Console.WriteLine(data.combatlog.Count);
+                for (int i = 0; i < 5; i++)
+                {
+                    content = data.combatlog[(data.combatlog.Count-1)-i];
+                    label = content.ToCharArray();
+                    for (int j = 0; j < label.Length; j++)
+                    {
+                        uiContent[(data.level.structure.GetLength(0) + 2) + i, /*(data.level.structure.GetLength(1)) / 2 - content.Length / 2*/ 0 + j] = new ConsolePixel(label[j], f, b);
+                    }
+                }
+            }
+            /*
+            else
+            {
+                char[,] _2dLabel = new char[,] { { '5', '1' },
+                                                 { '5', '1' },
+                                                 { 'P', 'R', '0', 'T', '0', 'L', '0', 'G' }, 
+                                                 { '5', '1' }, 
+                                                 { '5', '1'}
+                };
+
+                for (int i = 0; i < _2dLabel.GetLength(0); i++)
+                {
+                    for (int j = 0; j < _2dLabel.GetLength(1); j++)
+                    {
+                        uiContent[(data.level.structure.GetLength(0) + 1) + 1, 0 + j] = new ConsolePixel(_2dLabel[i,j], f, b);
+                    }
+                }
+            }
+            /**/
+        }
+
+        if (true)
         {
             string content = errorMessage;
             char[] label = content.ToCharArray();

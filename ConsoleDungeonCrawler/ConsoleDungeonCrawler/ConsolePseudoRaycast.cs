@@ -12,19 +12,22 @@ public class ConsolePseudoRaycast
     {
     }
 
-    public static bool CastRay(Vector2 a, Vector2 b)
+    public static bool CastRay(Vector2 source, Vector2 target_position)
     {
         bool hit = false;
-        Vector2 distance = GetDistanceVector(a, b);
-        Vector2 current = a;
+        bool run = true;
+        Console.WriteLine("" + source.x + "|" + source.y + " " + target_position.x + "|" + target_position.y);
+        Vector2 distance = GetDistanceVector(source, target_position);
+        Vector2 current = new Vector2(0,0);
+        Vector2 storage = new Vector2(0,0);
 
         float x = distance.x;
         float y = distance.y;
 
-        while (x != 0 || y != 0)
+        while (run)
         {
             int count = 0;
-            current = Vector2.AddVectors(a, new Vector2(Math.Abs(x), Math.Abs(y)));
+            current = Vector2.Equalize(target_position, source);
 
             //PLEASE FIND BETTER WAY
             if (x > 0) x -= 1;
@@ -33,27 +36,22 @@ public class ConsolePseudoRaycast
             if (y < 0) y += 1;
 
             Console.WriteLine("" + distance.x + " " + distance.y + " " + current.x + " " + current.y);
-            Console.ReadKey();
+            //Console.ReadKey();
 
             if (Application.GetData().level.structure[(int)(current.x), (int)(current.y)].substance == ClipType.WALL)
             {
-                if (a.x != current.x && a.y != current.y)
-                {
-                    hit = true;
-                }
-                if (a.x == current.x && Vector2.Distance(a, current) <= 1)
-                {
-                    hit = true;
-                }
-                if (a.y == current.y && Vector2.Distance(a, current) <= 1)
-                {
-                    hit = true;
-                }
+                Vector2 wall = new Vector2(current.x, current.y);
+                hit = true;
                 //Console.WriteLine("WALL DETECTED!!!!; (RayCast)");
-                ConsoleView.errorMessage = "Wall detected";
             }
 
             count++;
+
+            if (x == 0 && y == 0)
+            {
+                run = false;
+            }
+            Console.WriteLine("" + x + " " + y);
         }
 
         return hit;
@@ -63,8 +61,8 @@ public class ConsolePseudoRaycast
     {
         Vector2 dist_vec = new Vector2();
 
-        dist_vec.x = a.x - b.x;
-        dist_vec.y = a.y - b.y;
+        dist_vec.x = Math.Abs(a.x - b.x);
+        dist_vec.y = Math.Abs(a.y - b.y);
 
         return dist_vec;
     }

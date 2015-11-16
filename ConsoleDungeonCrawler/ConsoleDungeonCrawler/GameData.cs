@@ -12,6 +12,14 @@ public class GameData
     public Score score;
     public Level level;
     public List<Actor> collision = new List<Actor>();
+    public List<string> combatlog = new List<string>()
+    {
+        "|============|",
+        "|////////////|",
+        "|//PR0T0L0G//|",
+        "|////////////|",
+        "|============|"
+    };
 
     public GameData()
     {
@@ -28,6 +36,8 @@ public class GameData
         this.player = new Actor();
         player.health = 10;
         player.maxHealth = 10;
+        player.Weapon.content = new Weapon("new_weap", "weap", 10, 5, -1, 5, 20, 5, "none", "none", -1);
+        Application.GetData().inventory.Add(player.Weapon.content, 1);
 
         Random rng = new Random();
         this.player.position = new Vector2(19,0);

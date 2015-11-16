@@ -11,8 +11,8 @@ public class ItemLibrary
 
     public void Init()
     {
-        items.Add(new Item("med_kit", "cons"));
-        items.Add(new Weapon("new_weap", "weap", 10, 5, -1, -1, -1, "none", "none", -1));
+        items.Add(new Item("med_kit", "med"));
+        items.Add(new Weapon("new_weap", "weap", 10, 5, 5, -1, 20, 5, "none", "none", -1));
         items.Add(new Armor());
         items.Add(new Item("test_ammo", "ammo"));
         items.Add(new Item("infrared_keycard", "key"));

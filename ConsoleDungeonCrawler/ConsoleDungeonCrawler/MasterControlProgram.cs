@@ -70,6 +70,7 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
         ConsolePlayerController.done = false;
         EnemyController.done = false;
+        ConsoleView.errorMessage = "";
     }
 
     public static void SetController(IBaseController c)

@@ -9,6 +9,7 @@ public class Inventory
     public List<ItemWrapper> content = new List<ItemWrapper>();
     public Inventory()
     {
+
     }
 
     public void Add(Item item, int count)

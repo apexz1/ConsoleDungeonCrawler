@@ -45,4 +45,18 @@ public class Vector2
 
         return result;
     }
+
+    public static Vector2 Equalize(Vector2 a, Vector2 b)
+    {
+        //throw new NotImplementedException();
+
+        Vector2 result = a;
+
+        if (a.x < b.x) result.x = result.x + 1;
+        if (a.x > b.x) result.x = result.x - 1;
+        if (a.y < b.y) result.y = result.y + 1;
+        if (a.y > b.y) result.y = result.y - 1;
+
+        return result;
+    }
 }

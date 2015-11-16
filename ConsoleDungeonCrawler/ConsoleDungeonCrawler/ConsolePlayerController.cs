@@ -57,9 +57,13 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Console.WriteLine("\ni");
                 InventorySwitch();
                 break;
+            case ConsoleKey.E:
+                Console.WriteLine("\nE");
+                End();
+                break;
             case ConsoleKey.R:
                 Console.WriteLine("\nr");
-                End();
+                data.player.Weapon.content.Reload();
                 break;
         }
 

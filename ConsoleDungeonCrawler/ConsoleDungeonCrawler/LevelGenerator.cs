@@ -57,14 +57,16 @@ public class LevelGenerator : ILevelBuilder
         }
 
         //Debugging Wall
-        levelGenStructure[15, 15] = new Tile("wall", ClipType.WALL);
+        levelGenStructure[14, 2] = new Tile("wall", ClipType.WALL);
+        levelGenStructure[15, 2] = new Tile("wall", ClipType.WALL);
+        levelGenStructure[16, 2] = new Tile("wall", ClipType.WALL);
 
         return levelGenStructure;
     }
     
     private PickUp SpawnPickup(Vector2 pos)
     {
-        PickUp pickUp = new PickUp(ItemLibrary.Get().items[rng.Next(0, ItemLibrary.Get().items.Count)], 1); //rng.Next(1,3));
+        PickUp pickUp = new PickUp(); //rng.Next(1,3));
         pickUp.position = pos;
 
         return pickUp;

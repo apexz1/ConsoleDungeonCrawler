@@ -41,8 +41,8 @@ public class Application
             listener.OnGameDataChange(data);
         }
 
-        Console.WriteLine("TESTING RAYCAST SYSTEM");
-        ConsolePseudoRaycast.CastRay(new Vector2(13, 13), new Vector2(17, 17));
+        //ConsolePseudoRaycast.CastRay(new Vector2(14, 1), new Vector2(16, 3));
+        //Console.ReadKey();
     }
 
     public static void Add(IGameDataChangeListener listener)
