@@ -20,6 +20,20 @@ public class Weapon : Item
         this.penetration = 0;
     }
 
+    public Weapon(string name, string type)
+    {
+        this.name = name;
+        this.type = type;
+        this.damage = 0;
+        this.range = 0;
+        this.accuracy = 0;
+        this.ammo = 0;
+        this.clipsize = 0;
+        this.ammotype = "none";
+        this.damagetype = "none";
+        this.penetration = 0;
+    }
+
     public Weapon(string n, string t, int d, float r, float a, int ammo, int maxAmmo, int clip, string ammotype, string damagetype, float pen)
     {
         this.name = n;

@@ -10,7 +10,11 @@ public class Throwable : Item
     
     public Throwable()
     {
-
+    }
+    public Throwable(string n, string t)
+    {
+        name = n;
+        type = t;
     }
     public Throwable(string n, string t, IImpactBehaviour b)
     {

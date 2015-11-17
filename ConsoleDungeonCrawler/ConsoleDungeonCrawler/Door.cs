@@ -9,8 +9,6 @@ public class Door : GameObject
     public bool open;
     public string type;
 
-    private bool init = false;
-
     public Door()
     {
     }
@@ -27,7 +25,6 @@ public class Door : GameObject
     {
         open = false;
         SetClipType();
-        init = true;
     }
 
     public void Switch()
@@ -82,6 +79,7 @@ public class Door : GameObject
             Item current = Application.GetData().inventory.content[i].item;
             Console.WriteLine(this.type + " " + current.name);
 
+            //HIGHLY MODDABLE SYSTEM, YES YES
             if (this.type == "red" && (current.name == "Red Keycard" || current.name == "master_key")) hasCard = true;
             if (this.type == "blue" && (current.name == "Blue Keycard" || current.name == "master_key")) hasCard = true;
             if (this.type == "green" && (current.name == "Green Keycard" || current.name == "master_key")) hasCard = true;

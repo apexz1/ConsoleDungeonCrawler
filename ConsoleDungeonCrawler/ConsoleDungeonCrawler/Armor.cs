@@ -13,7 +13,23 @@ public class Armor : Item
         type = "none";
     }
 
+    public Armor(string name, string type)
+    {
+        this.name = name;
+        this.type = type;
+        value = 5;
+        armortype = "none";
+    }
+
+    public Armor(string name, string type, int value, string armortype)
+    {
+        this.name = name;
+        this.type = type;
+        this.value = value;
+        this.armortype = armortype;
+    }
+
     public int value;
-    public string type;
+    public string armortype;
 
 }
