@@ -21,6 +21,20 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
     public void Run()
     {
+        /*
+        Random rng = new Random();
+        for (int i = 0; i < 1000; i++)
+        {
+            float rngF = (rng.Next(0, 150));
+            float acc = rngF / 100.0f;
+
+            if (acc > 1.0f) acc = 1.0f;
+            Console.WriteLine(acc);
+        }
+
+        Console.ReadKey();
+        /**/
+
         Application.NewGame();
 
         while (running)
@@ -66,6 +80,13 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
         for (int i = 0; i < data.collision.Count; i++)
         {
             data.collision[i].actions = data.collision[i].maxActions;
+        }
+        for (int i = 0; i < data.level.trigger.Count; i++)
+        {
+            if (data.level.trigger[i].position.x == data.player.position.x && data.level.trigger[i].position.y == data.player.position.y)
+            {
+                data.level.trigger[i].OnTriggerEnter();
+            }
         }
 
         ConsolePlayerController.done = false;

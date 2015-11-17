@@ -12,14 +12,22 @@ public class LevelFromImage : ILevelBuilder {
     public int enemyCount = 3;
     string path = "layout.bmp";
     Random rng = new Random();
+    Bitmap btm;
 
     public LevelFromImage()
     {
+        Init();
     }
 
     public LevelFromImage(string path)
     {
         this.path = path;
+        Init();
+    }
+    
+    public void Init()
+    {
+        btm = new Bitmap(new FileStream(path, FileMode.Open));
     }
 
     public Level Generate()
@@ -58,8 +66,6 @@ public class LevelFromImage : ILevelBuilder {
 
     private Tile[,] BuildStructure()
     {
-        Bitmap btm = new Bitmap(new FileStream(path, FileMode.Open));
-
         Tile[,] levelGenStructure = new Tile[btm.Width, btm.Height];
 
         for (int i = 0; i < btm.Width; i++)

@@ -54,6 +54,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
 
+        //Ammo Stuff
         if (true)
         {
             string content = data.player.Weapon.content.currentammo.ToString() + "/" + data.player.Weapon.content.ammo;
@@ -61,7 +62,14 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             for (int i = 0; i < label.Length; i++)
             {
-                uiContent[0, data.level.structure.GetLength(1)-content.Length + i] = new ConsolePixel(label[i]);
+                //Console.WriteLine(label[i]);
+                if (data.player.Weapon.content.currentammo == 0 && label[i].ToString().Equals("0"))
+                {
+                    Console.WriteLine(label[i]);
+                    f = ConsoleColor.Red;
+                }
+                else f = ConsoleColor.Gray;
+                uiContent[0, data.level.structure.GetLength(1) - content.Length + i] = new ConsolePixel(label[i], f, b);
             }
         }
         /*
@@ -86,7 +94,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 for (int x = 0; x < data.level.pickUps.Count; x++)
                 {
                     if ((i == data.level.pickUps[x].position.x) && (j == data.level.pickUps[x].position.y))
-                    {                        
+                    {
                         symbol = 'P';
                         f = ConsoleColor.Yellow;
 
@@ -99,6 +107,32 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     {
                         symbol = 'O';
                         f = ConsoleColor.Red;
+                    }
+                }
+                for (int x = 0; x < data.level.trigger.Count; x++)
+                {
+                    if ((i == data.level.trigger[x].position.x) && (j == data.level.trigger[x].position.y))
+                    {
+                        symbol = '♦';
+                        f = ConsoleColor.Green;
+                    }
+                }
+                for (int x = 0; x < data.level.doors.Count; x++)
+                {
+                    if ((i == data.level.doors[x].position.x) && (j == data.level.doors[x].position.y))
+                    {
+                        if (data.level.doors[x].open == true)
+                        {
+                            symbol = '▀';
+                        }
+                        if (data.level.doors[x].open == false)
+                        {
+                            symbol = '■';
+                        }
+                        if (data.level.doors[x].type == "red") f = ConsoleColor.Red;
+                        if (data.level.doors[x].type == "green") f = ConsoleColor.Green;
+                        if (data.level.doors[x].type == "blue") f = ConsoleColor.Blue;
+                        if (data.level.doors[x].type == "yellow") f = ConsoleColor.Yellow;
                     }
                 }
                 if ((i == data.player.position.x) && (j == data.player.position.y))
@@ -185,7 +219,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
         //ProtoLog
         if (true)
-        {         
+        {
             char[] label;
             string content = "";
             label = content.ToCharArray();
@@ -195,7 +229,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 Console.WriteLine(data.combatlog.Count);
                 for (int i = 0; i < 5; i++)
                 {
-                    content = data.combatlog[(data.combatlog.Count-1)-i];
+                    content = data.combatlog[(data.combatlog.Count - 1) - i];
                     label = content.ToCharArray();
                     for (int j = 0; j < label.Length; j++)
                     {
@@ -231,7 +265,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             for (int i = 0; i < label.Length; i++)
             {
-                uiContent[(data.level.structure.GetLength(1)+1), 0+i] = new ConsolePixel(label[i]);
+                uiContent[(data.level.structure.GetLength(1) + 1), 0 + i] = new ConsolePixel(label[i]);
             }
         }
 

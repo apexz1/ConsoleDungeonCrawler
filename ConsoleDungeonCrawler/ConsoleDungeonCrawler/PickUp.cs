@@ -41,13 +41,12 @@ public class PickUp : GameObject
 
         while(!done)
         {
-            this.item = ItemLibrary.Get().items[rng.Next(0, ItemLibrary.Get().items.Count)];
+            this.item = ItemLibrary.Get().items[2];
 
             //Sequence spawn conditions
             if (item.type == "ammo")
             {
-                Console.WriteLine("AMMO FOUND");
-                //Check if inventory has weapon, if not re-roll
+                Console.WriteLine("AMMO FOUND");                
                 for (int i = 0; i < data.inventory.content.Count; i++)
                 {
                     if (data.inventory.content[i].item.type == "weap")
@@ -64,6 +63,8 @@ public class PickUp : GameObject
                             temp.ammo = temp.maxAmmo;
 
                         data.inventory.content[i].item = temp;
+
+                        data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Ammunition crate found. Weapon ammunition restored.");
                     }
                 }
             }
@@ -71,23 +72,45 @@ public class PickUp : GameObject
             else if (item.type == "med")
             {
                 //Console.WriteLine("MEDKIT FOUND");
-                data.combatlog.Add(DateTime.Now.Hour + ":" + DateTime.Now.Minute + " Medkit found. Player health restored");
+                data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Medkit found. Player health restored.");
                 data.player.health = data.player.maxHealth;
             }
 
             else if (item.type == "weap")
             {
+                if (!data.inventory.Contains(this.item))
+                {
+                    data.inventory.Add(this.item, this.count);
+                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Weaponcase found. " + this.item.name + " was added to the inventory.");
+                }
+                else
+                {
+                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Empty Weaponcase found. Proceeding...");
+                }
+                /*
                 for (int i = 0; i < data.inventory.content.Count; i++)
                 {
                     if (data.inventory.content[i].item.name == this.item.name)
                     {
-                        //
+                        Console.WriteLine(item.name + " " + data.inventory.content[i].item.name);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("FIRST");
+                        data.inventory.Add(this.item, this.count);
+                        //Console.WriteLine(item.name + data.inventory.content[i].item.name);
+                        //Weapon temp = (Weapon)this.item;
+                        //Console.WriteLine(temp.name + " " + temp.ammo + " " + temp.maxAmmo + " " + temp.range);
                     }
                 }
+                /**/
             }
 
             else
             {
+                //Console.WriteLine("SECOND");
+
                 data.inventory.Add(this.item, this.count);
             }
 
@@ -95,7 +118,7 @@ public class PickUp : GameObject
         }
 
         data.level.pickUps.Remove(this);
-        Console.WriteLine("item picked up " + item.name);
+        //Console.WriteLine("item picked up " + item.name);
     }
 
 }

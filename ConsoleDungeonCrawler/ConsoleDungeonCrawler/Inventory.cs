@@ -45,6 +45,21 @@ public class Inventory
         }
     }
 
+    public bool Contains(Item item)
+    {
+        bool contains = false;
+
+        for (int i = 0; i < content.Count; i++)
+        {
+            if (content[i].item.name == item.name)
+            {
+                contains = true;
+            }
+        }
+
+        return contains;
+    }
+
     public void Remove(Item item)
     {
         // TODO implement here

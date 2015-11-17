@@ -180,6 +180,7 @@ public class Actor : GameObject
             position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
             actions -= 1;
             moved = true;
+            //Console.WriteLine("PLAYER POSITION = " + position.x + "," + position.y);
         }
 
         if (data.combat)
@@ -218,11 +219,23 @@ public class Actor : GameObject
         return true;
     }
 
-    public void TakeDamage(int value)
+    public void TakeDamage(int value, string dmgtype)
     {
         data = Application.GetData();
-        Console.WriteLine("DAMAGE TAKEN!");
+
+        //DAMAGE CALC WITH DAMAGE TYPE AND ARMOR TYPE AND STUFF
+
         health -= value;
+
+        if (this != data.player)
+        {
+            data.combatlog.Add("...Enemy took" + value + " damage");
+        }
+        if (this == data.player)
+        {
+            data.combatlog.Add("Hit." + value + " damage taken");
+        }
+
 
         if (this != data.player && health <= 0)
         {

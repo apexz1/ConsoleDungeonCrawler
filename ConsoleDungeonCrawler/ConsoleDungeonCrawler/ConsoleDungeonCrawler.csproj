@@ -62,6 +62,7 @@
     <Compile Include="ConsoleView.cs" />
     <Compile Include="Damage.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameObject.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Item.cs" />
     <Compile Include="ItemLibrary.cs" />
     <Compile Include="ItemWrapper.cs" />
+    <Compile Include="ITrigger.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelFromImage.cs" />
     <Compile Include="LevelGenerator.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Throwable.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Trait.cs" />
+    <Compile Include="TriggerObject.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>

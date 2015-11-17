@@ -40,6 +40,10 @@ public class LevelGenerator : ILevelBuilder
             levelGen.enemySpawnPoints.RemoveAt(current);
         }
         /**/
+        //Debugging win field
+        levelGen.trigger.Add(new TriggerObject("endoflevel", new Vector2(0,19)));
+        //Debugging Door
+        levelGen.doors.Add(new Door("door1", "red", new Vector2(15, 0), false));
 
         return levelGen;
     }

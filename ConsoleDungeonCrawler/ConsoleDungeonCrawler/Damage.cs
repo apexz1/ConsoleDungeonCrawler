@@ -26,7 +26,7 @@ class Damage : Item, IImpactBehaviour
             {
                 if (data.collision[i].position.x == radArray[j].x && data.collision[i].position.y == radArray[j].y)
                 {
-                    data.collision[i].TakeDamage((int)(damage / (radius - 1) * 1.5));
+                    data.collision[i].TakeDamage((int)(damage / (radius - 1) * 1.5), "explosive");
                 }
             }
         }

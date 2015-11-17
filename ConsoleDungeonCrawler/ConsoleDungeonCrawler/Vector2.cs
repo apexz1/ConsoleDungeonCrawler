@@ -32,7 +32,7 @@ public class Vector2
         return result;
     }
 
-    public static double Distance(Vector2 a, Vector2 b)
+    public static double CrossDistance(Vector2 a, Vector2 b)
     {
         double result = 0;
 
@@ -56,6 +56,35 @@ public class Vector2
         if (a.x > b.x) result.x = result.x - 1;
         if (a.y < b.y) result.y = result.y + 1;
         if (a.y > b.y) result.y = result.y - 1;
+
+        return result;
+    }
+
+    public static bool Adjacent(Vector2 a, Vector2 b)
+    {
+        bool adjacent = false;
+
+        //Console.WriteLine(a.x + "," + a.y + " | " + b.x + "," + b.y + " distance:" + Vector2.Distance(a, b));
+
+        if (Vector2.Distance(a,b) <= 1 && (a.x == b.x || a.y == b.y))
+        {
+            adjacent = true;
+        }
+
+        return adjacent;
+    }
+
+    public static float Distance(Vector2 a, Vector2 b)
+    {
+        float result = 0;
+
+        float x;
+        float y;
+
+        x = Math.Abs(a.x - b.x);
+        y = Math.Abs(a.y - b.y);
+
+        if (x > y) result = x; else result = y; 
 
         return result;
     }

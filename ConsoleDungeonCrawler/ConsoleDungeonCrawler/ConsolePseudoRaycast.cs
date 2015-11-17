@@ -16,7 +16,7 @@ public class ConsolePseudoRaycast
     {
         bool hit = false;
         bool run = true;
-        Console.WriteLine("" + source.x + "|" + source.y + " " + target_position.x + "|" + target_position.y);
+        //Console.WriteLine("" + source.x + "|" + source.y + " " + target_position.x + "|" + target_position.y);
         Vector2 distance = GetDistanceVector(source, target_position);
         Vector2 current = new Vector2(0,0);
         Vector2 storage = new Vector2(0,0);
@@ -35,7 +35,7 @@ public class ConsolePseudoRaycast
             if (y > 0) y -= 1;
             if (y < 0) y += 1;
 
-            Console.WriteLine("" + distance.x + " " + distance.y + " " + current.x + " " + current.y);
+            //Console.WriteLine("" + distance.x + " " + distance.y + " " + current.x + " " + current.y);
             //Console.ReadKey();
 
             if (Application.GetData().level.structure[(int)(current.x), (int)(current.y)].substance == ClipType.WALL)
@@ -51,7 +51,7 @@ public class ConsolePseudoRaycast
             {
                 run = false;
             }
-            Console.WriteLine("" + x + " " + y);
+            //Console.WriteLine("" + x + " " + y);
         }
 
         return hit;

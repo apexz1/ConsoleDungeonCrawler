@@ -58,16 +58,32 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 InventorySwitch();
                 break;
             case ConsoleKey.E:
-                Console.WriteLine("\nE");
+                Console.WriteLine("\ne");
                 End();
                 break;
             case ConsoleKey.R:
                 Console.WriteLine("\nr");
                 data.player.Weapon.content.Reload();
                 break;
+            case ConsoleKey.O:
+                Console.WriteLine("\no");
+                OpenDoor();
+                break;
         }
 
         //Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);
+    }
+
+    private void OpenDoor()
+    {
+        for (int i = 0; i < data.level.doors.Count; i++)
+        {
+            if (Vector2.Adjacent(data.level.doors[i].position, data.player.position))
+            {
+                //Console.WriteLine("OPENING DOOR");
+                data.level.doors[i].Switch();
+            }
+        }
     }
 
     private void CombatSwitch()

@@ -34,6 +34,11 @@ public class Application
         ILevelBuilder generator = new LevelGenerator();
 
         data.level = generator.Generate();
+        for (int i = 0; i < data.level.doors.Count; i++)
+        {
+            data.level.doors[i].Init();
+        }
+
         data.SpawnPlayer();
 
         foreach (IGameDataChangeListener listener in GAMEDATA_CHANGE_LISTENERS)
