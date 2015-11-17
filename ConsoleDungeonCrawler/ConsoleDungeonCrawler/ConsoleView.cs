@@ -22,7 +22,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     private readonly Dictionary<string, char> TILE_CHARS = new Dictionary<string, char>();
     private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
 
-    public ConsolePixel[,] uiContent = new ConsolePixel[44, 72];
+    public ConsolePixel[,] uiContent = new ConsolePixel[44, 79];
 
     public void Execute()
     {

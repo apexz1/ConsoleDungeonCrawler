@@ -41,6 +41,10 @@ public class Application
 
         data.SpawnPlayer();
 
+        //DEBUG STUFF
+        //data.inventory.Add(ItemLibrary.Get().items[5], 1);
+
+
         foreach (IGameDataChangeListener listener in GAMEDATA_CHANGE_LISTENERS)
         {
             listener.OnGameDataChange(data);

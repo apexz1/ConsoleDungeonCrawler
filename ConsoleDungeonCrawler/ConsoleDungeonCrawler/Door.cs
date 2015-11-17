@@ -9,6 +9,8 @@ public class Door : GameObject
     public bool open;
     public string type;
 
+    private bool init = false;
+
     public Door()
     {
     }
@@ -25,17 +27,27 @@ public class Door : GameObject
     {
         open = false;
         SetClipType();
+        init = true;
     }
 
     public void Switch()
     {
+        if (!CheckKeyCard())
+        {
+            Application.GetData().combatlog.Add("Authorization failed. Unable to access door control.");
+            return;
+        }
         open = !open;
-        //Console.WriteLine("SWITCHED DOOR");
-        SetClipType();
+        if (SetClipType())
+        {
+            if (open) Application.GetData().combatlog.Add("Door succesfully opened.");
+            if (!open) Application.GetData().combatlog.Add("Door succesfully closed.");
+        }
     }
 
-    public void SetClipType()
+    public bool SetClipType()
     {
+        bool set = false;
         GameData data = Application.GetData();
 
         //Console.WriteLine("ATTEMPTING TO SETCLIPTYPE");
@@ -47,13 +59,36 @@ public class Door : GameObject
                 //Console.WriteLine(i + " " + j);
                 if (this.position.x == new Vector2(i, j).x && this.position.y == new Vector2(i, j).y)
                 {
-                    if (open == true) data.level.structure[i, j].substance = ClipType.FLOOR;
-                    if (open == false) data.level.structure[i, j].substance = ClipType.WALL;
+                    {
+                        if (open == true) data.level.structure[i, j].substance = ClipType.FLOOR;
+                        if (open == false) data.level.structure[i, j].substance = ClipType.WALL;
 
+                        set = true;
+                    }
                     //Console.WriteLine("SETTING CLIPTYPE TO:" + data.level.structure[i, j].substance);
                 }
             }
-        }       
+        }
+
+        return set;       
+    }
+
+    public bool CheckKeyCard()
+    {
+        bool hasCard = false;
+
+        for (int i = 0; i < Application.GetData().inventory.content.Count; i++)
+        {
+            Item current = Application.GetData().inventory.content[i].item;
+            Console.WriteLine(this.type + " " + current.name);
+
+            if (this.type == "red" && (current.name == "Red Keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "blue" && (current.name == "Blue Keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "green" && (current.name == "Green Keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "yellow" && (current.name == "Yellow Keycard" || current.name == "master_key")) hasCard = true;
+        }
+
+        return hasCard;
     }
 }
 
