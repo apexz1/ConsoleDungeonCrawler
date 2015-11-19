@@ -13,6 +13,14 @@ public class Armor : Item
         type = "none";
     }
 
+    public Armor(Armor armor)
+    {
+        this.name = armor.name;
+        this.type = armor.type;
+        this.value = armor.value;
+        this.armortype = armor.armortype;
+    }
+
     public Armor(string name, string type)
     {
         this.name = name;

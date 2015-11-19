@@ -24,21 +24,23 @@ public void Execute()
         GameData data = Application.GetData();
         List<Actor> enemies = data.level.enemies;
         Direction dir;
+        bool hit = false;
 
         Vector2 p_pos = data.player.position;
 
         for (int i = 0; i < enemies.Count; i++)
         {
+            hit = false;
             if (enemies[i].position.x == p_pos.x || enemies[i].position.y == p_pos.y)
             {
                 if ((ConsolePseudoRaycast.CastRay(new Vector2(enemies[i].position.x, enemies[i].position.y), new Vector2(p_pos.x, p_pos.y))))
                 {
                     //ConsoleView.errorMessage = "target obscured (RayCast)";
                     Console.WriteLine("target obscured (RayCast)");
-                    break;
+                    hit = true;
                 }
                 Console.WriteLine("PLAYER DETECTED");
-                enemies[i].Weapon.content.Attack(data.player.position);
+                if (!hit) enemies[i].Weapon.content.Attack(data.player.position);
             }
             else
             {

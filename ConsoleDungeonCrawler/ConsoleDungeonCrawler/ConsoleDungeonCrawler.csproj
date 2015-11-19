@@ -64,6 +64,7 @@
     <Compile Include="Direction.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="EnemyController.cs" />
+    <Compile Include="EnemyLibrary.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameState.cs" />

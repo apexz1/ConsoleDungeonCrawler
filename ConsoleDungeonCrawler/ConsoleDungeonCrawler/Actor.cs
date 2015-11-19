@@ -22,13 +22,32 @@ public class Actor : GameObject
 
         XselecRange = Weapon.content.range;
     }
+    /// <summary>
+    /// Constructor for enemies
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="health"></param>
+    /// <param name="weapon"></param>
+    /// <param name="armor"></param>
+    public Actor(string name, int health, Weapon weapon, Armor armor)
+    {
+        this.name = name;
+        this.health = health;
+        this.position = new Vector2();
+        this.selector = new GameObject();
+        this.selector.position = new Vector2(0, 0);
 
+        this.Weapon = new Slot<Weapon>();
+        this.Armor = new Slot<Armor>();
+        Weapon.content = weapon;
+        Armor.content = armor;
+    }
+
+    public string type;
     public int health;
     public int maxHealth;
-    public int speed;
     public int actions;
     public int maxActions = 10000;
-    public float vision;
     public Slot<Weapon> Weapon;
     public Slot<Armor> Armor;
     private GameData data;

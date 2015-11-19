@@ -180,7 +180,6 @@ public class PickUp : GameObject
             data.inventory.Add(this.item, this.count);
         }
 
-
         data.level.pickUps.Remove(this);
         //Console.WriteLine("item picked up " + item.name);
     }

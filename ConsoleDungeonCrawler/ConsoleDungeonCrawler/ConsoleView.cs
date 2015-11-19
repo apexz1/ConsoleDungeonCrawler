@@ -26,6 +26,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public void Execute()
     {
+        Console.WriteLine(Application.GetData().level.enemies.Count);
+        Console.WriteLine(Application.GetData().level.pickUps.Count);
         //Console.Clear();
         char symbol = ' ';
         ConsoleColor f = ConsoleColor.Gray;
@@ -91,6 +93,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             for (int j = 0; j < data.level.structure.GetLength(1); j++)
             {
                 TILE_CHARS.TryGetValue(data.level.structure[i, j].terrain, out symbol);
+
                 for (int x = 0; x < data.level.pickUps.Count; x++)
                 {
                     if ((i == data.level.pickUps[x].position.x) && (j == data.level.pickUps[x].position.y))
@@ -130,14 +133,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         }
                     }
                 }
-                for (int x = 0; x < data.level.enemies.Count; x++)
-                {
-                    if ((i == data.level.enemies[x].position.x) && (j == data.level.enemies[x].position.y))
-                    {
-                        symbol = 'O';
-                        f = ConsoleColor.Red;
-                    }
-                }
+
                 for (int x = 0; x < data.level.trigger.Count; x++)
                 {
                     if ((i == data.level.trigger[x].position.x) && (j == data.level.trigger[x].position.y))
@@ -193,6 +189,33 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 f = ConsoleColor.Gray;
                 b = ConsoleColor.Black;
             }
+        }
+
+        for (int i = 0; i < data.level.enemies.Count; i++)
+        {
+            Actor enemy = data.level.enemies[i];
+            symbol = 'O';
+            f = ConsoleColor.Red;
+
+            uiContent[(int)enemy.position.x, (int)enemy.position.y] = new ConsolePixel(symbol, f, b);
+            /**/
+            /*
+            if (data.level.enemies[i].name == "e_basemelee")
+            {
+                symbol = 'M';
+                f = ConsoleColor.Red;
+            }
+            if (data.level.enemies[i].name == "e_baseranged")
+            {
+                symbol = 'R';
+                f = ConsoleColor.Red;
+            }
+            if (data.level.enemies[i].name == "e_cyberbear")
+            {
+                symbol = 'B';
+                f = ConsoleColor.Red;
+            }
+            /**/
         }
 
         #region inventory stuff

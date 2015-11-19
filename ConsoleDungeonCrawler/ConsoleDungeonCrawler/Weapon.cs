@@ -6,18 +6,29 @@ using System.Text;
 
 public class Weapon : Item
 {
+    Random rng = new Random();
+
     public Weapon()
     {
-        this.name = "base_weap";
-        this.type = "none";
-        this.damage = 3;
-        this.range = 20;
-        this.accuracy = 0.8f;
-        this.ammo = 2;
-        this.clipsize = -1;
-        this.ammotype = "none";
-        this.damagetype = "none";
-        this.penetration = 0;
+        this.name = "empty_weap";
+    }
+    public Weapon(Weapon weapon)
+    {
+        this.name = weapon.name;
+        this.type = weapon.type;
+        this.damage = weapon.damage;
+        this.range = weapon.range;
+
+        if (weapon.accuracy > 1) weapon.accuracy = 1;
+        this.accuracy = weapon.accuracy;
+
+        this.ammo = weapon.ammo;
+        this.currentammo = 0;
+        this.maxAmmo = weapon.maxAmmo;
+        this.clipsize = weapon.clipsize;
+        this.ammotype = weapon.ammotype;
+        this.damagetype = weapon.damagetype;
+        this.penetration = weapon.penetration;
     }
 
     public Weapon(string name, string type)
@@ -199,8 +210,6 @@ public class Weapon : Item
 
     public bool CheckAccuracy()
     {
-        Random rng = new Random();
-
         float rngF = (rng.Next(-50, 100));
         float acc = rngF / 100.0f;
         if (acc < 0.01f) acc = 0.01f;
