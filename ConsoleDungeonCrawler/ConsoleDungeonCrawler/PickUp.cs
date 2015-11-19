@@ -75,17 +75,18 @@ public class PickUp : GameObject
         else if (item.type == "weap")
         {
             bool added = false;
+            bool NotAllWeapons = true;
             int count = 0;
 
             for (int i = 0; i < data.inventory.content.Count; i++)
             {
                 if (data.inventory.content[i].item.type == "weap") count++;
-                if (count == ItemLibrary.Get().weaponList.Count) return;
+                if (count == ItemLibrary.Get().weaponList.Count) NotAllWeapons = false;
             }
 
             count = 0;
 
-            while (true)
+            while (NotAllWeapons)
             {
                 int current = rng.Next(0, ItemLibrary.Get().weaponList.Count);
                 this.item = ItemLibrary.Get().weaponList[current];

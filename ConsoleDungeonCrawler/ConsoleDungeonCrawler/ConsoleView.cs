@@ -101,7 +101,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         if (data.level.pickUps[x].item.type == "med")
                         {
                             symbol = '+';
-                            f = ConsoleColor.DarkGreen;
+                            f = ConsoleColor.Green;
                         }
                         if (data.level.pickUps[x].item.type == "ammo")
                         {
@@ -111,22 +111,22 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         if (data.level.pickUps[x].item.type == "weap")
                         {
                             symbol = '¬';
-                            f = ConsoleColor.Gray;
+                            f = ConsoleColor.Yellow;
                         }
                         if (data.level.pickUps[x].item.type == "armor")
                         {
                             symbol = 'A';
-                            f = ConsoleColor.Gray;
+                            f = ConsoleColor.Blue;
                         }
                         if (data.level.pickUps[x].item.type == "grenade")
                         {
                             symbol = 'ó';
-                            f = ConsoleColor.Gray;
+                            f = ConsoleColor.Cyan;
                         }
                         if (data.level.pickUps[x].item.type == "key")
                         {
                             symbol = '¶';
-                            f = ConsoleColor.DarkYellow;
+                            f = ConsoleColor.Magenta;
                         }
                     }
                 }
@@ -168,7 +168,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 {
                     //Console.WriteLine("Player Found");
                     symbol = 'O';
-                    f = ConsoleColor.Green;
+                    f = ConsoleColor.Black;
                     b = ConsoleColor.DarkGray;
 
                     if (data.player.actions <= 0)
