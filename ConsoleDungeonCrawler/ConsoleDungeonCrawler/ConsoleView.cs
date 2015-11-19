@@ -98,7 +98,36 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         symbol = 'P';
                         f = ConsoleColor.Yellow;
 
-                        //if (data.level.pickUps[x].item.type == "ammo") f = ConsoleColor.Cyan;
+                        if (data.level.pickUps[x].item.type == "med")
+                        {
+                            symbol = '+';
+                            f = ConsoleColor.DarkGreen;
+                        }
+                        if (data.level.pickUps[x].item.type == "ammo")
+                        {
+                            symbol = '‼';
+                            f = ConsoleColor.White;
+                        }
+                        if (data.level.pickUps[x].item.type == "weap")
+                        {
+                            symbol = '¬';
+                            f = ConsoleColor.Gray;
+                        }
+                        if (data.level.pickUps[x].item.type == "armor")
+                        {
+                            symbol = 'A';
+                            f = ConsoleColor.Gray;
+                        }
+                        if (data.level.pickUps[x].item.type == "grenade")
+                        {
+                            symbol = 'ó';
+                            f = ConsoleColor.Gray;
+                        }
+                        if (data.level.pickUps[x].item.type == "key")
+                        {
+                            symbol = '¶';
+                            f = ConsoleColor.DarkYellow;
+                        }
                     }
                 }
                 for (int x = 0; x < data.level.enemies.Count; x++)
@@ -233,39 +262,9 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     label = content.ToCharArray();
                     for (int j = 0; j < label.Length; j++)
                     {
-                        uiContent[(data.level.structure.GetLength(0) + 2) + i, /*(data.level.structure.GetLength(1)) / 2 - content.Length / 2*/ 0 + j] = new ConsolePixel(label[j], f, b);
+                        uiContent[(data.level.structure.GetLength(0) + 2) + i, 0 + j] = new ConsolePixel(label[j], f, b);
                     }
                 }
-            }
-            /*
-            else
-            {
-                char[,] _2dLabel = new char[,] { { '5', '1' },
-                                                 { '5', '1' },
-                                                 { 'P', 'R', '0', 'T', '0', 'L', '0', 'G' }, 
-                                                 { '5', '1' }, 
-                                                 { '5', '1'}
-                };
-
-                for (int i = 0; i < _2dLabel.GetLength(0); i++)
-                {
-                    for (int j = 0; j < _2dLabel.GetLength(1); j++)
-                    {
-                        uiContent[(data.level.structure.GetLength(0) + 1) + 1, 0 + j] = new ConsolePixel(_2dLabel[i,j], f, b);
-                    }
-                }
-            }
-            /**/
-        }
-
-        if (true)
-        {
-            string content = errorMessage;
-            char[] label = content.ToCharArray();
-
-            for (int i = 0; i < label.Length; i++)
-            {
-                uiContent[(data.level.structure.GetLength(1) + 1), 0 + i] = new ConsolePixel(label[i]);
             }
         }
 

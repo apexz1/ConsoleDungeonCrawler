@@ -10,7 +10,7 @@ public class LevelGenerator : ILevelBuilder
     int pickUpCount = 5;
     int enemyCount = 3;
 
-    Random rng = new Random();
+    private Random rng = new Random();
 
     public LevelGenerator()
     {
@@ -28,7 +28,7 @@ public class LevelGenerator : ILevelBuilder
         for (int i = 0; i < pickUpCount; i++)
         {         
             int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
-            levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
+            levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current], rng.Next(0, ItemLibrary.Get().generics.Count)));
             levelGen.pickupSpawnPoints.RemoveAt(current);
         }
         /**/
@@ -39,6 +39,7 @@ public class LevelGenerator : ILevelBuilder
             levelGen.enemies.Add(SpawnEnemy(levelGen.enemySpawnPoints[current], 1));
             levelGen.enemySpawnPoints.RemoveAt(current);
         }
+
         /**/
         //Debugging win field
         levelGen.trigger.Add(new TriggerObject("endoflevel", new Vector2(0,19)));
@@ -68,9 +69,9 @@ public class LevelGenerator : ILevelBuilder
         return levelGenStructure;
     }
     
-    private PickUp SpawnPickup(Vector2 pos)
+    private PickUp SpawnPickup(Vector2 pos, int i)
     {
-        PickUp pickUp = new PickUp(); //rng.Next(1,3));
+        PickUp pickUp = new PickUp(ItemLibrary.Get().generics[i], 1); //rng.Next(1,3));
         pickUp.position = pos;
 
         return pickUp;

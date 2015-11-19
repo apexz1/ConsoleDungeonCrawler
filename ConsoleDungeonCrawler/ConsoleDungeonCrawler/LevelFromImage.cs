@@ -33,6 +33,7 @@ public class LevelFromImage : ILevelBuilder {
     public Level Generate()
     {
         Level levelGen = new Level();
+        Random rng = new Random();
 
         levelGen.structure = BuildStructure();
         levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
@@ -43,7 +44,7 @@ public class LevelFromImage : ILevelBuilder {
         for (int i = 0; i < pickUpCount; i++)
         {
             int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
-            //levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current]));
+            levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current], rng.Next(0, ItemLibrary.Get().generics.Count)));
             levelGen.pickupSpawnPoints.RemoveAt(current);
         }
         /**/
@@ -89,7 +90,9 @@ public class LevelFromImage : ILevelBuilder {
 
     private PickUp SpawnPickup(Vector2 pos, int i)
     {
-        PickUp pickUp = new PickUp(ItemLibrary.Get().items[i], 1); //rng.Next(1,3));
+        Random rng = new Random();
+
+        PickUp pickUp = new PickUp(ItemLibrary.Get().generics[i], 1); //rng.Next(1,3));
         pickUp.position = pos;
 
         return pickUp;
