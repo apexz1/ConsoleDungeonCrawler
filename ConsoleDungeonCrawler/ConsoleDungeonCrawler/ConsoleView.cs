@@ -21,6 +21,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     public IConsoleRenderer currentRenderer;
     private readonly Dictionary<string, char> TILE_CHARS = new Dictionary<string, char>();
     private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
+    private Vector2 loff = new Vector2(1, 0);
 
     public ConsolePixel[,] uiContent = new ConsolePixel[44, 79];
 
@@ -67,7 +68,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 //Console.WriteLine(label[i]);
                 if (data.player.Weapon.content.currentammo == 0 && label[i].ToString().Equals("0"))
                 {
-                    Console.WriteLine(label[i]);
+                    //Console.WriteLine(label[i]);
                     f = ConsoleColor.Red;
                 }
                 else f = ConsoleColor.Gray;
@@ -184,7 +185,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 }
 
                 //?+i/?+j for the level position offset
-                uiContent[1 + i, j] = new ConsolePixel(symbol, f, b);
+                uiContent[i + (int)loff.x, j] = new ConsolePixel(symbol, f, b);
 
                 f = ConsoleColor.Gray;
                 b = ConsoleColor.Black;
@@ -196,12 +197,10 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             Actor enemy = data.level.enemies[i];
             symbol = 'O';
             f = ConsoleColor.Red;
-
-            uiContent[(int)enemy.position.x, (int)enemy.position.y] = new ConsolePixel(symbol, f, b);
-            /**/
-            /*
+            //Console.WriteLine(data.level.enemies[i].name);
             if (data.level.enemies[i].name == "e_basemelee")
             {
+                //Console.WriteLine(i);
                 symbol = 'M';
                 f = ConsoleColor.Red;
             }
@@ -215,6 +214,10 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 symbol = 'B';
                 f = ConsoleColor.Red;
             }
+
+            uiContent[(int)enemy.position.x + (int)loff.x, (int)enemy.position.y] = new ConsolePixel(symbol, f, b);
+            //Console.WriteLine(symbol + " " + f + " " + b + " " + uiContent[(int)enemy.position.x, (int)enemy.position.y].symbol);
+
             /**/
         }
 

@@ -27,7 +27,9 @@ public class LevelGenerator : ILevelBuilder
     public Level Generate()
     {
         Level levelGen = new Level();
-        levelGen.structure = BuildStructure();
+        LevelFromImage lfi = new LevelFromImage();
+        levelGen.structure = lfi.BuildStructure();
+
         //levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
         //levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
         //levelGen.enemySpawnPoints = SetEnemySpawnPoints();
@@ -38,7 +40,12 @@ public class LevelGenerator : ILevelBuilder
         pickUpCount = pickUpCount + (rng.Next(0, 10) * factor);
 
         enemyCount = pickUpCount * 2;
+        maxMeleeCount = enemyCount / 2;
+        maxRangedCount = (enemyCount / 2) - 1;
+        maxBossCount = 1;
         /**/
+
+        enemyCount = 1;
 
         /*
         for (int i = 0; i < enemyCount; i++)
@@ -48,7 +55,7 @@ public class LevelGenerator : ILevelBuilder
             if (rng.Next(0, 2) == 2 && !(maxBossCount >= enemyCount/20) && !(maxMeleeCount + maxRangedCount + maxBossCount >= enemyCount)) maxBossCount++;
         }
         /**/
-        
+
 
         for (int i = 0; i < enemyCount; i++)
         {
@@ -144,38 +151,48 @@ public class LevelGenerator : ILevelBuilder
     {
         Actor enemy = new Actor();
         bool found = false;
-
+        //bool spawn = false;
         /*
-        if (rng.Next(0, 2) == 0 && meleeCount < maxMeleeCount)
+        while (true)
         {
-            enemy = EnemyLibrary.Get().meleeList[rng.Next(0, EnemyLibrary.Get().meleeList.Count)];
-            meleeCount++;
+            int index = rng.Next(0, 3);
+            if (index == 0 && meleeCount < maxMeleeCount)
+            {
+                //enemy = EnemyLibrary.Get().meleeList[rng.Next(0, EnemyLibrary.Get().meleeList.Count)];
+                enemy = new Actor(EnemyLibrary.Get().meleeList[rng.Next(0, EnemyLibrary.Get().meleeList.Count)]);
+                meleeCount++;
+                break;
+            }
+            if (index == 1 && rangedCount < maxRangedCount)
+            {
+                //enemy = EnemyLibrary.Get().meleeList[rng.Next(0, EnemyLibrary.Get().meleeList.Count)];
+                enemy = new Actor(EnemyLibrary.Get().rangedList[rng.Next(0, EnemyLibrary.Get().rangedList.Count)]);
+                rangedCount++;
+                break;
+            }
+            if (index == 2 && bossCount < maxBossCount)
+            {
+                //enemy = EnemyLibrary.Get().meleeList[rng.Next(0, EnemyLibrary.Get().meleeList.Count)];
+                enemy = new Actor(EnemyLibrary.Get().bossList[rng.Next(0, EnemyLibrary.Get().bossList.Count)]);
+                bossCount++;
+                break;
+            }
         }
-        if (rng.Next(0, 2) == 1 && rangedCount < maxRangedCount)
-        {
-            enemy = EnemyLibrary.Get().rangedList[rng.Next(0, EnemyLibrary.Get().rangedList.Count)];
-            rangedCount++;
-        }
-        if (rng.Next(0, 2) == 2 && bossCount < maxBossCount)
-        {
-            enemy = EnemyLibrary.Get().bossList[rng.Next(0, EnemyLibrary.Get().bossList.Count)];
-            bossCount++;
-        }
-        /**/
-        
+        /***/
+        enemy = new Actor(EnemyLibrary.Get().meleeList[0]);
 
         //Console.WriteLine("ATTEMPTING TO SPAWN ENEMY");
-
         //enemy position
         while (!found)
         {
-            int a = rng.Next(0, (level.structure.GetLength(0)));
-            int b = rng.Next(0, (level.structure.GetLength(1)));
+            int a = rng.Next(1, (level.structure.GetLength(0)));
+            int b = rng.Next(1, (level.structure.GetLength(1)));
+
+            //Console.WriteLine(level.structure[a, b].substance + " " + a + ", " + b);
 
             if (level.structure[a, b].substance == ClipType.FLOOR)
             {
                 //Console.WriteLine("FOUND FLOOR");
-
 
                 if (level.enemies.Count > 0)
                 {
@@ -207,13 +224,14 @@ public class LevelGenerator : ILevelBuilder
                 {
                     //Console.WriteLine("ATTEMPTING TO SET ENEMY POSITION");
                     enemy.position = new Vector2(a, b);
-                    Console.Write("| " + enemy.position.x + " " + enemy.position.y);
+                    //Console.Write("| " + enemy.position.x + " " + enemy.position.y);
                 }
             }
         }
 
-
+        enemy.position = new Vector2(19, 2);
         Application.GetData().collision.Add(enemy);
+        //Console.WriteLine(enemy.name);
 
         return enemy;
     }

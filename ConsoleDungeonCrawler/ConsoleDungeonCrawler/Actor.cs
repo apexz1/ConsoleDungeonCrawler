@@ -29,9 +29,11 @@ public class Actor : GameObject
     /// <param name="health"></param>
     /// <param name="weapon"></param>
     /// <param name="armor"></param>
-    public Actor(string name, int health, Weapon weapon, Armor armor)
+    public Actor(string name, string type,  int health, Weapon weapon, Armor armor)
     {
         this.name = name;
+        this.actions = 20000;
+        this.type = type;
         this.health = health;
         this.position = new Vector2();
         this.selector = new GameObject();
@@ -41,6 +43,21 @@ public class Actor : GameObject
         this.Armor = new Slot<Armor>();
         Weapon.content = weapon;
         Armor.content = armor;
+    }
+    public Actor(Actor enemy)
+    {
+        this.name = enemy.name;
+        this.actions = 20000;
+        this.type = enemy.type;
+        this.health = enemy.health;
+        this.position = new Vector2();
+        this.selector = new GameObject();
+        this.selector.position = new Vector2(0, 0);
+
+        this.Weapon = new Slot<Weapon>();
+        this.Armor = new Slot<Armor>();
+        Weapon.content = enemy.Weapon.content;
+        Armor.content = enemy.Armor.content;
     }
 
     public string type;
@@ -67,12 +84,15 @@ public class Actor : GameObject
 
         if (actions <= 0)
         {
+            Console.WriteLine(18);
             return false;
         }
 
         switch (dir)
         {
             case Direction.VOID:
+                Console.WriteLine(0);
+
                 return true;
 
             case Direction.UP:
@@ -83,6 +103,7 @@ public class Actor : GameObject
                 //------------------------------------------------------------
                 if (!(data.combat) && position.x - 1 < 0)
                 {
+                    Console.WriteLine(1);
                     return false;
                 }
                 {
@@ -90,6 +111,7 @@ public class Actor : GameObject
                 }
                 if (data.combat && (selector.position.x - 1 < position.x - XselecRange || selector.position.x - 1 < 0))
                 {
+                    Console.WriteLine(2);
                     return false;
                 }
                 //------------------------------------------------------------
@@ -97,12 +119,14 @@ public class Actor : GameObject
                 {
                     if (!(data.combat) && (data.collision[i].position.x == position.x - 1 && data.collision[i].position.y == position.y))
                     {
+                        Console.WriteLine(3);
                         return false;
                     }
                 }
                 //------------------------------------------------------------              
                 if (!(data.combat) && (data.level.structure[(int)position.x - 1, (int)position.y].substance == ClipType.WALL))
                 {
+                    Console.WriteLine(4);
                     return false;
                 }
 
@@ -118,21 +142,25 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.x + 1 > data.level.structure.GetLength(0) - 1)
                 {
+                    Console.WriteLine(5);
                     return false;
                 }
                 if (data.combat && (selector.position.x + 1 > position.x + XselecRange || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
+                    Console.WriteLine(6);
                     return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
                     if (!(data.combat) && (data.collision[i].position.x == position.x + 1 && data.collision[i].position.y == position.y))
                     {
+                        Console.WriteLine(7);
                         return false;
                     }
                 }
                 if (!(data.combat) && (data.level.structure[(int)position.x + 1, (int)position.y].substance == ClipType.WALL))
                 {
+                    Console.WriteLine(8);
                     return false;
                 }
                 pos.x += 1;
@@ -144,21 +172,25 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.y - 1 < 0)
                 {
+                    Console.WriteLine(9);
                     return false;
                 }
                 if (data.combat && (selector.position.y - 1 < position.y - XselecRange || selector.position.y - 1 < 0))
                 {
+                    Console.WriteLine(10);
                     return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
                     if (!(data.combat) && (data.collision[i].position.y == position.y - 1 && data.collision[i].position.x == position.x))
                     {
+                        Console.WriteLine(11);
                         return false;
                     }
                 }
                 if (!(data.combat) && (data.level.structure[(int)position.x, (int)position.y - 1].substance == ClipType.WALL))
                 {
+                    Console.WriteLine(12);
                     return false;
                 }
                 pos.y -= 1;
@@ -170,21 +202,25 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.y + 1 > data.level.structure.GetLength(1) - 1)
                 {
+                    Console.WriteLine(13);
                     return false;
                 }
                 if (data.combat && (selector.position.y + 1 > position.y + XselecRange || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
+                    Console.WriteLine(14);
                     return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
                     if (!(data.combat) && (data.collision[i].position.y == position.y + 1 && data.collision[i].position.x == position.x))
                     {
+                        Console.WriteLine(15);
                         return false;
                     }
                 }
                 if (!(data.combat) && (data.level.structure[(int)position.x, (int)position.y + 1].substance == ClipType.WALL))
                 {
+                    Console.WriteLine(17);
                     return false;
                 }
                 pos.y += 1;
@@ -219,8 +255,24 @@ public class Actor : GameObject
                 }
             }
         }
-
         return moved;
+    }
+    /// <summary>
+    /// Move position A towards position B
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public Direction[] DirectionTowards(Vector2 b)
+    {
+        Direction[] dir = new Direction[] { Direction.VOID, Direction.VOID };
+
+        if (position.x < b.x) dir[0] = Direction.DOWN;
+        if (position.x > b.x) dir[0] = Direction.UP;
+        if (position.y < b.y) dir[1] = Direction.RIGHT;
+        if (position.y > b.y) dir[1] = Direction.LEFT;
+
+        return dir;
     }
 
     public bool EnterCombat()

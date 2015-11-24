@@ -65,7 +65,7 @@ public class LevelFromImage : ILevelBuilder {
      
     }
 
-    private Tile[,] BuildStructure()
+    public Tile[,] BuildStructure()
     {
         Tile[,] levelGenStructure = new Tile[btm.Width, btm.Height];
 
