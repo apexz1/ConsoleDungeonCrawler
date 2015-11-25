@@ -93,6 +93,9 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         {
             for (int j = 0; j < data.level.structure.GetLength(1); j++)
             {
+                //REALLY SIMPLE METHOD, CAN PROBABLY DO BETTER
+                if (Vector2.Distance(new Vector2(i, j), data.player.position) > 5)
+                    continue;
                 TILE_CHARS.TryGetValue(data.level.structure[i, j].terrain, out symbol);
 
                 for (int x = 0; x < data.level.pickUps.Count; x++)

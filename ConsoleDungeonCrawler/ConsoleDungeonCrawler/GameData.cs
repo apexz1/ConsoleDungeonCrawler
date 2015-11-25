@@ -40,7 +40,7 @@ public class GameData
         Application.GetData().inventory.Add(player.Weapon.content, 1);
 
         Random rng = new Random();
-        this.player.position = new Vector2(19,0);
+        this.player.position = new Vector2(16,16);
 
 
         Application.GetData().collision.Add(player);
