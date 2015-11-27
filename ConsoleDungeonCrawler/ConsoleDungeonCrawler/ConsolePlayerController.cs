@@ -45,9 +45,10 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                     CombatSwitch();
                 }
                 break;
-            case ConsoleKey.Enter:
-                Console.WriteLine("\nenter");
+            case ConsoleKey.Q:
+                Console.WriteLine("\nq");
                 data.player.Weapon.content.Attack();
+                data.player.RemoveTrait("acc");
                 break;
             case ConsoleKey.Backspace:
                 Console.WriteLine("\nbackspace");
@@ -57,8 +58,8 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
                 Console.WriteLine("\ni");
                 InventorySwitch();
                 break;
-            case ConsoleKey.E:
-                Console.WriteLine("\ne");
+            case ConsoleKey.Enter:
+                Console.WriteLine("\nenter");
                 End();
                 break;
             case ConsoleKey.R:
@@ -68,6 +69,10 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
             case ConsoleKey.O:
                 Console.WriteLine("\no");
                 OpenDoor();
+                break;
+            case ConsoleKey.E:
+                Console.WriteLine("\ne");
+                Analyze();
                 break;
         }
 
@@ -86,6 +91,32 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
         }
     }
 
+    private void Analyze()
+    {
+        //PUT FUNCTION INTO ACTOR
+        Actor type = null;
+        for (int i = 0; i < data.level.enemies.Count; i++)
+        {
+            if (Vector2.Distance(data.level.enemies[i].position, data.player.selector.position) <= 0)
+            {
+                type = data.level.enemies[i];
+            }
+        }
+
+        if (type != null)
+        {
+            for (int i = 0; i < data.level.enemies.Count; i++)
+            {
+                if (type.name == data.level.enemies[i].name)
+                {
+                    data.level.enemies[i].info = true;
+                }
+            }
+
+            data.player.actions -= 1;
+        }
+    }
+
     private void CombatSwitch()
     {
         data.combat = !(data.combat);
@@ -93,6 +124,7 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
     private void InventorySwitch()
     {
         MasterControlProgram.SetController(new ConsoleInventoryController());
+        data.inv = !data.inv;
         data.currentItem = 0;
     }
 

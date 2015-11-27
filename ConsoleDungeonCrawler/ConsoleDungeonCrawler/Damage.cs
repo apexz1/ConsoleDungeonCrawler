@@ -18,6 +18,7 @@ class Damage : Item, IImpactBehaviour
 
     public void Execute()
     {
+        data = Application.GetData();
         Vector2[] radArray = CalcRadius(data.player.selector.position, radius);
 
         for (int i = 0; i < data.collision.Count; i++)
@@ -26,11 +27,10 @@ class Damage : Item, IImpactBehaviour
             {
                 if (data.collision[i].position.x == radArray[j].x && data.collision[i].position.y == radArray[j].y)
                 {
-                    data.collision[i].TakeDamage((int)(damage / (radius - 1) * 1.5), "explosive");
+                    data.collision[i].TakeDamage((int)(damage / (radius - 1) * 1.5), "explosive", 0.0f);
                 }
             }
         }
-
     }
 
     private List<Actor> GetTarget()

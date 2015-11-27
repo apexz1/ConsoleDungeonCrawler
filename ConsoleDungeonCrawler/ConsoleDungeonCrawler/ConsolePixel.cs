@@ -18,6 +18,16 @@ public class ConsolePixel
         this.background = ConsoleColor.Black;
         this.foreground = ConsoleColor.Gray;
     }
+    public ConsolePixel(ConsoleColor f, ConsoleColor b)
+    {
+        foreground = f;
+        background = b;
+    }
+    public ConsolePixel(char symbol, ConsoleColor f)
+    {
+        this.symbol = symbol;
+        foreground = f;
+    }
 
     public ConsolePixel(char symbol, ConsoleColor f, ConsoleColor b)
     {

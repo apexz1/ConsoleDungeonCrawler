@@ -52,7 +52,7 @@ public class Weapon : Item
         this.damage = d;
         this.range = r;
 
-        if (a > 1)  a = 1;
+        if (a > 1) a = 1;
         this.accuracy = a;
 
         this.ammo = ammo;
@@ -100,15 +100,15 @@ public class Weapon : Item
                     {
                         if (CheckAccuracy())
                         {
-                            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */" Target found. Dealing damage...");
-                            CheckTarget(new Vector2(i, j)).TakeDamage(damage, damagetype);
+                            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Target found. Dealing damage...");
+                            CheckTarget(new Vector2(i, j)).TakeDamage(damage, damagetype, penetration);
                         }
                         else
                         {
                             data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */" Target missed. No damage dealt.");
                         }
 
-                        data.player.actions -= 1;               
+                        data.player.actions -= 1;
                         if (data.player.actions <= 0)
                         {
                             data.combat = false;
@@ -124,12 +124,12 @@ public class Weapon : Item
     public void Attack(Vector2 target)
     {
         GameData data = Application.GetData();
-
+        Console.WriteLine(this.name + " " + this.accuracy);
         if (CheckTarget(target) != null)
         {
             if (CheckAccuracy())
             {
-                CheckTarget(target).TakeDamage(damage, damagetype);
+                CheckTarget(target).TakeDamage(damage, damagetype, penetration);
             }
             else
             {
@@ -142,6 +142,8 @@ public class Weapon : Item
 
     public void Reload()
     {
+        GameData data = Application.GetData();
+
         if (Application.GetData().combat)
         {
             Application.GetData().combat = false;
@@ -175,6 +177,14 @@ public class Weapon : Item
             Application.GetData().combatlog.Add("Weapon system reloaded. Please refill ammunition.");
         }
 
+        for (int i = 0; i < data.player.traits.Count; i++)
+        {
+            if (data.player.traits[i].name == "ammo_mod")
+            {
+                data.player.RemoveTrait(data.player.traits[i]);
+            }
+        }
+
         Application.GetData().player.actions -= 1;
     }
 
@@ -187,7 +197,7 @@ public class Weapon : Item
         for (int i = 0; i < data.collision.Count; i++)
         {
             if (data.collision[i].position.x == target.x && data.collision[i].position.y == target.y)
-            {              
+            {
                 if ((ConsolePseudoRaycast.CastRay(new Vector2(data.player.position.x, data.player.position.y), new Vector2(target.x, target.y))))
                 {
                     //ConsoleView.errorMessage = "target obscured (RayCast)";
@@ -214,9 +224,9 @@ public class Weapon : Item
         float acc = rngF / 100.0f;
         if (acc < 0.01f) acc = 0.01f;
 
-        Console.WriteLine("ACCURACY CHECK " + acc + Application.GetData().player.Weapon.content.accuracy);
+        Console.WriteLine("ACCURACY CHECK " + acc + " " + this.accuracy);
 
-        if (acc <= Application.GetData().player.Weapon.content.accuracy) return true;
+        if (acc <= this.accuracy) return true;
         else return false;
     }
 

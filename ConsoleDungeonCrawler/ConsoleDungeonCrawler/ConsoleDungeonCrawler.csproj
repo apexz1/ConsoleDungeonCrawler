@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accuracy.cs" />
+    <Compile Include="AccuracyTrait.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Armor.cs" />
@@ -81,12 +82,14 @@
     <Compile Include="Item.cs" />
     <Compile Include="ItemLibrary.cs" />
     <Compile Include="ItemWrapper.cs" />
+    <Compile Include="ITraitBehaviour.cs" />
     <Compile Include="ITrigger.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelFromImage.cs" />
     <Compile Include="LevelGenerator.cs" />
     <Compile Include="MasterControlProgram.cs" />
     <Compile Include="MenuState.cs" />
+    <Compile Include="PenetrationTrait.cs" />
     <Compile Include="PickUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Tile.cs" />
     <Compile Include="Trait.cs" />
     <Compile Include="TriggerObject.cs" />
+    <Compile Include="Usable.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>

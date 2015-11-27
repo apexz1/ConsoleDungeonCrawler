@@ -45,8 +45,6 @@ public class LevelGenerator : ILevelBuilder
         maxBossCount = 1;
         /**/
 
-        enemyCount = 1;
-
         /*
         for (int i = 0; i < enemyCount; i++)
         {
@@ -152,7 +150,7 @@ public class LevelGenerator : ILevelBuilder
         Actor enemy = new Actor();
         bool found = false;
         //bool spawn = false;
-        /*
+
         while (true)
         {
             int index = rng.Next(0, 3);
@@ -179,7 +177,7 @@ public class LevelGenerator : ILevelBuilder
             }
         }
         /***/
-        enemy = new Actor(EnemyLibrary.Get().meleeList[0]);
+        //enemy = new Actor(EnemyLibrary.Get().meleeList[0]);
 
         //Console.WriteLine("ATTEMPTING TO SPAWN ENEMY");
         //enemy position
@@ -229,7 +227,7 @@ public class LevelGenerator : ILevelBuilder
             }
         }
 
-        enemy.position = new Vector2(19, 2);
+        //enemy.position = new Vector2(19, 2);
         Application.GetData().collision.Add(enemy);
         //Console.WriteLine(enemy.name);
 

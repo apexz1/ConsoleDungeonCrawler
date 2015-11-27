@@ -17,8 +17,8 @@ public class Actor : GameObject
         this.actions = maxActions;
         this.Weapon = new Slot<Weapon>();
         this.Armor = new Slot<Armor>();
-        Weapon.content = new Weapon();
-        Armor.content = new Armor();
+        Weapon.content = new Weapon(ItemLibrary.Get().weaponList[0]);
+        Armor.content = new Armor(ItemLibrary.Get().armorList[0]);
 
         XselecRange = Weapon.content.range;
     }
@@ -67,8 +67,10 @@ public class Actor : GameObject
     public int maxActions = 10000;
     public Slot<Weapon> Weapon;
     public Slot<Armor> Armor;
+    public List<Trait> traits = new List<Trait>();
     private GameData data;
     public GameObject selector;
+    public bool info = false;
 
     public bool usingItem = false;
     public float XselecRange;
@@ -290,27 +292,31 @@ public class Actor : GameObject
         return true;
     }
 
-    public void TakeDamage(int value, string dmgtype)
+    public void TakeDamage(float value, string dmgtype, float pen)
     {
         data = Application.GetData();
+        Armor armor = this.Armor.content;
 
         //DAMAGE CALC WITH DAMAGE TYPE AND ARMOR TYPE AND STUFF
-
-        health -= value;
+        value = ApplyArmor(value, dmgtype, armor, pen);
+        health -= (int)value;
 
         if (this != data.player)
         {
-            data.combatlog.Add("...Enemy took" + value + " damage");
+            data.combatlog.Add("...Enemy took " + (int)value + " damage");
         }
         if (this == data.player)
         {
-            data.combatlog.Add("Hit." + value + " damage taken");
+            data.combatlog.Add("Hit. " + (int)value + " damage taken");
         }
 
 
         if (this != data.player && health <= 0)
         {
             data.level.enemies.Remove(this);
+            data.collision.Remove(this);
+            data.score.AddScore(10);
+            Console.WriteLine(data.score.GetScore());
         }
         if (this == data.player && health <= 0)
         {
@@ -322,14 +328,91 @@ public class Actor : GameObject
         }
     }
 
+    private float ApplyArmor(float value, string dmgtype, Armor armor, float pen)
+    {
+        float result = value;
+
+        if (armor.armortype == "none") return value;
+        if (armor.armortype == "plate")
+        {
+            if (dmgtype == "sharp") result = (value * 0.3f) - ((armor.value/10) * (1-pen));
+            if (dmgtype == "bullet") result = (value * 0.9f) - ((armor.value/10) * (1 - pen));
+            if (dmgtype == "blunt") result = (value * 1.5f) + ((armor.value/20) * (1 - pen));
+        }
+        if (armor.armortype == "fluffy")
+        {
+            if (dmgtype == "sharp") result = (value * 3.0f) + ((armor.value) * (1 - pen));
+            if (dmgtype == "bullet") result = (value) - ((armor.value/10) * (1 - pen));
+            if (dmgtype == "blunt") result = (value) + ((armor.value) * (1 - pen));
+        }
+
+        //Console.WriteLine(value + " " + dmgtype + " " + armor.armortype);
+        //Console.WriteLine("ARMOR CALC DONE " + result);
+        return result;
+    }
+
+    private void ApplyTraits()
+    {
+        Reset();
+        for (int i = 0; i < traits.Count; i++)
+        {
+            for (int j = 0; j < traits[i].behaviour.Count; j++)
+            {
+                traits[i].behaviour[j].Execute(this);
+            }
+        }
+    }
+    public void AddTrait(Trait trait)
+    {
+        traits.Add(trait);
+        ApplyTraits();
+    }
+    public void AddTrait(string name, ITraitBehaviour trait)
+    {
+        traits.Add(new Trait(name, trait));
+        ApplyTraits();
+    }
+    public void RemoveTrait(string name)
+    {
+        Trait trait = null;
+
+        for (int i = 0; i < traits.Count; i++)
+        {
+            if (name == traits[i].name)
+            {
+                trait = traits[i];
+            }
+        }
+
+        if (trait == null) return;
+
+        trait.Remove(this);
+        traits.Remove(trait);
+    }
+    public void RemoveTrait(Trait trait)
+    {
+        trait.Remove(this);
+        traits.Remove(trait);
+    }
+
     public void EquipWeapon(Weapon r)
     {
-        if (data.combat)
+        if (Application.GetData().combat)
         {
             data.combat = false;
         }
 
         Weapon.content = r;
+    }
+
+    public void EquipArmor(Armor a)
+    {
+        if (Application.GetData().combat)
+        {
+            data.combat = false;
+        }
+
+        Armor.content = a;
     }
 
 
@@ -347,6 +430,17 @@ public class Actor : GameObject
         position = path[path.Count - 1];
         path.RemoveAt(path.Count - 1);
         actions += 1;
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < ItemLibrary.Get().weaponList.Count; i++)
+        {
+            if (ItemLibrary.Get().weaponList[i].name == this.Weapon.content.name)
+            {
+                this.Weapon.content = new Weapon(ItemLibrary.Get().weaponList[i]);
+            }
+        }
     }
 
 }

@@ -8,7 +8,6 @@ class ConsoleInventoryController : IBaseController
 {
     GameData data = Application.GetData();
 
-
     public void Execute()
     {
         int current = data.currentItem;
@@ -48,6 +47,7 @@ class ConsoleInventoryController : IBaseController
                 Console.WriteLine("\ni");
                 MasterControlProgram.SetController(new ConsolePlayerController());
                 current = -1;
+                data.inv = !data.inv;
                 break;
         }
 
@@ -62,10 +62,37 @@ class ConsoleInventoryController : IBaseController
         {
             data.player.EquipWeapon((Weapon)item);
         }
+        if (item is Armor)
+        {
+            data.player.EquipArmor((Armor)item);
+        }
         if (item is Throwable)
         {
             Throwable t = (Throwable)item;
+
+            data.inventory.content[data.currentItem].count -= 1;
+            // == 0 for potential abuse with items that have a count of < 0 to allow easier unlimited use items
+            if (data.inventory.content[data.currentItem].count == 0)
+            {
+                data.inventory.content.RemoveAt(data.currentItem);
+                data.currentItem = -1;
+            }
+
             t.Use();
+        }
+        if (item is Usable)
+        {
+            Usable u = (Usable)item;
+
+            data.inventory.content[data.currentItem].count -= 1;
+            // == 0 for potential abuse with items that have a count of < 0 to allow easier unlimited use items
+            if (data.inventory.content[data.currentItem].count == 0)
+            {
+                data.inventory.content.RemoveAt(data.currentItem);
+                data.currentItem = -1;
+            }
+
+            u.Use();
         }
     }
 }

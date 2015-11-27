@@ -7,6 +7,7 @@ public class GameData
 {
     public Actor player;
     public Inventory inventory;
+    public bool inv = false;
     public int currentItem;
     public bool combat;
     public Score score;
@@ -28,19 +29,23 @@ public class GameData
         this.score = new Score();
         this.level = new Level();
         this.combat = new bool();
+        this.score = new Score();
         this.currentItem = -1;
     }
 
     public void SpawnPlayer()
     {
-        this.player = new Actor();
+        player = new Actor();
         player.health = 10;
         player.maxHealth = 10;
-        player.Weapon.content = new Weapon("new_weap", "weap", 10, 5, -1, 5, 20, 5, "none", "none", -1);
         Application.GetData().inventory.Add(player.Weapon.content, 1);
+        Application.GetData().inventory.Add(player.Armor.content, 1);
 
-        Random rng = new Random();
-        this.player.position = new Vector2(16,16);
+        Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[0], 1);
+        Application.GetData().inventory.Add(ItemLibrary.Get().usableList[0], 1);
+        //player.AddTrait("acc", new AccuracyTrait(.3f));
+
+        player.position = new Vector2(19,0);
 
 
         Application.GetData().collision.Add(player);
