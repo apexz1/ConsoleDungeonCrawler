@@ -89,6 +89,19 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
             }
         }
 
+        for (int i = 0; i < data.collision.Count; i++)
+        {
+            for (int j = 0; j < data.collision[i].traits.Count; j++)
+            if (data.collision[i].traits[j].name == "temp")
+            {
+                    data.collision[i].traits[j].duration -= 1;
+                    if (data.collision[i].traits[j].duration <= 0)
+                    {
+                        data.collision[i].RemoveTrait(data.collision[i].traits[j]);
+                }
+            }
+        }
+
         ConsolePlayerController.done = false;
         EnemyController.done = false;
         ConsoleView.errorMessage = "";

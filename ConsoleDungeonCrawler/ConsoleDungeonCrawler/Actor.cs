@@ -335,15 +335,21 @@ public class Actor : GameObject
         if (armor.armortype == "none") return value;
         if (armor.armortype == "plate")
         {
-            if (dmgtype == "sharp") result = (value * 0.3f) - ((armor.value/10) * (1-pen));
-            if (dmgtype == "bullet") result = (value * 0.9f) - ((armor.value/10) * (1 - pen));
+            if (dmgtype == "sharp") result = (value * 0.3f) - ((armor.value/10));
+            if (dmgtype == "bullet") result = (value * 0.9f) - ((armor.value/10) * (1 - pen/2));
+            if (dmgtype == "flechet")
+            {
+                result = (value * 0.9f) - ((armor.value / 10) * (1 - pen));
+                AddTrait(2, "temp", new HeavyInjuryTrait(1));
+            }
+
             if (dmgtype == "blunt") result = (value * 1.5f) + ((armor.value/20) * (1 - pen));
         }
         if (armor.armortype == "fluffy")
         {
-            if (dmgtype == "sharp") result = (value * 3.0f) + ((armor.value) * (1 - pen));
-            if (dmgtype == "bullet") result = (value) - ((armor.value/10) * (1 - pen));
-            if (dmgtype == "blunt") result = (value) + ((armor.value) * (1 - pen));
+            if (dmgtype == "sharp" || dmgtype == "flechet") result = (value * 3.0f) + ((armor.value) * (1 - pen));
+            if (dmgtype == "bullet") result = (value) - ((armor.value/10) * (1 - pen*0.8f));
+            if (dmgtype == "blunt") result = (value) + ((armor.value));
         }
 
         //Console.WriteLine(value + " " + dmgtype + " " + armor.armortype);
@@ -353,7 +359,7 @@ public class Actor : GameObject
 
     private void ApplyTraits()
     {
-        Reset();
+        //Reset();
         for (int i = 0; i < traits.Count; i++)
         {
             for (int j = 0; j < traits[i].behaviour.Count; j++)
@@ -367,9 +373,9 @@ public class Actor : GameObject
         traits.Add(trait);
         ApplyTraits();
     }
-    public void AddTrait(string name, ITraitBehaviour trait)
+    public void AddTrait(int duration, string name, ITraitBehaviour trait)
     {
-        traits.Add(new Trait(name, trait));
+        traits.Add(new Trait(duration, name, trait));
         ApplyTraits();
     }
     public void RemoveTrait(string name)
@@ -432,6 +438,7 @@ public class Actor : GameObject
         actions += 1;
     }
 
+    /*
     public void Reset()
     {
         for (int i = 0; i < ItemLibrary.Get().weaponList.Count; i++)
@@ -442,5 +449,6 @@ public class Actor : GameObject
             }
         }
     }
+    */
 
 }

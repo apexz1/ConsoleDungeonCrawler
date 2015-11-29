@@ -260,7 +260,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
 
-        //Selector Render - Bugged
+        //Selector Render - (Not anymore) Bugged
         if (data.combat)
         {
             GameObject selector = data.player.selector;

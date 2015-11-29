@@ -6,6 +6,7 @@ using System.Text;
 
 public class Trait
 {
+    public int duration;
     public string name;
     public List<ITraitBehaviour> behaviour = new List<ITraitBehaviour>();
 
@@ -17,13 +18,15 @@ public class Trait
     {
         this.behaviour.Add(behaviour);
     }
-    public Trait(string name, ITraitBehaviour behaviour)
+    public Trait(int duration, string name, ITraitBehaviour behaviour)
     {
+        this.duration = duration;
         this.name = name;
         this.behaviour.Add(behaviour);
     }
-    public Trait(string name, List<ITraitBehaviour> behaviour)
+    public Trait(int duration, string name, List<ITraitBehaviour> behaviour)
     {
+        this.duration = duration;
         this.name = name;
         this.behaviour.AddRange(behaviour);
     }

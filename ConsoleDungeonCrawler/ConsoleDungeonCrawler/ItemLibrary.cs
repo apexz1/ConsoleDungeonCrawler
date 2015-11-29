@@ -40,6 +40,7 @@ public class ItemLibrary
         //new Weapon(string n, string t, int d, float r, float a, int ammo, int maxammo, int clip, string ammotype, damagetype, pen)
         weaponList.Add(new Weapon("handgun", "weap", 3, 4, 0.7f, 24, 24, 12, "9mm", "bullet", 0));
         weaponList.Add(new Weapon("assault_rifle", "weap", 3, 6, 0.8f, 30, 90, 10, "9mm", "bullet", 0));
+        weaponList.Add(new Weapon("combat_shotgun", "weap", 6, 2, 0.95f, 4, 16, 4, "12-gauge", "bullet", 0));
         //ENEMY WEAPONS
         enemyweaponList.Add(new Weapon("claws", "weap", 3, 1, 0.95f, -1, -1, -1, "none", "sharp", 0.3f));
         enemyweaponList.Add(new Weapon("bolter", "weap", 2, 3, 0.7f, -1, -1, -1, "raw", "bullet", 0));
@@ -50,9 +51,12 @@ public class ItemLibrary
         enemyarmorList.Add(new Armor("thin_plating", "armor", 5, "plate"));
         enemyarmorList.Add(new Armor("cyber_fur", "armor", 5, "fluffy"));
         //Throwable - ALL Grenades in the game
-        grenadeList.Add(new Throwable("frag_grenade", "grenade", new Damage(4.0f, 8.0f)));
+        grenadeList.Add(new Throwable("frag_grenade", "grenade", new DamageImpact(4.0f, 8.0f)));
+        grenadeList.Add(new Throwable("flashbang", "grenade", new AccuracyImpact(4.0f)));
         //Usables - ALL Character Buff Items in the game
-        usableList.Add(new Usable("tracer_ammo", "use", new Trait("ammo_mod", new AccuracyTrait(1))));
+        usableList.Add(new Usable("tracer_ammo", "use", new Trait(-1, "ammo_mod", new AccuracyTrait(1))));
+        usableList.Add(new Usable("slug_shells", "use", new Trait(-1, "ammo_mod", new List<ITraitBehaviour> { new AccuracyTrait(-0.2f), new DamageTrait(1), new RangeTrait(1), new PenetrationTrait(1), new DamageTypeTrait("blunt")})));
+        usableList.Add(new Usable("flechet_shells", "use", new Trait(-1, "ammo_mod", new List<ITraitBehaviour> { new DamageTrait(1), new PenetrationTrait(0.5f), new DamageTypeTrait("flechet")})));
         //Keys 
         keyItems.Add(new Item("master_key", "key"));
         //Uses - ALL items that are used instantly when picked up and are not ammo? Maybe we should drop this one

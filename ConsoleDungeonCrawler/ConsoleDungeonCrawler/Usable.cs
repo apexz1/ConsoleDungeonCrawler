@@ -41,6 +41,27 @@ public class Usable : Item
         {
             return;
         }
+        //Yep, I'm actually going to do this.
+        if (this.name == "tracer_ammo" && data.player.Weapon.content.ammotype != "9mm")
+        {
+            data.combatlog.Add("" + name + " can only applied to 9mm weapon systems.");
+            return;
+        }
+        if(this.name == "slug_shells" && data.player.Weapon.content.ammotype != "12-gauge")
+        {
+            data.combatlog.Add("" + name + " can only applied to 12-gauge weapon systems.");
+            return;
+        }
+        /*for testing disabled -- FLECHETS WORKING. YAY.
+        if (this.name == "flechet_shells" && data.player.Weapon.content.ammotype != "12-gauge")
+        {
+            data.combatlog.Add("" + name + " can only applied to 12-gauge weapon systems.");
+            return;
+        }
+        /**/
+
+
+
 
         for (int i = 0; i < behaviour.Count; i++)
         {

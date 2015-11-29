@@ -45,11 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accuracy.cs" />
-    <Compile Include="AccuracyTrait.cs" />
+    <Compile Include="AccuracyImpact.cs" />
+    <Compile Include="Traits\AccuracyTrait.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Armor.cs" />
+    <Compile Include="Traits\HeavyInjuryTrait.cs" />
     <Compile Include="ClipType.cs" />
     <Compile Include="ConsoleGameRenderer.cs" />
     <Compile Include="ConsoleInventoryController.cs" />
@@ -61,7 +62,9 @@
     <Compile Include="ConsolePseudoRaycast.cs" />
     <Compile Include="ConsoleUI.cs" />
     <Compile Include="ConsoleView.cs" />
-    <Compile Include="Damage.cs" />
+    <Compile Include="DamageImpact.cs" />
+    <Compile Include="Traits\DamageTrait.cs" />
+    <Compile Include="Traits\DamageTypeTrait.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="EnemyController.cs" />
@@ -82,22 +85,23 @@
     <Compile Include="Item.cs" />
     <Compile Include="ItemLibrary.cs" />
     <Compile Include="ItemWrapper.cs" />
-    <Compile Include="ITraitBehaviour.cs" />
+    <Compile Include="Traits\ITraitBehaviour.cs" />
     <Compile Include="ITrigger.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelFromImage.cs" />
     <Compile Include="LevelGenerator.cs" />
     <Compile Include="MasterControlProgram.cs" />
     <Compile Include="MenuState.cs" />
-    <Compile Include="PenetrationTrait.cs" />
+    <Compile Include="Traits\PenetrationTrait.cs" />
     <Compile Include="PickUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Traits\RangeTrait.cs" />
     <Compile Include="Score.cs" />
     <Compile Include="Slot.cs" />
     <Compile Include="Throwable.cs" />
     <Compile Include="Tile.cs" />
-    <Compile Include="Trait.cs" />
+    <Compile Include="Traits\Trait.cs" />
     <Compile Include="TriggerObject.cs" />
     <Compile Include="Usable.cs" />
     <Compile Include="Vector2.cs" />

@@ -41,9 +41,9 @@ public class GameData
         Application.GetData().inventory.Add(player.Weapon.content, 1);
         Application.GetData().inventory.Add(player.Armor.content, 1);
 
-        Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[0], 1);
-        Application.GetData().inventory.Add(ItemLibrary.Get().usableList[0], 1);
-        //player.AddTrait("acc", new AccuracyTrait(.3f));
+        Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[1], 1);
+        Application.GetData().inventory.Add(ItemLibrary.Get().usableList[2], 1);
+        //player.AddTrait(2, "temp", new HeavyInjuryTrait(5));
 
         player.position = new Vector2(19,0);
 

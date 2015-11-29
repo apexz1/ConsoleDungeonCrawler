@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Damage : Item, IImpactBehaviour
+class DamageImpact : Item, IImpactBehaviour
 {
-    GameData data = Application.GetData();
+    GameData data;
     float radius;
     float damage;
 
-    public Damage(float radius, float damage)
+    public DamageImpact(float radius, float damage)
     {
         this.radius = radius;
         this.damage = damage;
