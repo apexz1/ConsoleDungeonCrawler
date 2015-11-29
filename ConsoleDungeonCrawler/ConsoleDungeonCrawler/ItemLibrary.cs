@@ -54,6 +54,7 @@ public class ItemLibrary
         grenadeList.Add(new Throwable("frag_grenade", "grenade", new DamageImpact(4.0f, 8.0f)));
         grenadeList.Add(new Throwable("flashbang", "grenade", new AccuracyImpact(4.0f)));
         //Usables - ALL Character Buff Items in the game (technically all usables, but a little difficult to use the system)
+        //Hollow-tips, explosive, 
         usableList.Add(new AmmoFacade("tracer_ammo", accuracy: 1).Create());
         usableList.Add(new AmmoFacade("slug_shells", damage: 1, accuracy: -0.2f, range: 1, penetration: 1, type: "blunt").Create());
         usableList.Add(new AmmoFacade("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet").Create());      
