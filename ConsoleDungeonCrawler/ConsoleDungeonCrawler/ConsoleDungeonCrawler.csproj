@@ -48,7 +48,6 @@
     <Compile Include="AccuracyImpact.cs" />
     <Compile Include="AmmoFacade.cs" />
     <Compile Include="Ammo.cs" />
-    <Compile Include="EnemyFacade.cs" />
     <Compile Include="Traits\AccuracyTrait.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Application.cs" />
@@ -83,7 +82,7 @@
     <Compile Include="IGameDataChangeListener.cs" />
     <Compile Include="IGameStateChangeListener.cs" />
     <Compile Include="ILevelBuilder.cs" />
-    <Compile Include="ImpactBehaviour.cs" />
+    <Compile Include="IImpactBehaviour.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemLibrary.cs" />
