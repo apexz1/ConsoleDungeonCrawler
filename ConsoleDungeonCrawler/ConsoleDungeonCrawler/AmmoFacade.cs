@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 public class AmmoFacade
 {
+    private static AmmoFacade instance;
+
     private string name;
     private int damage;
     private float accuracy;
     private float range;
     private float penetration;
     private string type;
-    private List<ITraitBehaviour> list;
 
     /// <summary>
     /// Creates AmmoMod Usables more conveniently (easier to use) than chaining constructors.
@@ -24,22 +25,12 @@ public class AmmoFacade
     /// <param name="penetration">amount of penetration changed</param>
     /// <param name="type">new damage type</param>
     /// <param name="list">Parameter that allows to add additional custom ITraitBehaviours, default or empty list results in nothing being added to the Usable Behaviour</param>
-    public AmmoFacade(string name, int damage = 0, float accuracy = 0, float range = 0, float penetration = 0, string type = "default", List<ITraitBehaviour> list = null)
+    public AmmoFacade()
     {
-        this.name = name;
-        this.damage = damage;
-        this.accuracy = accuracy;
-        this.range = range;
-        this.penetration = penetration;
-        this.type = type;
 
-        if (list.Count > 0)
-        {
-            this.list = list;
-        }
     }
 
-    public Usable Create()
+    public Usable Create(string name, int damage = 0, float accuracy = 0, float range = 0, float penetration = 0, string type = "default", List<ITraitBehaviour> list = null)
     {
         Usable ammo = new Usable();
         Trait temp = new Trait();
@@ -62,5 +53,15 @@ public class AmmoFacade
         ammo.behaviour = new List<Trait> { temp };
 
         return ammo;
+    }
+
+    public static AmmoFacade Get()
+    {
+        if (instance != null)
+        {
+            instance = new AmmoFacade();
+        }
+
+        return instance;
     }
 }

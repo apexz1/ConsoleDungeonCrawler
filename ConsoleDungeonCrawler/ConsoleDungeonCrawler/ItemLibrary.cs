@@ -55,9 +55,9 @@ public class ItemLibrary
         grenadeList.Add(new Throwable("flashbang", "grenade", new AccuracyImpact(4.0f)));
         //Usables - ALL Character Buff Items in the game (technically all usables, but a little difficult to use the system)
         //Hollow-tips, explosive, 
-        usableList.Add(new AmmoFacade("tracer_ammo", accuracy: 1).Create());
-        usableList.Add(new AmmoFacade("slug_shells", damage: 1, accuracy: -0.2f, range: 1, penetration: 1, type: "blunt").Create());
-        usableList.Add(new AmmoFacade("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet").Create());      
+        usableList.Add(AmmoFacade.Get().Create("tracer_ammo", accuracy: 1));
+        usableList.Add(AmmoFacade.Get().Create("slug_shells", damage: 1, accuracy: -0.2f, range: 1, penetration: 1, type: "blunt"));
+        usableList.Add(AmmoFacade.Get().Create("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet"));      
         //Keys 
         keyItems.Add(new Item("master_key", "key"));
         //Uses - ALL items that are used instantly when picked up and are not ammo? Maybe we should drop this one
