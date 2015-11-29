@@ -53,10 +53,10 @@ public class ItemLibrary
         //Throwable - ALL Grenades in the game
         grenadeList.Add(new Throwable("frag_grenade", "grenade", new DamageImpact(4.0f, 8.0f)));
         grenadeList.Add(new Throwable("flashbang", "grenade", new AccuracyImpact(4.0f)));
-        //Usables - ALL Character Buff Items in the game
-        usableList.Add(new Usable("tracer_ammo", "use", new Trait(-1, "ammo_mod", new AccuracyTrait(1))));
-        usableList.Add(new Usable("slug_shells", "use", new Trait(-1, "ammo_mod", new List<ITraitBehaviour> { new AccuracyTrait(-0.2f), new DamageTrait(1), new RangeTrait(1), new PenetrationTrait(1), new DamageTypeTrait("blunt")})));
-        usableList.Add(new Usable("flechet_shells", "use", new Trait(-1, "ammo_mod", new List<ITraitBehaviour> { new DamageTrait(1), new PenetrationTrait(0.5f), new DamageTypeTrait("flechet")})));
+        //Usables - ALL Character Buff Items in the game (technically all usables, but a little difficult to use the system)
+        usableList.Add(new AmmoFacade("tracer_ammo", accuracy: 1).Create());
+        usableList.Add(new AmmoFacade("slug_shells", damage: 1, accuracy: -0.2f, range: 1, penetration: 1, type: "blunt").Create());
+        usableList.Add(new AmmoFacade("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet").Create());      
         //Keys 
         keyItems.Add(new Item("master_key", "key"));
         //Uses - ALL items that are used instantly when picked up and are not ammo? Maybe we should drop this one

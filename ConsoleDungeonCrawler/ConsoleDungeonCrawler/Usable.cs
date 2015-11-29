@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// </summary>
 public class Usable : Item
 {
-    List<Trait> behaviour = new List<Trait>();
+    public List<Trait> behaviour = new List<Trait>();
 
     public Usable()
     {

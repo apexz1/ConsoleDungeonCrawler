@@ -79,9 +79,13 @@ public class Application
         // TODO implement here
     }
 
-    public static void ChangeGameData(GameData data)
+    public static void ChangeGameData(GameData newdata)
     {
-
+        data = newdata;
+        for (int i = 0; i < GAMEDATA_CHANGE_LISTENERS.Count; i++)
+        {
+            GAMEDATA_CHANGE_LISTENERS.ElementAt(i).OnGameDataChange(newdata);
+        }
     }
     public static GameData GetData()
     {
@@ -91,9 +95,4 @@ public class Application
     {
         return enemyController;
     }
-    public static void SetData(GameData value)
-    {
-        data = value;
-    }
-
 }

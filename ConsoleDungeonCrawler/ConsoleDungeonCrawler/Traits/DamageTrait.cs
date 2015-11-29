@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 public class DamageTrait : ITraitBehaviour
 {
-    private float dmg;
+    private int dmg;
 
 
-    public DamageTrait(float dmg)
+    public DamageTrait(int dmg)
     {
         this.dmg = dmg;
     }
