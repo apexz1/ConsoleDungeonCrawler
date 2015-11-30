@@ -19,6 +19,7 @@ public class ItemLibrary
     public List<Armor> enemyarmorList = new List<Armor>();
     public List<Throwable> grenadeList = new List<Throwable>();
     public List<Item> usableList = new List<Item>();
+
     //public List<List<Item>> itemLists = new List<List<Item>>();
 
     public void Init()
@@ -33,7 +34,7 @@ public class ItemLibrary
         generics.Add(new Item("max_mustermann", "key"));
         generics.Add(new Throwable("grenade_shell", "grenade"));
 
-        //Gonna be used for additional pickups, like Ammo Mods maybe or other usable that arent grenades (can still be coded like them)
+        //Gonna be used for additional pickups, like Ammo Mods maybe or other usable that arent grenades (can still be coded like them) -So much for that...
         items.Add(new Item());
         //Weapons - ALL Weapons in the game
         //PLAYER WEAPONS         
