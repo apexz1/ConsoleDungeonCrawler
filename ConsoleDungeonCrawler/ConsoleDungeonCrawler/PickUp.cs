@@ -94,7 +94,7 @@ public class PickUp : GameObject
                 if (!data.inventory.Contains(this.item))
                 {
                     data.inventory.Add(this.item, this.count);
-                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Weaponcase found. " + this.item.name + " was added to the inventory.");
+                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Weaponcase found. " + this.item.name + " added to inventory.");
 
                     added = true;
                     break;

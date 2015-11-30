@@ -7,6 +7,8 @@ using System.Text;
 
 public class Vector2
 {
+    public static readonly Vector2 ZERO = new Vector2(0, 0);
+
     public Vector2()
     {
         this.x = 0;

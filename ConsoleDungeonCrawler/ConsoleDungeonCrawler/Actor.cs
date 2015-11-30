@@ -166,7 +166,7 @@ public class Actor : GameObject
                     return false;
                 }
                 pos.x += 1;
-                Console.WriteLine("move down? " + position.x + " " + position.y);
+                //Console.WriteLine("move down? " + position.x + " " + position.y);
 
                 break;
 
@@ -196,7 +196,7 @@ public class Actor : GameObject
                     return false;
                 }
                 pos.y -= 1;
-                Console.WriteLine("move left? " + position.x + " " + position.y);
+                //Console.WriteLine("move left? " + position.x + " " + position.y);
 
                 break;
 
@@ -226,7 +226,7 @@ public class Actor : GameObject
                     return false;
                 }
                 pos.y += 1;
-                Console.WriteLine("move right? " + position.x + " " + position.y);
+                //Console.WriteLine("move right? " + position.x + " " + position.y);
 
                 break;
         }
@@ -237,7 +237,7 @@ public class Actor : GameObject
             position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
             actions -= 1;
             moved = true;
-            //Console.WriteLine("PLAYER POSITION = " + position.x + "," + position.y);
+            Console.WriteLine("NEW POSITION = " + position.x + "," + position.y);
         }
 
         if (data.combat)

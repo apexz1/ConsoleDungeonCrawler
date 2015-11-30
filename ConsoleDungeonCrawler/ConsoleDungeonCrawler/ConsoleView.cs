@@ -22,15 +22,21 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     private readonly Dictionary<string, char> TILE_CHARS = new Dictionary<string, char>();
     private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
     private Vector2 loff = new Vector2(1, 0);
+    private Vector2 offset = Vector2.ZERO;
+    private int viewH = 19;
+    private int viewW = 19;
 
     public ConsolePixel[,] uiContent = new ConsolePixel[44, 55];
 
     public void Execute()
     {
+        char symbol = ' ';
+        offset = new Vector2((int)data.player.position.x - (viewH / 2), (int)data.player.position.y - (viewW / 2));
+        Console.WriteLine(offset.x + " " + offset.y);
+
         Console.WriteLine(Application.GetData().level.enemies.Count);
         Console.WriteLine(Application.GetData().level.pickUps.Count);
         //Console.Clear();
-        char symbol = ' ';
         ConsoleColor f = ConsoleColor.Gray;
         ConsoleColor b = ConsoleColor.Black;
 
@@ -121,25 +127,42 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         /**/
 
         //Geography Render
-        for (int i = 0; i < data.level.structure.GetLength(0); i++)
+        for (int i = 0; i < viewH; i++)
         {
-            for (int j = 0; j < data.level.structure.GetLength(1); j++)
+            for (int j = 0; j < viewW; j++)
             {
+                //Todo: Dont render whole level
+                //
                 //REALLY SIMPLE METHOD, CAN PROBABLY DO BETTER
                 /*
                 if (Vector2.Distance(new Vector2(i, j), data.player.position) > 5)
                     continue;
                     */
-                TILE_CHARS.TryGetValue(data.level.structure[i, j].terrain, out symbol);
-                //?+i/?+j for the level position offset
-                uiContent[i + (int)loff.x, j] = new ConsolePixel(symbol, f, b);
 
-                f = ConsoleColor.Gray;
-                b = ConsoleColor.Black;
+                int x = (int)offset.x + i;
+                int y = (int)offset.y + j;
+
+                if ((x >= 0 && x < data.level.structure.GetLength(0)) && (y >= 0 && y < data.level.structure.GetLength(1)))
+                {
+                    symbol = TILE_CHARS[data.level.structure[x, y].terrain];
+                    //?+i/?+j for the level position offset
+                    f = ConsoleColor.Gray;
+                    b = ConsoleColor.Black;
+                    uiContent[i + (int)loff.x, j] = new ConsolePixel(symbol, f, b);
+                }
+                /*
+                else
+                {
+                    f = ConsoleColor.Black;
+                    b = ConsoleColor.DarkGreen;
+                    uiContent[i + (int)loff.x, j] = new ConsolePixel(' ', f, b);
+                }
+                /**/
             }
         }
         /**/
 
+        /*
         //Doors Render
         for (int x = 0; x < data.level.doors.Count; x++)
         {
@@ -161,48 +184,57 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
 
+        
         //Pickup Render
-        for (int x = 0; x < data.level.pickUps.Count; x++)
+        for (int i = 0; i < data.level.pickUps.Count; i++)
         {
             symbol = 'P';
             f = ConsoleColor.Yellow;
 
-            if (data.level.pickUps[x].item.type == "med")
+            if (data.level.pickUps[i].item.type == "med")
             {
                 symbol = '+';
                 f = ConsoleColor.Green;
             }
-            if (data.level.pickUps[x].item.type == "ammo")
+            if (data.level.pickUps[i].item.type == "ammo")
             {
                 symbol = '‼';
                 f = ConsoleColor.White;
             }
-            if (data.level.pickUps[x].item.type == "weap")
+            if (data.level.pickUps[i].item.type == "weap")
             {
                 symbol = '¬';
                 f = ConsoleColor.Yellow;
             }
-            if (data.level.pickUps[x].item.type == "armor")
+            if (data.level.pickUps[i].item.type == "armor")
             {
                 symbol = 'A';
                 f = ConsoleColor.Blue;
             }
-            if (data.level.pickUps[x].item.type == "grenade")
+            if (data.level.pickUps[i].item.type == "grenade")
             {
                 symbol = 'ó';
                 f = ConsoleColor.Cyan;
             }
-            if (data.level.pickUps[x].item.type == "key")
+            if (data.level.pickUps[i].item.type == "key")
             {
                 symbol = '¶';
                 f = ConsoleColor.Magenta;
             }
-            uiContent[(int)data.level.pickUps[x].position.x + (int)loff.x, (int)data.level.pickUps[x].position.y] = new ConsolePixel(symbol, f, b);
+
+            int x = -(int)offset.x + (int)data.level.pickUps[i].position.x + (int)loff.x; ;
+            int y = -(int)offset.y + (int)data.level.pickUps[i].position.y;
+
+            if ((x >= (int)loff.x && x < viewH) && (y >= 0 && y < viewW))
+            {
+                uiContent[-(int)offset.x + (int)data.level.pickUps[i].position.x + (int)loff.x, -(int)offset.y + (int)data.level.pickUps[i].position.y] = new ConsolePixel(symbol, f, b);
+            }
         }
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
         /**/
 
+        /*
         //Level End Trigger Render
         for (int x = 0; x < data.level.trigger.Count; x++)
         {
@@ -214,6 +246,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
 
+        
         //Enemies Render
         for (int i = 0; i < data.level.enemies.Count; i++)
         {
@@ -238,7 +271,13 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 f = ConsoleColor.Red;
             }
 
-            uiContent[(int)enemy.position.x + (int)loff.x, (int)enemy.position.y] = new ConsolePixel(symbol, f, b);
+            int x = -(int)offset.x + (int)enemy.position.x + (int)loff.x;
+            int y = -(int)offset.y + (int)enemy.position.y;
+
+            if ((x >= (int)loff.x && x < viewH - (int)loff.x && (y >= 0 && y < viewW)))
+            {
+                uiContent[-(int)offset.x + (int)enemy.position.x + (int)loff.x, -(int)offset.y + (int)enemy.position.y] = new ConsolePixel(symbol, f, b);
+            }
         }
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
@@ -255,7 +294,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             f = ConsoleColor.DarkGreen;
         }
 
-        uiContent[(int)player.position.x + (int)loff.x, (int)player.position.y] = new ConsolePixel(symbol, f, b);
+        uiContent[viewH/2 + (int)loff.x, viewW/2] = new ConsolePixel(symbol, f, b);
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
         /**/
@@ -267,7 +306,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             symbol = uiContent[(int)selector.position.x + (int)loff.x, (int)selector.position.y].symbol;
             f = ConsoleColor.White;
             b = ConsoleColor.Magenta;
-            uiContent[(int)selector.position.x + (int)loff.x, (int)selector.position.y] = new ConsolePixel(symbol, f, b);
+            uiContent[viewH/2 + (int)selector.position.x + (int)loff.x, viewW/2 + (int)selector.position.y] = new ConsolePixel(symbol, f, b);
             f = ConsoleColor.Gray;
             b = ConsoleColor.Black;
         }
