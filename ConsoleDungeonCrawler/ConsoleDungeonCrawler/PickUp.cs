@@ -40,7 +40,7 @@ public class PickUp : GameObject
         #region Ammo
         if (item.type == "ammo")
         {
-            Console.WriteLine("AMMO FOUND");
+            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Ammunition crate found.");
             for (int i = 0; i < data.inventory.content.Count; i++)
             {
                 if (data.inventory.content[i].item.type == "weap")
@@ -58,7 +58,7 @@ public class PickUp : GameObject
 
                     data.inventory.content[i].item = temp;
 
-                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Ammunition crate found. Weapon ammunition restored.");
+                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ '"' + data.inventory.content[i].item.name + '"' + " ammunition restored.");
                 }
             }
         }

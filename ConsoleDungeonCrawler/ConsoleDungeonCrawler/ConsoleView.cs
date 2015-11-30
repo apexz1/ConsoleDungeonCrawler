@@ -162,23 +162,30 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         }
         /**/
 
-        /*
+        
         //Doors Render
-        for (int x = 0; x < data.level.doors.Count; x++)
+        for (int i = 0; i < data.level.doors.Count; i++)
         {
-            if (data.level.doors[x].open == true)
+            if (data.level.doors[i].open == true)
             {
                 symbol = '▀';
             }
-            if (data.level.doors[x].open == false)
+            if (data.level.doors[i].open == false)
             {
                 symbol = '■';
             }
-            if (data.level.doors[x].type == "red") f = ConsoleColor.Red;
-            if (data.level.doors[x].type == "green") f = ConsoleColor.Green;
-            if (data.level.doors[x].type == "blue") f = ConsoleColor.Blue;
-            if (data.level.doors[x].type == "yellow") f = ConsoleColor.Yellow;
-            uiContent[(int)data.level.doors[x].position.x + (int)loff.x, (int)data.level.doors[x].position.y] = new ConsolePixel(symbol, f, b);
+            if (data.level.doors[i].type == "red") f = ConsoleColor.Red;
+            if (data.level.doors[i].type == "green") f = ConsoleColor.Green;
+            if (data.level.doors[i].type == "blue") f = ConsoleColor.Blue;
+            if (data.level.doors[i].type == "yellow") f = ConsoleColor.Yellow;
+
+            int x = -(int)offset.x + (int)data.level.doors[i].position.x + (int)loff.x;
+            int y = -(int)offset.y + (int)data.level.doors[i].position.y;
+
+            if ((x >= (int)loff.x && x < viewH - (int)loff.x && (y >= 0 && y < viewW)))
+            {
+                uiContent[- (int)offset.x + (int)data.level.doors[i].position.x + (int)loff.x, -(int)offset.y + (int)data.level.doors[i].position.y] = new ConsolePixel(symbol, f, b);
+            }
         }
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
@@ -234,13 +241,20 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
 
-        /*
+        
         //Level End Trigger Render
-        for (int x = 0; x < data.level.trigger.Count; x++)
+        for (int i = 0; i < data.level.trigger.Count; i++)
         {
             symbol = '♦';
             f = ConsoleColor.Green;
-            uiContent[(int)data.level.trigger[x].position.x + (int)loff.x, (int)data.level.trigger[x].position.y] = new ConsolePixel(symbol, f, b);
+
+            int x = -(int)offset.x + (int)data.level.trigger[i].position.x + (int)loff.x; ;
+            int y = -(int)offset.y + (int)data.level.trigger[i].position.y;
+
+            if ((x >= (int)loff.x && x < viewH) && (y >= 0 && y < viewW))
+            {
+                uiContent[-(int)offset.x + (int)data.level.trigger[i].position.x + (int)loff.x, -(int)offset.y + (int)data.level.trigger[i].position.y] = new ConsolePixel(symbol, f, b);
+            }
         }
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
@@ -365,7 +379,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             if (data.inventory.content.Count > 0)
             {
-                for (int i = 0; i < data.inventory.content.Count; i++)
+                for (int i = 0; i < Math.Min(11, data.inventory.content.Count); i++)
                 {
                     content = data.inventory.content[i].item.name;
 
@@ -375,6 +389,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     }
 
                     label = content.ToCharArray();
+
                     for (int j = 0; j < label.Length; j++)
                     {
                         if (i == data.currentItem)
@@ -392,7 +407,12 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                             f = ConsoleColor.White;
                             b = b;
                         }
-                        uiContent[i + 3, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j], f, b);
+
+                        if (true)
+                        {
+                            uiContent[i + 3, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j], f, b);
+                        }
+
                         f = ConsoleColor.Gray;
                         b = ConsoleColor.Black;
                     }

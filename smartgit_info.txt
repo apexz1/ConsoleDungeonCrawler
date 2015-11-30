@@ -1,8 +1,0 @@
-layout.bmp is missing currently.
-
-if you have anything thats not Paint you can go ahead and make one, needs to be placed in 
-ConsoleDungeonCrawler\ConsoleDungeonCrawler\bin\Debug
-
-The correct one will be up tomorrow though, so this really doesnt matter.
-
-Can also switch the level generation in Application.NewGame() back to LevelGenerator (from LevelFromImage)
