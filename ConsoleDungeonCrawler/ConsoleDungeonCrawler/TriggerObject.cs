@@ -20,7 +20,11 @@ public class TriggerObject : GameObject, ITrigger
     public string OnTriggerEnter()
     {
         Console.Write("TRIGGERED");
-        Environment.Exit(0);
+        if (this.name == "endoflevel")
+        {
+            Environment.Exit(0);
+        }
+
         return name;
     }
 }

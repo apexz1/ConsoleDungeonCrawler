@@ -96,7 +96,7 @@ public class LevelFromImage : ILevelBuilder
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.Aqua.ToArgb())
                 {
-                    level.trigger.Add(new TriggerObject("endoflevel", new Vector2(i, j)));
+                    new TriggerObject("endoflevel", new Vector2(i, j));
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.LightSlateGray.ToArgb())
                 {
