@@ -6,14 +6,23 @@ using System.Text;
 
 public class GameState : IBaseState
 {
+    private GameStates state = new GameStates();
 
     public GameState()
     {
     }
 
-    public void Enter()
+    public GameStates Get()
     {
-        throw new NotImplementedException();
+        return state;
+    }
+
+    public void Enter(GameStates state)
+    {
+        this.state = state;
+
+        if (state == GameStates.GAME) MasterControlProgram.SetController(new ConsolePlayerController());
+        if (state == GameStates.MENU && state == GameStates.MAPS) MasterControlProgram.SetController(new ConsoleMenuController());
     }
 
     public void Execute()
@@ -40,5 +49,4 @@ public class GameState : IBaseState
     {
         // TODO implement here
     }
-
 }

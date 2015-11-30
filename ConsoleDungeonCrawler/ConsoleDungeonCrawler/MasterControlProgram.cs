@@ -21,25 +21,14 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
     public void Run()
     {
-        /*
-        Random rng = new Random();
-        for (int i = 0; i < 1000; i++)
-        {
-            float rngF = (rng.Next(0, 150));
-            float acc = rngF / 100.0f;
-
-            if (acc > 1.0f) acc = 1.0f;
-            Console.WriteLine(acc);
-        }
-
-        Console.ReadKey();
-        /**/
-
-        Application.NewGame();
+        //Application.NewGame();
+        Application.ChangeGameState(GameStates.MENU);
+        view.Execute();
 
         while (running)
         {
             controller.Execute();
+
             if (ConsolePlayerController.done && EnemyController.done)
             {
                 EndTurn();
@@ -110,5 +99,10 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
     public static void SetController(IBaseController c)
     {
         controller = c;
+    }
+
+    public static IBaseController GetController()
+    {
+        return controller;
     }
 }

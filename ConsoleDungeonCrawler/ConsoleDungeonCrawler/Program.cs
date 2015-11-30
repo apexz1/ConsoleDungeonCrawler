@@ -17,7 +17,7 @@ namespace ConsoleDungeonCrawler
 
             //Console.SetWindowSize(236, 80);
             Console.SetWindowSize(60, 60);
-            MasterControlProgram.SetController(playerController);
+            MasterControlProgram.SetController(menuController);
             MCP.view = view;
             MCP.Run();
             return;

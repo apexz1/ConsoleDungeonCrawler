@@ -48,6 +48,9 @@
     <Compile Include="AccuracyImpact.cs" />
     <Compile Include="AmmoFacade.cs" />
     <Compile Include="Ammo.cs" />
+    <Compile Include="ConsoleMapSelectionController.cs" />
+    <Compile Include="MapsStates.cs" />
+    <Compile Include="MenuStates.cs" />
     <Compile Include="Traits\AccuracyTrait.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Application.cs" />

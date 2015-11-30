@@ -16,6 +16,11 @@ public class MenuState : IBaseState
         throw new NotImplementedException();
     }
 
+    public void Enter(GameStates state)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Execute()
     {
         throw new NotImplementedException();

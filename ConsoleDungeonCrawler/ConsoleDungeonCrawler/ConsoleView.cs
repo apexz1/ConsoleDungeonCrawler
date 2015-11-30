@@ -30,6 +30,97 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public void Execute()
     {
+        //Console.Clear(); //Very important for the view to actually work correctly, uncomment and test first before continuing if somethings looks wrong
+        if (Application.GetState().Get() == GameStates.MENU)
+        {
+            RenderMenu();
+        }
+        if (Application.GetState().Get() == GameStates.MAPS)
+        {
+            RenderMapSelect();
+        }
+        if (Application.GetState().Get() == GameStates.GAME)
+        {
+            RenderGame();
+        }
+        //RENDERS THE CURRENT UICONTENT
+        for (int i = 0; i < uiContent.GetLength(0); i++)
+        {
+            for (int j = 0; j < uiContent.GetLength(1); j++)
+            {
+                Console.ForegroundColor = uiContent[i, j].foreground;
+                Console.BackgroundColor = uiContent[i, j].background;
+                Console.Write(uiContent[i, j].symbol);
+            }
+            Console.WriteLine();
+        }
+    }
+
+    public void RenderMenu()
+    {
+        ConsoleColor f = ConsoleColor.Gray;
+        ConsoleColor b = ConsoleColor.Black;
+
+        char[] label;
+        string content;
+
+        ConsoleMenuController temp = (ConsoleMenuController)MasterControlProgram.GetController();
+
+        for (int i = 0; i < uiContent.GetLength(0); i++)
+        {
+            for (int j = 0; j < uiContent.GetLength(1); j++)
+            {
+                uiContent[i, j] = new ConsolePixel();
+            }
+        }
+
+        content = "CONSOLE DUNGEON CRAWLER : MAIN MENU";
+        label = content.ToCharArray();
+        for (int i = 0; i < label.Length; i++)
+        {
+            f = ConsoleColor.Green;
+            uiContent[0, i] = new ConsolePixel(label[i], f);
+        }
+
+        if (temp.states.Count > 0)
+        {
+            for (int i = 0; i < temp.states.Count; i++)
+            {
+                content = temp.states[i].ToString();
+                label = content.ToCharArray();
+
+                for (int j = 0; j < label.Length; j++)
+                {
+                    if (i == temp.index)
+                    {
+                        f = ConsoleColor.Gray;
+                        b = ConsoleColor.Magenta;
+                    }
+                    else
+                    {
+                        f = ConsoleColor.Gray;
+                        b = ConsoleColor.Black;
+                    }
+
+                    uiContent[1+i,j] = new ConsolePixel(label[j], f, b);
+                }
+            }
+        }
+    }
+
+    public void RenderMapSelect()
+    {
+        for (int i = 0; i < uiContent.GetLength(0); i++)
+        {
+            for (int j = 0; j < uiContent.GetLength(1); j++)
+            {
+                uiContent[i, j] = new ConsolePixel();
+            }
+        }
+    }
+
+    public void RenderGame()
+    {
         char symbol = ' ';
         offset = new Vector2((int)data.player.position.x - (viewH / 2), (int)data.player.position.y - (viewW / 2));
         Console.WriteLine(offset.x + " " + offset.y);
@@ -78,7 +169,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
         /**/
-               
+
         //Score stuff
         if (true)
         {
@@ -162,7 +253,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         }
         /**/
 
-        
+
         //Doors Render
         for (int i = 0; i < data.level.doors.Count; i++)
         {
@@ -184,14 +275,14 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             if ((x >= (int)loff.x && x < viewH - (int)loff.x && (y >= 0 && y < viewW)))
             {
-                uiContent[- (int)offset.x + (int)data.level.doors[i].position.x + (int)loff.x, -(int)offset.y + (int)data.level.doors[i].position.y] = new ConsolePixel(symbol, f, b);
+                uiContent[-(int)offset.x + (int)data.level.doors[i].position.x + (int)loff.x, -(int)offset.y + (int)data.level.doors[i].position.y] = new ConsolePixel(symbol, f, b);
             }
         }
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
         /**/
 
-        
+
         //Pickup Render
         for (int i = 0; i < data.level.pickUps.Count; i++)
         {
@@ -241,7 +332,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
 
-        
+
         //Level End Trigger Render
         for (int i = 0; i < data.level.trigger.Count; i++)
         {
@@ -260,7 +351,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
 
-        
+
         //Enemies Render
         for (int i = 0; i < data.level.enemies.Count; i++)
         {
@@ -308,7 +399,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             f = ConsoleColor.DarkGreen;
         }
 
-        uiContent[viewH/2 + (int)loff.x, viewW/2] = new ConsolePixel(symbol, f, b);
+        uiContent[viewH / 2 + (int)loff.x, viewW / 2] = new ConsolePixel(symbol, f, b);
         f = ConsoleColor.Gray;
         b = ConsoleColor.Black;
         /**/
@@ -320,7 +411,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             symbol = uiContent[(int)selector.position.x + (int)loff.x, (int)selector.position.y].symbol;
             f = ConsoleColor.White;
             b = ConsoleColor.Magenta;
-            uiContent[viewH/2 + (int)selector.position.x + (int)loff.x, viewW/2 + (int)selector.position.y] = new ConsolePixel(symbol, f, b);
+            uiContent[viewH / 2 + (int)selector.position.x + (int)loff.x, viewW / 2 + (int)selector.position.y] = new ConsolePixel(symbol, f, b);
             f = ConsoleColor.Gray;
             b = ConsoleColor.Black;
         }
@@ -540,17 +631,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             }
         }
 
-        //RENDERS THE CURRENT UICONTENT
-        for (int i = 0; i < uiContent.GetLength(0); i++)
-        {
-            for (int j = 0; j < uiContent.GetLength(1); j++)
-            {
-                Console.ForegroundColor = uiContent[i, j].foreground;
-                Console.BackgroundColor = uiContent[i, j].background;
-                Console.Write(uiContent[i, j].symbol);
-            }
-            Console.WriteLine();
-        }
     }
 
     public void OnGameDataChange(GameData data)

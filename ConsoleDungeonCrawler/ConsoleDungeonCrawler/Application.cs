@@ -29,7 +29,9 @@ public class Application
     public static void NewGame()
     {
         data = new GameData();
-        currentState = new GameState();
+        MasterControlProgram.SetController(new ConsolePlayerController());
+        ChangeGameState(GameStates.GAME);
+
         enemyController = new EnemyController();
         ILevelBuilder generator = new LevelGenerator();
 
@@ -76,7 +78,12 @@ public class Application
 
     public static void ChangeGameState(GameStates state)
     {
-        // TODO implement here
+        if (currentState == null)
+        {
+            currentState = new GameState();
+        }
+
+        currentState.Enter(state);
     }
 
     public static void ChangeGameData(GameData newdata)
@@ -90,6 +97,11 @@ public class Application
     public static GameData GetData()
     {
         return data;
+    }
+    public static GameState GetState()
+    {
+        GameState temp = (GameState)currentState;
+        return temp;
     }
     public static IBaseController GetEnemyController()
     {

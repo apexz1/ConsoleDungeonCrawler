@@ -9,6 +9,7 @@ public class GameData
     public Inventory inventory;
     public bool inv = false;
     public int currentItem;
+    public int currentMenu;
     public bool combat;
     public Score score;
     public Level level;

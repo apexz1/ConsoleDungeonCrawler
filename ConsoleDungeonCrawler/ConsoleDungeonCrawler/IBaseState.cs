@@ -6,7 +6,7 @@ using System.Text;
 
 public interface IBaseState
 {
-    void Enter();
+    void Enter(GameStates state);
     void Exit();
     void Execute();
 }
