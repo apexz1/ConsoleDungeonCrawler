@@ -52,7 +52,8 @@ public class GameData
         Application.GetData().inventory.Add(ItemLibrary.Get().weaponList[2], 1);
         //player.AddTrait(2, "temp", new HeavyInjuryTrait(5));
 
-        player.position = new Vector2(19,0);
+        Random rng = new Random();
+        player.position = level.playerSpawnPoints[rng.Next(0, 4)];
 
 
         Application.GetData().collision.Add(player);

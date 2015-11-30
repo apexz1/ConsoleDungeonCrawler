@@ -29,6 +29,7 @@ public class LevelGenerator : ILevelBuilder
         Level levelGen = new Level();
         LevelFromImage lfi = new LevelFromImage();
         levelGen.structure = lfi.BuildStructure();
+        lfi.AddObjectsFromImage(levelGen);
 
         //levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
         //levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
@@ -71,9 +72,7 @@ public class LevelGenerator : ILevelBuilder
 
         /**/
         //Debugging win field
-        levelGen.trigger.Add(new TriggerObject("endoflevel", new Vector2(0, 19)));
-        //Debugging Door
-        levelGen.doors.Add(new Door("door1", "red", new Vector2(15, 0), false));
+        levelGen.trigger.Add(new TriggerObject("endoflevel", new Vector2(0, 19)));;
 
         return levelGen;
     }
@@ -89,11 +88,6 @@ public class LevelGenerator : ILevelBuilder
                 levelGenStructure[i, j] = new Tile("floor", ClipType.FLOOR);
             }
         }
-
-        //Debugging Wall
-        levelGenStructure[14, 2] = new Tile("wall", ClipType.WALL);
-        levelGenStructure[15, 2] = new Tile("wall", ClipType.WALL);
-        levelGenStructure[16, 2] = new Tile("wall", ClipType.WALL);
 
         return levelGenStructure;
     }

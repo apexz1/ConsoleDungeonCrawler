@@ -31,7 +31,7 @@ public class ItemLibrary
         generics.Add(new Weapon("empty_weap", "weap"));
         generics.Add(new Armor("empty_armor", "armor"));
         generics.Add(new Item("ammo_box", "ammo"));
-        generics.Add(new Item("max_mustermann", "key"));
+        generics.Add(new Item("keycard", "key"));
         generics.Add(new Throwable("grenade_shell", "grenade"));
 
         //Gonna be used for additional pickups, like Ammo Mods maybe or other usable that arent grenades (can still be coded like them) -So much for that...
@@ -58,9 +58,13 @@ public class ItemLibrary
         //Hollow-tips, explosive, 
         usableList.Add(AmmoFacade.Get().Create("tracer_ammo", accuracy: 1));
         usableList.Add(AmmoFacade.Get().Create("slug_shells", damage: 1, accuracy: -0.2f, range: 1, penetration: 1, type: "blunt"));
-        usableList.Add(AmmoFacade.Get().Create("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet"));      
+        usableList.Add(AmmoFacade.Get().Create("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet"));
         //Keys 
         keyItems.Add(new Item("master_key", "key"));
+        keyItems.Add(new Item("red_keycard", "key"));
+        keyItems.Add(new Item("blue_keycard", "key"));
+        keyItems.Add(new Item("green_keycard", "key"));
+        keyItems.Add(new Item("yellow_keycard", "key"));
         //Uses - ALL items that are used instantly when picked up and are not ammo? Maybe we should drop this one
     }
 

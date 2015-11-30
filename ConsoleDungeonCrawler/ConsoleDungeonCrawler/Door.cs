@@ -80,10 +80,10 @@ public class Door : GameObject
             Console.WriteLine(this.type + " " + current.name);
 
             //HIGHLY MODDABLE SYSTEM, YES YES
-            if (this.type == "red" && (current.name == "Red Keycard" || current.name == "master_key")) hasCard = true;
-            if (this.type == "blue" && (current.name == "Blue Keycard" || current.name == "master_key")) hasCard = true;
-            if (this.type == "green" && (current.name == "Green Keycard" || current.name == "master_key")) hasCard = true;
-            if (this.type == "yellow" && (current.name == "Yellow Keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "red" && (current.name == "red_keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "blue" && (current.name == "blue_keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "green" && (current.name == "green_keycard" || current.name == "master_key")) hasCard = true;
+            if (this.type == "yellow" && (current.name == "yellow_keycard" || current.name == "master_key")) hasCard = true;
         }
 
         return hasCard;

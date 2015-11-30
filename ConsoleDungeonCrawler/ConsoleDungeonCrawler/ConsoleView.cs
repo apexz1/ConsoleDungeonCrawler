@@ -23,8 +23,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     private readonly Dictionary<string, char> ITEM_CHARS = new Dictionary<string, char>();
     private Vector2 loff = new Vector2(1, 0);
     private Vector2 offset = Vector2.ZERO;
-    private int viewH = 19;
-    private int viewW = 19;
+    private int viewH = 31;
+    private int viewW = 31;
 
     public ConsolePixel[,] uiContent = new ConsolePixel[44, 55];
 

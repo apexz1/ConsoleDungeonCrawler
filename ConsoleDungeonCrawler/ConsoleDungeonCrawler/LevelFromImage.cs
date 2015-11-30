@@ -6,11 +6,12 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 
-public class LevelFromImage : ILevelBuilder {
+public class LevelFromImage : ILevelBuilder
+{
 
     public int pickUpCount = 5;
     public int enemyCount = 3;
-    string path = "layout.bmp";
+    string path = "layout_all.bmp";
     Random rng = new Random();
     Bitmap btm;
 
@@ -24,7 +25,7 @@ public class LevelFromImage : ILevelBuilder {
         this.path = path;
         Init();
     }
-    
+
     public void Init()
     {
         btm = new Bitmap(new FileStream(path, FileMode.Open));
@@ -36,25 +37,8 @@ public class LevelFromImage : ILevelBuilder {
         Random rng = new Random();
 
         levelGen.structure = BuildStructure();
+        AddObjectsFromImage(levelGen);
         levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
-        levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
-        levelGen.enemySpawnPoints = SetEnemySpawnPoints();
-
-        /*
-        for (int i = 0; i < pickUpCount; i++)
-        {
-            int current = rng.Next(0, levelGen.pickupSpawnPoints.Count);
-            levelGen.pickUps.Add(SpawnPickup(levelGen.pickupSpawnPoints[current], rng.Next(0, ItemLibrary.Get().generics.Count)));
-            levelGen.pickupSpawnPoints.RemoveAt(current);
-        }
-        /**/
-
-        for (int i = 0; i < enemyCount; i++)
-        {
-            int current = rng.Next(0, levelGen.enemySpawnPoints.Count);
-            levelGen.enemies.Add(SpawnEnemy(levelGen.enemySpawnPoints[current], 1));
-            levelGen.enemySpawnPoints.RemoveAt(current);
-        }
 
         /**/
         levelGen.pickUps.Add(SpawnPickup(new Vector2(1, 2), 0));
@@ -62,7 +46,7 @@ public class LevelFromImage : ILevelBuilder {
         levelGen.pickUps.Add(SpawnPickup(new Vector2(2, 3), 2));
         levelGen.pickUps.Add(SpawnPickup(new Vector2(3, 3), 3));
         return levelGen;
-     
+
     }
 
     public Tile[,] BuildStructure()
@@ -73,7 +57,7 @@ public class LevelFromImage : ILevelBuilder {
         {
             for (int j = 0; j < btm.Height; j++)
             {
-                //Console.WriteLine(btm.GetPixel(i, j).ToArgb());
+                //Console.Write(btm.GetPixel(i, j).ToArgb());
                 if (btm.GetPixel(i, j).ToArgb() == Color.Black.ToArgb())
                 {
                     levelGenStructure[i, j] = new Tile("wall", ClipType.WALL);
@@ -86,6 +70,40 @@ public class LevelFromImage : ILevelBuilder {
         }
 
         return levelGenStructure;
+    }
+
+    public void AddObjectsFromImage(Level level)
+    {
+        for (int i = 0; i < btm.Width; i++)
+        {
+            for (int j = 0; j < btm.Height; j++)
+            {
+                if (btm.GetPixel(i, j).ToArgb() == Color.Red.ToArgb())
+                {
+                    level.doors.Add(new Door("door", "red", new Vector2(i, j), false));
+                }
+                if (btm.GetPixel(i, j).ToArgb() == Color.Blue.ToArgb())
+                {
+                    level.doors.Add(new Door("door", "blue", new Vector2(i, j), false));
+                }
+                if (btm.GetPixel(i, j).ToArgb() == Color.Lime.ToArgb())
+                {
+                    level.doors.Add(new Door("door", "green", new Vector2(i, j), false));
+                }
+                if (btm.GetPixel(i, j).ToArgb() == Color.Yellow.ToArgb())
+                {
+                    level.doors.Add(new Door("door", "yellow", new Vector2(i, j), false));
+                }
+                if (btm.GetPixel(i, j).ToArgb() == Color.Aqua.ToArgb())
+                {
+                    level.trigger.Add(new TriggerObject("endoflevel", new Vector2(i, j)));
+                }
+                if (btm.GetPixel(i, j).ToArgb() == Color.LightSlateGray.ToArgb())
+                {
+                    level.playerSpawnPoints.Add(new Vector2(i, j));
+                }
+            }
+        }
     }
 
     private PickUp SpawnPickup(Vector2 pos, int i)
