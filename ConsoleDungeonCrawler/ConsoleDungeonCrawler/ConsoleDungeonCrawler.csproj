@@ -111,6 +111,7 @@
     <Compile Include="TriggerObject.cs" />
     <Compile Include="Usable.cs" />
     <Compile Include="Vector2.cs" />
+    <Compile Include="TerraformImpact.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>

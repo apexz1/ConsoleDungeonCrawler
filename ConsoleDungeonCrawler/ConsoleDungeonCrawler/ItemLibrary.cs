@@ -12,7 +12,7 @@ public class ItemLibrary
     private static ItemLibrary instance;
     public List<Item> items = new List<Item>();
     public List<Item> generics = new List<Item>();
-    public List<Item> keyItems = new List<Item>();
+    public List<Item> keyList = new List<Item>();
     public List<Weapon> weaponList = new List<Weapon>();
     public List<Weapon> enemyweaponList = new List<Weapon>();
     public List<Armor> armorList = new List<Armor>();
@@ -35,7 +35,8 @@ public class ItemLibrary
         generics.Add(new Throwable("grenade_shell", "grenade"));
 
         //Gonna be used for additional pickups, like Ammo Mods maybe or other usable that arent grenades (can still be coded like them) -So much for that...
-        items.Add(new Item());
+        items.Add(new Throwable("terra_former", "grenade", new TerraformImpact()));
+        items.Add(new Item("master_key", "key"));
         //Weapons - ALL Weapons in the game
         //PLAYER WEAPONS         
         //new Weapon(string n, string t, int d, float r, float a, int ammo, int maxammo, int clip, string ammotype, damagetype, pen)
@@ -60,11 +61,10 @@ public class ItemLibrary
         usableList.Add(AmmoFacade.Get().Create("slug_shells", damage: 1, accuracy: -0.2f, range: 1, penetration: 1, type: "blunt"));
         usableList.Add(AmmoFacade.Get().Create("flechet_shells", damage: 1, penetration: 0.5f, type: "flechet"));
         //Keys 
-        keyItems.Add(new Item("master_key", "key"));
-        keyItems.Add(new Item("red_keycard", "key"));
-        keyItems.Add(new Item("blue_keycard", "key"));
-        keyItems.Add(new Item("green_keycard", "key"));
-        keyItems.Add(new Item("yellow_keycard", "key"));
+        keyList.Add(new Item("red_keycard", "key"));
+        keyList.Add(new Item("blue_keycard", "key"));
+        keyList.Add(new Item("green_keycard", "key"));
+        keyList.Add(new Item("yellow_keycard", "key"));
         //Uses - ALL items that are used instantly when picked up and are not ammo? Maybe we should drop this one
     }
 

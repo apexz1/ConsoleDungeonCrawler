@@ -8,7 +8,6 @@ using System.Drawing;
 
 public class LevelFromImage : ILevelBuilder
 {
-
     public int pickUpCount = 5;
     public int enemyCount = 3;
     public LevelFromImageOutputInfo output = new LevelFromImageOutputInfo();
@@ -109,7 +108,13 @@ public class LevelFromImage : ILevelBuilder
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.Aqua.ToArgb())
                 {
-                    new TriggerObject("endoflevel", new Vector2(i, j));
+                    Application.GetData().levelfinish.x = i;
+                    Application.GetData().levelfinish.y = j;
+                }
+                //RESERVED FOR SUBSYSTEMS
+                if (btm.GetPixel(i, j).ToArgb() == Color.Orange.ToArgb())
+                {
+                    level.trigger.Add(new TriggerObject("subsystem", new Vector2(i, j)));
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.LightSlateGray.ToArgb())
                 {

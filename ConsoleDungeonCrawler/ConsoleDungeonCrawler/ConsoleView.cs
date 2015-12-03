@@ -102,7 +102,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         b = ConsoleColor.Black;
                     }
 
-                    uiContent[1+i,j] = new ConsolePixel(label[j], f, b);
+                    uiContent[1 + i, j] = new ConsolePixel(label[j], f, b);
                 }
             }
         }
@@ -375,11 +375,19 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         /**/
 
 
-        //Level End Trigger Render
+        //Subsystem/Level End Trigger Render
         for (int i = 0; i < data.level.trigger.Count; i++)
         {
-            symbol = '♦';
-            f = ConsoleColor.Green;
+            if (data.level.trigger[i].name == "endoflevel")
+            {
+                symbol = '♦';
+                f = ConsoleColor.Green;
+            }
+            if (data.level.trigger[i].name == "subsystem")
+            {
+                symbol = '♦';
+                f = ConsoleColor.Yellow;
+            }
 
             int x = -(int)offset.x + (int)data.level.trigger[i].position.x + (int)loff.x; ;
             int y = -(int)offset.y + (int)data.level.trigger[i].position.y;
@@ -514,6 +522,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             {
                 for (int i = 0; i < Math.Min(11, data.inventory.content.Count); i++)
                 {
+                    //content = data.inventory.content[i].item.name;
                     content = data.inventory.content[i].item.name;
 
                     if (data.inventory.content[i].count > 1)

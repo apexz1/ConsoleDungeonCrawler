@@ -238,6 +238,21 @@ public class Actor : GameObject
             actions -= 1;
             moved = true;
             Console.WriteLine("NEW POSITION = " + position.x + "," + position.y);
+            
+            for(int i = 0; i < data.level.trigger.Count; i++)
+            {
+                if (position.x == data.level.trigger[i].position.x && position.y == data.level.trigger[i].position.y)
+                {
+                    if (data.level.trigger[i].name == "subsystem")
+                    {
+                        data.combatlog.Add("Ship system reached... End turn to activate");
+                    }
+                    if (data.level.trigger[i].name == "endoflevel")
+                    {
+                        data.combatlog.Add("Escape pod reached... End turn to leave ship");
+                    }
+                }
+            }
         }
 
         if (data.combat)
@@ -333,6 +348,7 @@ public class Actor : GameObject
         float result = value;
 
         if (armor.armortype == "none") return value;
+        if (dmgtype == "true") return value;
         if (armor.armortype == "plate")
         {
             if (dmgtype == "sharp") result = (value * 0.3f) - ((armor.value/10));

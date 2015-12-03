@@ -8,7 +8,6 @@ class AccuracyImpact : Item, IImpactBehaviour
 {
     GameData data;
     float radius;
-    float damage;
 
     public AccuracyImpact(float radius)
     {

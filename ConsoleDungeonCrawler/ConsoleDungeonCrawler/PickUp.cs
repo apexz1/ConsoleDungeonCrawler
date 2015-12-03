@@ -172,7 +172,8 @@ public class PickUp : GameObject
                 data.combatlog.Add("Empty grenade found. Proceeding...");
             }
             /**/
-
+            int current = rng.Next(0, ItemLibrary.Get().grenadeList.Count);
+            this.item = ItemLibrary.Get().grenadeList[current];
             data.inventory.Add(this.item, this.count);
         }
         #endregion
@@ -185,13 +186,13 @@ public class PickUp : GameObject
             for (int i = 0; i < data.inventory.content.Count; i++)
             {
                 if (data.inventory.content[i].item.type == "key") count++;
-                if (count == ItemLibrary.Get().keyItems.Count) return;
+                if (count == ItemLibrary.Get().keyList.Count) return;
             }
 
             while (true)
             {
-                int current = rng.Next(0, ItemLibrary.Get().keyItems.Count);
-                this.item = ItemLibrary.Get().keyItems[current];
+                int current = rng.Next(0, ItemLibrary.Get().keyList.Count);
+                this.item = ItemLibrary.Get().keyList[current];
 
                 if (!data.inventory.Contains(this.item) && this.item.name != "master_key")
                 {

@@ -39,7 +39,6 @@ public class Application
         }
 
         data.SpawnPlayer();
-
         //DEBUG STUFF
         //data.inventory.Add(ItemLibrary.Get().items[5], 1);
 

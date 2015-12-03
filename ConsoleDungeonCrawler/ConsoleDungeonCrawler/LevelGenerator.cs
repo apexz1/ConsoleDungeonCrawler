@@ -76,7 +76,7 @@ public class LevelGenerator : ILevelBuilder
 
         /**/
         //Debugging win field
-        levelGen.trigger.Add(new TriggerObject("endoflevel", new Vector2(0, 19)));
+        //levelGen.trigger.Add(new TriggerObject("endoflevel", new Vector2(0, 19)));
 
         return levelGen;
     }

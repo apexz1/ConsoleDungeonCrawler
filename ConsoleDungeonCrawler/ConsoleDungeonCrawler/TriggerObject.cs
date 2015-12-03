@@ -24,6 +24,11 @@ public class TriggerObject : GameObject, ITrigger
         {
             Environment.Exit(0);
         }
+        if (this.name == "subsystem")
+        {
+            Application.GetData().ActivateSubsystem();
+            Application.GetData().level.trigger.Remove(this);
+        }
 
         return name;
     }

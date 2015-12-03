@@ -72,13 +72,14 @@ class ConsoleInventoryController : IBaseController
 
             data.inventory.content[data.currentItem].count -= 1;
             // == 0 for potential abuse with items that have a count of < 0 to allow easier unlimited use items
-            if (data.inventory.content[data.currentItem].count == 0)
+            bool temp = t.Use();
+            Console.WriteLine(temp);
+
+            if (data.inventory.content[data.currentItem].count == 0 && temp)
             {
                 data.inventory.content.RemoveAt(data.currentItem);
                 data.currentItem = -1;
             }
-
-            t.Use();
         }
         if (item is Usable)
         {

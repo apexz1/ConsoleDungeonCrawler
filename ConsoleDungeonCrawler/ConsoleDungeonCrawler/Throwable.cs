@@ -29,19 +29,20 @@ public class Throwable : Item
         behaviour = b;
     }
 
-    public void Use()
+    public bool Use()
     {
         GameData data = Application.GetData();
 
         if (!data.combat)
         {
-            return;
+            return false;
         }
 
         for (int i = 0; i < behaviour.Count; i++)
         {
             behaviour[i].Execute();
         }
+        return true;
     }
 
     public void AddBehaviour(IImpactBehaviour b)
