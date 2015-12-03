@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeListener
 {
+    public static string map = "";
 
     public MasterControlProgram()
     {
         turn = 0;
+        map = "nomap";
         Application.Add((IGameDataChangeListener)this);
     }
 

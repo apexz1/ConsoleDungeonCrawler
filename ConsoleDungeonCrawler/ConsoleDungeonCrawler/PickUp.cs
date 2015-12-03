@@ -102,10 +102,10 @@ public class PickUp : GameObject
 
                 count++;
             }
-                if (!added)
-                {
-                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Empty Weaponcase found. Proceeding...");
-                }
+            if (!added)
+            {
+                data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Empty Weaponcase found. Proceeding...");
+            }
         }
         #endregion
         #region Armor
@@ -147,6 +147,7 @@ public class PickUp : GameObject
         #region Grenades
         else if (item.type == "grenade")
         {
+            /*
             bool added = false;
             int count = 0;
 
@@ -158,7 +159,7 @@ public class PickUp : GameObject
                 if (!data.inventory.Contains(this.item))
                 {
                     data.inventory.Add(this.item, this.count);
-                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Grenade found. " + this.item.name + " was added to the inventory.");
+                    data.combatlog.Add("Grenade found. " + this.item.name + " was added to the inventory.");
 
                     added = true;
                     break;
@@ -168,15 +169,52 @@ public class PickUp : GameObject
             }
             if (!added)
             {
-                data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Empty grenade found. Proceeding...");
+                data.combatlog.Add("Empty grenade found. Proceeding...");
+            }
+            /**/
+
+            data.inventory.Add(this.item, this.count);
+        }
+        #endregion
+        #region Keycards
+        else if (item.type == "key")
+        {
+            bool added = false;
+            int count = 0;
+
+            for (int i = 0; i < data.inventory.content.Count; i++)
+            {
+                if (data.inventory.content[i].item.type == "key") count++;
+                if (count == ItemLibrary.Get().keyItems.Count) return;
+            }
+
+            while (true)
+            {
+                int current = rng.Next(0, ItemLibrary.Get().keyItems.Count);
+                this.item = ItemLibrary.Get().keyItems[current];
+
+                if (!data.inventory.Contains(this.item) && this.item.name != "master_key")
+                {
+                    data.inventory.Add(this.item, this.count);
+                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ this.item.name + " was added to the inventory.");
+
+                    added = true;
+                    break;
+                }
+
+                count++;
+            }
+            if (!added)
+            {
+                data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Keycard already in possesion.");
             }
         }
         #endregion
 
+
         else
         {
             //Console.WriteLine("SECOND");
-
             data.inventory.Add(this.item, this.count);
         }
 

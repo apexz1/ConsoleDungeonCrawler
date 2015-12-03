@@ -31,7 +31,11 @@ public class LevelGenerator : ILevelBuilder
         levelGen.structure = lfi.BuildStructure();
         lfi.AddObjectsFromImage(levelGen);
 
-        //levelGen.playerSpawnPoints = SetPlayerSpawnPoints();
+        if(lfi.output.playerSpawns <= 0)
+        {
+            levelGen.playerSpawnPoints = SetPlayerSpawnPoints(levelGen);
+        }
+
         //levelGen.pickupSpawnPoints = SetPickupSpawnPoints();
         //levelGen.enemySpawnPoints = SetEnemySpawnPoints();
 
@@ -228,14 +232,14 @@ public class LevelGenerator : ILevelBuilder
         return enemy;
     }
     /**/
-    private List<Vector2> SetPlayerSpawnPoints()
+    private List<Vector2> SetPlayerSpawnPoints(Level level)
     {
         List<Vector2> spawns = new List<Vector2>();
 
-        spawns.Add(new Vector2(0, 0));
-        spawns.Add(new Vector2(0, 19));
-        spawns.Add(new Vector2(19, 0));
-        spawns.Add(new Vector2(19, 19));
+        spawns.Add(new Vector2(1, 1));
+        spawns.Add(new Vector2(level.structure.GetLength(0) - 1, 1));
+        spawns.Add(new Vector2(1, level.structure.GetLength(1) - 1));
+        spawns.Add(new Vector2(level.structure.GetLength(0) - 1, level.structure.GetLength(1) - 1));
 
         return spawns;
     }

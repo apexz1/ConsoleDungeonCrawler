@@ -29,9 +29,6 @@ public class Application
     public static void NewGame()
     {
         data = new GameData();
-        MasterControlProgram.SetController(new ConsolePlayerController());
-        ChangeGameState(GameStates.GAME);
-
         enemyController = new EnemyController();
         ILevelBuilder generator = new LevelGenerator();
 

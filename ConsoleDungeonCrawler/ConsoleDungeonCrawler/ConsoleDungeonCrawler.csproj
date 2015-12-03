@@ -49,6 +49,7 @@
     <Compile Include="AmmoFacade.cs" />
     <Compile Include="Ammo.cs" />
     <Compile Include="ConsoleMapSelectionController.cs" />
+    <Compile Include="LevelFromImageOutputInfo.cs" />
     <Compile Include="MapsStates.cs" />
     <Compile Include="MenuStates.cs" />
     <Compile Include="Traits\AccuracyTrait.cs" />

@@ -11,12 +11,18 @@ public class LevelFromImage : ILevelBuilder
 
     public int pickUpCount = 5;
     public int enemyCount = 3;
+    public LevelFromImageOutputInfo output = new LevelFromImageOutputInfo();
     string path = "layout_all.bmp";
-    Random rng = new Random();
+    Random rng = new Random(); 
     Bitmap btm;
 
     public LevelFromImage()
     {
+        //Console.WriteLine(MasterControlProgram.map);
+        if (MasterControlProgram.map != "nomap")
+        {
+            path = MasterControlProgram.map;
+        }
         Init();
     }
 
@@ -46,12 +52,13 @@ public class LevelFromImage : ILevelBuilder
         levelGen.pickUps.Add(SpawnPickup(new Vector2(2, 3), 2));
         levelGen.pickUps.Add(SpawnPickup(new Vector2(3, 3), 3));
         return levelGen;
-
     }
 
     public Tile[,] BuildStructure()
     {
         Tile[,] levelGenStructure = new Tile[btm.Width, btm.Height];
+        output.width = btm.Width;
+        output.height = btm.Height;
 
         for (int i = 0; i < btm.Width; i++)
         {
@@ -61,10 +68,12 @@ public class LevelFromImage : ILevelBuilder
                 if (btm.GetPixel(i, j).ToArgb() == Color.Black.ToArgb())
                 {
                     levelGenStructure[i, j] = new Tile("wall", ClipType.WALL);
+                    output.walls += 1;
                 }
                 else
                 {
                     levelGenStructure[i, j] = new Tile("floor", ClipType.FLOOR);
+                    output.floors += 1;
                 }
             }
         }
@@ -81,18 +90,22 @@ public class LevelFromImage : ILevelBuilder
                 if (btm.GetPixel(i, j).ToArgb() == Color.Red.ToArgb())
                 {
                     level.doors.Add(new Door("door", "red", new Vector2(i, j), false));
+                    output.doors += 1;
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.Blue.ToArgb())
                 {
                     level.doors.Add(new Door("door", "blue", new Vector2(i, j), false));
+                    output.doors += 1;
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.Lime.ToArgb())
                 {
                     level.doors.Add(new Door("door", "green", new Vector2(i, j), false));
+                    output.doors += 1;
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.Yellow.ToArgb())
                 {
                     level.doors.Add(new Door("door", "yellow", new Vector2(i, j), false));
+                    output.doors += 1;
                 }
                 if (btm.GetPixel(i, j).ToArgb() == Color.Aqua.ToArgb())
                 {
@@ -101,6 +114,7 @@ public class LevelFromImage : ILevelBuilder
                 if (btm.GetPixel(i, j).ToArgb() == Color.LightSlateGray.ToArgb())
                 {
                     level.playerSpawnPoints.Add(new Vector2(i, j));
+                    output.playerSpawns += 1;
                 }
             }
         }

@@ -110,6 +110,14 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public void RenderMapSelect()
     {
+        ConsoleColor f = ConsoleColor.Gray;
+        ConsoleColor b = ConsoleColor.Black;
+
+        char[] label;
+        string content;
+
+        ConsoleMapSelectionController temp = (ConsoleMapSelectionController)MasterControlProgram.GetController();
+
         for (int i = 0; i < uiContent.GetLength(0); i++)
         {
             for (int j = 0; j < uiContent.GetLength(1); j++)
@@ -117,11 +125,45 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 uiContent[i, j] = new ConsolePixel();
             }
         }
+
+        content = "CONSOLE DUNGEON CRAWLER : MAP SELECTION";
+        label = content.ToCharArray();
+        for (int i = 0; i < label.Length; i++)
+        {
+            f = ConsoleColor.Green;
+            uiContent[0, i] = new ConsolePixel(label[i], f);
+        }
+
+        if (temp.states.Count > 0)
+        {
+            for (int i = 0; i < temp.states.Count; i++)
+            {
+                content = temp.states[i].ToString();
+                label = content.ToCharArray();
+
+                for (int j = 0; j < label.Length; j++)
+                {
+                    if (i == temp.index)
+                    {
+                        f = ConsoleColor.Gray;
+                        b = ConsoleColor.Magenta;
+                    }
+                    else
+                    {
+                        f = ConsoleColor.Gray;
+                        b = ConsoleColor.Black;
+                    }
+
+                    uiContent[1 + i, j] = new ConsolePixel(label[j], f, b);
+                }
+            }
+        }
     }
 
     public void RenderGame()
     {
         char symbol = ' ';
+        Console.WriteLine(data.player);
         offset = new Vector2((int)data.player.position.x - (viewH / 2), (int)data.player.position.y - (viewW / 2));
         Console.WriteLine(offset.x + " " + offset.y);
 
@@ -179,7 +221,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             for (int i = 0; i < label.Length; i++)
             {
                 f = ConsoleColor.White;
-                uiContent[0, uiContent.GetLength(1) - content.Length + i] = new ConsolePixel(label[i], f, b);
+                uiContent[0, viewW - content.Length + i] = new ConsolePixel(label[i], f, b);
             }
         }
         f = ConsoleColor.Gray;
@@ -200,7 +242,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     f = ConsoleColor.Red;
                 }
                 else f = ConsoleColor.Gray;
-                uiContent[0, data.level.structure.GetLength(1) - content.Length + i] = new ConsolePixel(label[i], f, b);
+                uiContent[0, viewW - content.Length + i] = new ConsolePixel(label[i], f, b);
             }
         }
         /*
@@ -408,10 +450,10 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         if (data.combat)
         {
             GameObject selector = data.player.selector;
-            symbol = uiContent[(int)selector.position.x + (int)loff.x, (int)selector.position.y].symbol;
+            symbol = uiContent[-(int)offset.x + (int)selector.position.x + (int)loff.x, -(int)offset.y + (int)selector.position.y].symbol;
             f = ConsoleColor.White;
             b = ConsoleColor.Magenta;
-            uiContent[viewH / 2 + (int)selector.position.x + (int)loff.x, viewW / 2 + (int)selector.position.y] = new ConsolePixel(symbol, f, b);
+            uiContent[-(int)offset.x + (int)selector.position.x + (int)loff.x, -(int)offset.y + (int)selector.position.y] = new ConsolePixel(symbol, f, b);
             f = ConsoleColor.Gray;
             b = ConsoleColor.Black;
         }
@@ -452,7 +494,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     label = content.ToCharArray();
                     for (int j = 0; j < label.Length; j++)
                     {
-                        uiContent[i + 1, (data.level.structure.GetLength(1) + 1) + j] = new ConsolePixel(label[j], f, b);
+                        uiContent[i + 1, viewW + 1 + j] = new ConsolePixel(label[j], f, b);
                     }
                 }
             }
@@ -625,7 +667,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     label = content.ToCharArray();
                     for (int j = 0; j < label.Length; j++)
                     {
-                        uiContent[(data.level.structure.GetLength(0) + 2) + i, 0 + j] = new ConsolePixel(label[j], f, b);
+                        uiContent[viewH + 2 + i, 0 + j] = new ConsolePixel(label[j], f, b);
                     }
                 }
             }

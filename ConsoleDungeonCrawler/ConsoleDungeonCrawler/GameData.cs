@@ -42,6 +42,7 @@ public class GameData
         Application.GetData().inventory.Add(player.Weapon.content, 1);
         Application.GetData().inventory.Add(player.Armor.content, 1);
 
+        /*
         Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[1], 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().usableList[2], 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[1], 1);
@@ -52,6 +53,7 @@ public class GameData
         Application.GetData().inventory.Add(ItemLibrary.Get().weaponList[1], 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().weaponList[2], 1);
         //player.AddTrait(2, "temp", new HeavyInjuryTrait(5));
+        /**/
 
         Random rng = new Random();
         player.position = level.playerSpawnPoints[rng.Next(0, 4)];

@@ -22,7 +22,8 @@ public class GameState : IBaseState
         this.state = state;
 
         if (state == GameStates.GAME) MasterControlProgram.SetController(new ConsolePlayerController());
-        if (state == GameStates.MENU && state == GameStates.MAPS) MasterControlProgram.SetController(new ConsoleMenuController());
+        if (state == GameStates.MENU) MasterControlProgram.SetController(new ConsoleMenuController());
+        if (state == GameStates.MAPS) MasterControlProgram.SetController(new ConsoleMapSelectionController());
     }
 
     public void Execute()

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +64,7 @@ public class ConsoleMenuController : IBaseController
             case ConsoleKey.Enter:
                 if (current == MenuStates.NEW)
                 {
-                    Application.NewGame();
+                    Application.ChangeGameState(GameStates.MAPS);
                 }
                 if (current == MenuStates.CLOSE)
                 {
