@@ -43,6 +43,10 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         {
             RenderGame();
         }
+        if (Application.GetState().Get() == GameStates.FINISH)
+        {
+            RenderFinishScreen();
+        }
         //RENDERS THE CURRENT UICONTENT
         for (int i = 0; i < uiContent.GetLength(0); i++)
         {
@@ -160,6 +164,44 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         }
     }
 
+    public void RenderFinishScreen()
+    {
+        ConsoleColor f = ConsoleColor.Gray;
+        ConsoleColor b = ConsoleColor.Black;
+
+        char[] label;
+        string content;
+
+        for (int i = 0; i < uiContent.GetLength(0); i++)
+        {
+            for (int j = 0; j < uiContent.GetLength(1); j++)
+            {
+                uiContent[i, j] = new ConsolePixel();
+            }
+        }
+
+        content = "GAME OVER : SCORE REACHED";
+        label = content.ToCharArray();
+        for (int i = 0; i < label.Length; i++)
+        {
+            f = ConsoleColor.Green;
+            uiContent[0, i] = new ConsolePixel(label[i], f);
+        }
+
+        //Process all end game information here
+
+        content = "PRESS ANY KEY TO RETURN TO MAIN MENU";
+        label = content.ToCharArray();
+        for (int i = 0; i < label.Length; i++)
+        {
+            f = ConsoleColor.Green;
+            uiContent[0, i] = new ConsolePixel(label[i], f);
+        }
+
+        Console.ReadKey();
+        Application.ChangeGameState(GameStates.MENU);
+    }
+
     public void RenderGame()
     {
         char symbol = ' ';
@@ -228,7 +270,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         b = ConsoleColor.Black;
         /**/
         //Ammo Stuff
-        if (true)
+        if (data.player.Weapon.content.currentammo > -1 && data.player.Weapon.content.ammo > -1)
         {
             string content = data.player.Weapon.content.currentammo.ToString() + "/" + data.player.Weapon.content.ammo;
             char[] label = content.ToCharArray();
@@ -242,6 +284,16 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     f = ConsoleColor.Red;
                 }
                 else f = ConsoleColor.Gray;
+                uiContent[0, viewW - content.Length + i] = new ConsolePixel(label[i], f, b);
+            }
+        }
+        else
+        {
+            string content = "melee";
+            char[] label = content.ToCharArray();
+
+            for (int i = 0; i < label.Length; i++)
+            {
                 uiContent[0, viewW - content.Length + i] = new ConsolePixel(label[i], f, b);
             }
         }
@@ -340,6 +392,11 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             {
                 symbol = '‼';
                 f = ConsoleColor.White;
+            }
+            if (data.level.pickUps[i].item.type == "use")
+            {
+                symbol = '‼';
+                f = ConsoleColor.Yellow;
             }
             if (data.level.pickUps[i].item.type == "weap")
             {

@@ -59,6 +59,7 @@ public class PickUp : GameObject
                     data.inventory.content[i].item = temp;
 
                     data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ '"' + data.inventory.content[i].item.name + '"' + " ammunition restored.");
+                    data.score.AddScore(10);
                 }
             }
         }
@@ -69,6 +70,7 @@ public class PickUp : GameObject
             //Console.WriteLine("MEDKIT FOUND");
             data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Medkit found. Player health restored.");
             data.player.health = data.player.maxHealth;
+            data.score.AddScore(10);
         }
         #endregion
         #region Weapon
@@ -97,6 +99,7 @@ public class PickUp : GameObject
                     data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Weaponcase found. " + this.item.name + " added to inventory.");
 
                     added = true;
+                    data.score.AddScore(150);
                     break;
                 }
 
@@ -133,6 +136,7 @@ public class PickUp : GameObject
                     data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Armor found. " + this.item.name + " was added to the inventory.");
 
                     added = true;
+                    data.score.AddScore(150);
                     break;
                 }
 
@@ -175,6 +179,18 @@ public class PickUp : GameObject
             int current = rng.Next(0, ItemLibrary.Get().grenadeList.Count);
             this.item = ItemLibrary.Get().grenadeList[current];
             data.inventory.Add(this.item, this.count);
+            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Grenade found. Added " + this.item.name + " to inventory.");
+            data.score.AddScore(10);
+        }
+        #endregion
+        #region ammo_mods
+        else if (item.type == "use")
+        {
+            int current = rng.Next(0, ItemLibrary.Get().usableList.Count);
+            this.item = ItemLibrary.Get().usableList[current];
+            data.inventory.Add(this.item, this.count);
+            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ "Mod found. Added " + this.item.name + " to inventory.");
+            data.score.AddScore(10);
         }
         #endregion
         #region Keycards
@@ -200,6 +216,7 @@ public class PickUp : GameObject
                     data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */ this.item.name + " was added to the inventory.");
 
                     added = true;
+                    data.score.AddScore(50);
                     break;
                 }
 

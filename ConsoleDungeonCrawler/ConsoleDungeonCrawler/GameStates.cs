@@ -1,5 +1,6 @@
 public enum GameStates {
     MENU,
     MAPS,
-    GAME
+    GAME,
+    FINISH,
 }

@@ -44,6 +44,7 @@ public class GameData
         Application.GetData().inventory.Add(player.Weapon.content, 1);
         Application.GetData().inventory.Add(player.Armor.content, 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().items[0], 1);
+        Application.GetData().inventory.Add(ItemLibrary.Get().weaponList[5], 1);
 
         /*
         Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[0], 1);
@@ -72,6 +73,7 @@ public class GameData
         if (subsystems == 1)
         {
             Application.GetData().inventory.Add(ItemLibrary.Get().items[0], 1);
+            Application.GetData().inventory.Add(ItemLibrary.Get().items[2], 1);
         }
         if (subsystems == 2)
         {

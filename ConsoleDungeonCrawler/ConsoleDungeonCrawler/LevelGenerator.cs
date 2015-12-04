@@ -45,6 +45,7 @@ public class LevelGenerator : ILevelBuilder
         pickUpCount = pickUpCount + (rng.Next(0, 10) * factor);
 
         enemyCount = pickUpCount * 2;
+        pickUpCount += 10;
         maxMeleeCount = enemyCount / 2;
         maxRangedCount = (enemyCount / 2) - 1;
         maxBossCount = 1;
@@ -111,6 +112,14 @@ public class LevelGenerator : ILevelBuilder
 
             if (level.structure[a, b].substance == ClipType.FLOOR)
             {
+                for (int i = 0; i < level.doors.Count; i++)
+                {
+                    if (level.doors[i].position.x == a && level.doors[i].position.y == b)
+                    {
+                        found = false;
+                        break;
+                    }
+                }
                 if (level.pickUps.Count > 0)
                 {
                     for (int i = 0; i < level.pickUps.Count; i++)

@@ -48,7 +48,6 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
             case ConsoleKey.Q:
                 Console.WriteLine("\nq");
                 data.player.Weapon.content.Attack();
-                data.player.RemoveTrait("acc");
                 break;
             case ConsoleKey.Backspace:
                 Console.WriteLine("\nbackspace");

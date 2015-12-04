@@ -29,7 +29,7 @@ public class Actor : GameObject
     /// <param name="health"></param>
     /// <param name="weapon"></param>
     /// <param name="armor"></param>
-    public Actor(string name, string type,  int health, Weapon weapon, Armor armor)
+    public Actor(string name, string type, int health, Weapon weapon, Armor armor)
     {
         this.name = name;
         this.actions = 20000;
@@ -238,8 +238,8 @@ public class Actor : GameObject
             actions -= 1;
             moved = true;
             Console.WriteLine("NEW POSITION = " + position.x + "," + position.y);
-            
-            for(int i = 0; i < data.level.trigger.Count; i++)
+
+            for (int i = 0; i < data.level.trigger.Count; i++)
             {
                 if (position.x == data.level.trigger[i].position.x && position.y == data.level.trigger[i].position.y)
                 {
@@ -325,13 +325,27 @@ public class Actor : GameObject
             data.combatlog.Add("Hit. " + (int)value + " damage taken");
         }
 
+        data.score.AddScore((int)value);
 
         if (this != data.player && health <= 0)
         {
+            #region scores
+            if (this.name == "alien_assaulter")
+            {
+                data.score.AddScore(25);
+            }
+            if (this.name == "alien_trooper")
+            {
+                data.score.AddScore(20);
+            }
+            if (this.name == "cyberbear")
+            {
+                data.score.AddScore(75);
+            }
+            #endregion
+
             data.level.enemies.Remove(this);
             data.collision.Remove(this);
-            data.score.AddScore(10);
-            Console.WriteLine(data.score.GetScore());
         }
         if (this == data.player && health <= 0)
         {
@@ -340,6 +354,7 @@ public class Actor : GameObject
             data.SpawnPlayer();
 
             Console.WriteLine("YOU DIED");
+            Application.ChangeGameState(GameStates.FINISH);
         }
     }
 
@@ -349,24 +364,94 @@ public class Actor : GameObject
 
         if (armor.armortype == "none") return value;
         if (dmgtype == "true") return value;
+
+        #region plate
         if (armor.armortype == "plate")
         {
-            if (dmgtype == "sharp") result = (value * 0.3f) - ((armor.value/10));
-            if (dmgtype == "bullet") result = (value * 0.9f) - ((armor.value/10) * (1 - pen/2));
+            if (dmgtype == "sharp") result = (value * 0.3f) - ((armor.value / 10));
+            if (dmgtype == "bullet") result = (value * 0.9f) - ((armor.value / 10) * (1 - pen / 1.3f));
             if (dmgtype == "flechet")
             {
                 result = (value * 0.9f) - ((armor.value / 10) * (1 - pen));
                 AddTrait(2, "temp", new HeavyInjuryTrait(1));
             }
+            if (dmgtype == "hook")
+            {
+                result = (value * 0.5f) - ((armor.value / 10));
+                AddTrait(0, "temp", new HookedTrait());
+            }
 
-            if (dmgtype == "blunt") result = (value * 1.5f) + ((armor.value/20) * (1 - pen));
+            if (dmgtype == "blunt") result = (value * 1.5f) + ((armor.value / 20) * (1 - pen));
         }
+        #endregion
+        #region aramid
+        if (armor.armortype == "aramid")
+        {
+            if (dmgtype == "sharp") result = (value) - ((armor.value / 10));
+            if (dmgtype == "bullet") result = (value * 0.5f) - ((armor.value / 10) * (1 - pen / 1.8f));
+            if (dmgtype == "flechet")
+            {
+                result = (value * 0.9f) - ((armor.value / 10) * (1 - pen / 1.1f));
+                AddTrait(2, "temp", new HeavyInjuryTrait(1));
+            }
+            if (dmgtype == "hook")
+            {
+                result = (value * 0.5f) - ((armor.value / 10));
+                AddTrait(0, "temp", new HookedTrait());
+            }
+
+            if (dmgtype == "blunt") result = (value * 1.0f) + ((armor.value / 10) * (1 - pen));
+        }
+        #endregion
+        #region hybrid
+        if (armor.armortype == "hybrid")
+        {
+            if (dmgtype == "sharp") result = (value * 0.65f) - ((armor.value / 10) * (1 - pen / 1.4f));
+            if (dmgtype == "bullet") result = (value * 0.65f) - ((armor.value / 10) * (1 - pen / 1.4f));
+            if (dmgtype == "flechet")
+            {
+                result = (value) - ((armor.value / 10) * (1 - pen));
+                AddTrait(2, "temp", new HeavyInjuryTrait(1));
+            }
+            if (dmgtype == "hook")
+            {
+                result = (value * 0.5f) - ((armor.value / 10));
+                AddTrait(0, "temp", new HookedTrait());
+            }
+
+            if (dmgtype == "blunt") result = (value * 1.2f) + ((armor.value / 10) * (1 - pen));
+        }
+        #endregion
+        #region fluffy
         if (armor.armortype == "fluffy")
         {
             if (dmgtype == "sharp" || dmgtype == "flechet") result = (value * 3.0f) + ((armor.value) * (1 - pen));
-            if (dmgtype == "bullet") result = (value) - ((armor.value/10) * (1 - pen*0.8f));
+            if (dmgtype == "bullet") result = (value) - ((armor.value / 10) * (1 - pen * 0.8f));
             if (dmgtype == "blunt") result = (value) + ((armor.value));
         }
+        #endregion
+        #region molecular
+        if (armor.armortype == "molecular")
+        {
+            Random rng = new Random();
+            double current = Math.Round(rng.NextDouble(), 2);
+
+            if (dmgtype == "sharp" && current >= 0.2) result = (value) - ((armor.value / 100) * (1 - pen));
+            if (dmgtype == "bullet" && current >= 0.7) result = (value * 0.5f) - ((armor.value / 10) * (1 - pen / 1.8f));
+            if (dmgtype == "flechet" && current >= 0.7)
+            {
+                result = (value * 0.9f) - ((armor.value / 10) * (1 - pen / 1.1f));
+                AddTrait(2, "temp", new HeavyInjuryTrait(1));
+            }
+            if (dmgtype == "hook")
+            {
+                result = (value * 0.5f) - ((armor.value / 10));
+                AddTrait(0, "temp", new HookedTrait());
+            }
+
+            if (dmgtype == "blunt" && current >= 0.7) result = (value * 1.0f) + ((armor.value / 10) * (1 - pen));
+        }
+        #endregion
 
         //Console.WriteLine(value + " " + dmgtype + " " + armor.armortype);
         //Console.WriteLine("ARMOR CALC DONE " + result);
@@ -424,7 +509,17 @@ public class Actor : GameObject
             data.combat = false;
         }
 
+        for (int i = 0; i < traits.Count; i++)
+        {
+            if (traits[i].name == "equip")
+            {
+                RemoveTrait(traits[i]);
+            }
+        }
+
         Weapon.content = r;
+        actions--;
+        ApplyTraits();
     }
 
     public void EquipArmor(Armor a)
@@ -435,6 +530,7 @@ public class Actor : GameObject
         }
 
         Armor.content = a;
+        actions--;
     }
 
 

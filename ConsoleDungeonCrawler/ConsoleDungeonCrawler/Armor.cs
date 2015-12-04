@@ -6,11 +6,15 @@ using System.Text;
 
 public class Armor : Item
 {
+    public int value;
+    public string armortype;
+    public Trait trait;
 
     public Armor()
     {
         value = 5;
         type = "none";
+        trait = new Trait();
     }
 
     public Armor(Armor armor)
@@ -19,6 +23,7 @@ public class Armor : Item
         this.type = armor.type;
         this.value = armor.value;
         this.armortype = armor.armortype;
+        this.trait = armor.trait;
     }
 
     public Armor(string name, string type)
@@ -36,8 +41,12 @@ public class Armor : Item
         this.value = value;
         this.armortype = armortype;
     }
-
-    public int value;
-    public string armortype;
-
+    public Armor(string name, string type, int value, string armortype, Trait trait)
+    {
+        this.name = name;
+        this.type = type;
+        this.value = value;
+        this.armortype = armortype;
+        this.trait = trait;
+    }
 }

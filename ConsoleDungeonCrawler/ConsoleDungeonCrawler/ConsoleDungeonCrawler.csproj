@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccuracyImpact.cs" />
+    <Compile Include="Traits\ActionTrait.cs" />
     <Compile Include="AmmoFacade.cs" />
     <Compile Include="Ammo.cs" />
     <Compile Include="ConsoleMapSelectionController.cs" />
+    <Compile Include="Traits\HookedTrait.cs" />
     <Compile Include="LevelFromImageOutputInfo.cs" />
     <Compile Include="MapsStates.cs" />
     <Compile Include="MenuStates.cs" />

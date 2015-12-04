@@ -57,6 +57,11 @@ public class Weapon : Item
 
         this.ammo = ammo;
         this.currentammo = 0;
+        if (ammo == -1)
+        {
+            this.currentammo = -1;
+        }
+
         this.maxAmmo = maxAmmo;
         this.clipsize = clip;
         this.ammotype = ammotype;
@@ -78,45 +83,51 @@ public class Weapon : Item
     public void Attack()
     {
         GameData data = Application.GetData();
+        int hits = 1;
 
         if (data.player.actions <= 0)
         {
             return;
         }
 
-        if (currentammo <= 0)
+        if (currentammo == 0)
         {
             Console.WriteLine("no ammo");
             return;
         }
 
-        for (int i = 0; i < data.level.structure.GetLength(0); i++)
+        Console.WriteLine("TESTING THE BLADE 1");
+
+        if (CheckTarget(new Vector2(data.player.selector.position.x, data.player.selector.position.y)) != null)
         {
-            for (int j = 0; j < data.level.structure.GetLength(1); j++)
+            if (this.name == "submachine_gun")
             {
-                if ((i == data.player.selector.position.x) && (j == data.player.selector.position.y))
+                hits = 5;
+            }
+            for (int i = 0; i < hits; i++)
+            {
+                if (CheckAccuracy())
                 {
-                    if (CheckTarget(new Vector2(i, j)) != null)
+                    if (CheckTarget(new Vector2(data.player.selector.position.x, data.player.selector.position.y)) != null)
                     {
-                        if (CheckAccuracy())
-                        {
-                            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Target found. Dealing damage...");
-                            CheckTarget(new Vector2(i, j)).TakeDamage(damage, damagetype, penetration);
-                        }
-                        else
-                        {
-                            data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */" Target missed. No damage dealt.");
-                        }
-
-                        data.player.actions -= 1;
-                        if (data.player.actions <= 0)
-                        {
-                            data.combat = false;
-                        }
-
-                        currentammo -= 1;
+                        data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Target found. Dealing damage...");
+                        CheckTarget(new Vector2(data.player.selector.position.x, data.player.selector.position.y)).TakeDamage(damage, damagetype, penetration);
                     }
+
                 }
+                else
+                {
+                    data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */" Target missed. No damage dealt.");
+                }
+
+                data.player.actions -= 1;
+                if (data.player.actions <= 0)
+                {
+                    data.combat = false;
+                }
+
+                currentammo -= 1;
+                data.player.RemoveTrait("acc");
             }
         }
     }
@@ -137,6 +148,11 @@ public class Weapon : Item
             }
 
             data.player.actions -= 1;
+
+            for (int i = 0; i < data.level.enemies.Count; i++)
+            {
+                data.level.enemies[i].RemoveTrait("acc");
+            }
         }
     }
 
@@ -155,21 +171,23 @@ public class Weapon : Item
             return;
         }
 
-        if (currentammo == clipsize)
+        else if (currentammo == clipsize)
         {
             Application.GetData().combatlog.Add("Weapon system fully loaded. Unable to reload weapon.");
             return;
         }
 
-        if (ammo >= clipsize)
+        else if (ammo >= clipsize)
         {
+            Console.WriteLine(clipsize + " " + ammo);
+            int storage = currentammo;
             currentammo = clipsize;
-            ammo -= clipsize;
+            ammo -= clipsize - storage;
 
             Application.GetData().combatlog.Add("Weapon system reloaded.");
         }
 
-        if (ammo > 0 && ammo < clipsize)
+        else if (ammo > 0 && ammo < clipsize)
         {
             currentammo = ammo;
             ammo = 0;

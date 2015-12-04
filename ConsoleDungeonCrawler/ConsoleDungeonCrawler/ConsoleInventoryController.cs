@@ -80,6 +80,8 @@ class ConsoleInventoryController : IBaseController
                 data.inventory.content.RemoveAt(data.currentItem);
                 data.currentItem = -1;
             }
+
+            QuitInventory();
         }
         if (item is Usable)
         {
@@ -94,6 +96,14 @@ class ConsoleInventoryController : IBaseController
             }
 
             u.Use();
+            QuitInventory();
         }
+    }
+
+    public void QuitInventory()
+    {
+        MasterControlProgram.SetController(new ConsolePlayerController());
+        data.currentItem = -1;
+        data.inv = !data.inv;
     }
 }

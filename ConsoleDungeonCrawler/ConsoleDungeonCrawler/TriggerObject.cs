@@ -22,12 +22,13 @@ public class TriggerObject : GameObject, ITrigger
         Console.Write("TRIGGERED");
         if (this.name == "endoflevel")
         {
-            Environment.Exit(0);
+            Application.ChangeGameState(GameStates.FINISH); 
         }
         if (this.name == "subsystem")
         {
             Application.GetData().ActivateSubsystem();
             Application.GetData().level.trigger.Remove(this);
+            Application.GetData().score.AddScore(100);
         }
 
         return name;

@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class HeavyInjuryTrait : ITraitBehaviour
-{
-    private int dmg;
 
-    public HeavyInjuryTrait(int dmg)
+public class ActionTrait : ITraitBehaviour
+{
+    private int actions;
+
+    public ActionTrait(int actions)
     {
-        this.dmg = dmg;
+        this.actions = actions;
     }
+
     public void Execute(Actor actor)
     {
-        actor.Weapon.content.accuracy -= 0.15f;
+        actor.maxActions += actions;
     }
 
     public void OnRemove(Actor actor)
     {
-        actor.TakeDamage(dmg, "true", 0);
+        actor.maxActions -= actions;
     }
 }
+
