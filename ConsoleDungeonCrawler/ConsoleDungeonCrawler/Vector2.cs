@@ -66,7 +66,6 @@ public class Vector2
     {
         bool adjacent = false;
 
-        //Console.WriteLine(a.x + "," + a.y + " | " + b.x + "," + b.y + " distance:" + Vector2.Distance(a, b));
 
         if (Vector2.Distance(a,b) <= 1 && (a.x == b.x || a.y == b.y))
         {

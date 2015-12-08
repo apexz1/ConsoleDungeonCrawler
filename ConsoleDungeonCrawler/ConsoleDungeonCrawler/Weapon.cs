@@ -92,11 +92,8 @@ public class Weapon : Item
 
         if (currentammo == 0)
         {
-            Console.WriteLine("no ammo");
             return;
         }
-
-        Console.WriteLine("TESTING THE BLADE 1");
 
         if (CheckTarget(new Vector2(data.player.selector.position.x, data.player.selector.position.y)) != null)
         {
@@ -135,7 +132,6 @@ public class Weapon : Item
     public void Attack(Vector2 target)
     {
         GameData data = Application.GetData();
-        Console.WriteLine(this.name + " " + this.accuracy);
         if (CheckTarget(target) != null)
         {
             if (CheckAccuracy())
@@ -160,6 +156,11 @@ public class Weapon : Item
     {
         GameData data = Application.GetData();
 
+        if (data.player.actions <= 0)
+        {
+            return;
+        }
+
         if (Application.GetData().combat)
         {
             Application.GetData().combat = false;
@@ -179,7 +180,6 @@ public class Weapon : Item
 
         else if (ammo >= clipsize)
         {
-            Console.WriteLine(clipsize + " " + ammo);
             int storage = currentammo;
             currentammo = clipsize;
             ammo -= clipsize - storage;
@@ -218,8 +218,6 @@ public class Weapon : Item
             {
                 if ((ConsolePseudoRaycast.CastRay(new Vector2(data.player.position.x, data.player.position.y), new Vector2(target.x, target.y))))
                 {
-                    //ConsoleView.errorMessage = "target obscured (RayCast)";
-                    Console.WriteLine("target obscured (RayCast)");
                     return null;
                 }
                 /**/
@@ -241,8 +239,6 @@ public class Weapon : Item
         float rngF = (rng.Next(-50, 100));
         float acc = rngF / 100.0f;
         if (acc < 0.01f) acc = 0.01f;
-
-        Console.WriteLine("ACCURACY CHECK " + acc + " " + this.accuracy);
 
         if (acc <= this.accuracy) return true;
         else return false;

@@ -12,8 +12,8 @@ public class Trait
 
     public Trait()
     {
-
     }
+
     public Trait(ITraitBehaviour behaviour)
     {
         this.behaviour.Add(behaviour);

@@ -32,7 +32,7 @@ public class Actor : GameObject
     public Actor(string name, string type, int health, Weapon weapon, Armor armor)
     {
         this.name = name;
-        this.actions = 20000;
+        this.actions = maxActions;
         this.type = type;
         this.health = health;
         this.position = new Vector2();
@@ -47,7 +47,7 @@ public class Actor : GameObject
     public Actor(Actor enemy)
     {
         this.name = enemy.name;
-        this.actions = 20000;
+        this.actions = 1;
         this.type = enemy.type;
         this.health = enemy.health;
         this.position = new Vector2();
@@ -64,7 +64,7 @@ public class Actor : GameObject
     public int health;
     public int maxHealth;
     public int actions;
-    public int maxActions = 10000;
+    public int maxActions = 3;
     public Slot<Weapon> Weapon;
     public Slot<Armor> Armor;
     public List<Trait> traits = new List<Trait>();
@@ -86,26 +86,22 @@ public class Actor : GameObject
 
         if (actions <= 0)
         {
-            Console.WriteLine(18);
             return false;
         }
 
         switch (dir)
         {
             case Direction.VOID:
-                Console.WriteLine(0);
 
                 return true;
 
             case Direction.UP:
-                //Console.WriteLine(XselecRange);
                 //SMARTGIT DEMONSTRATION COMMENT
                 //change -5/+5 to temporary range, based on what is being used for weapon ranges and stuff
 
                 //------------------------------------------------------------
                 if (!(data.combat) && position.x - 1 < 0)
                 {
-                    Console.WriteLine(1);
                     return false;
                 }
                 {
@@ -113,7 +109,6 @@ public class Actor : GameObject
                 }
                 if (data.combat && (selector.position.x - 1 < position.x - XselecRange || selector.position.x - 1 < 0))
                 {
-                    Console.WriteLine(2);
                     return false;
                 }
                 //------------------------------------------------------------
@@ -121,20 +116,17 @@ public class Actor : GameObject
                 {
                     if (!(data.combat) && (data.collision[i].position.x == position.x - 1 && data.collision[i].position.y == position.y))
                     {
-                        Console.WriteLine(3);
                         return false;
                     }
                 }
                 //------------------------------------------------------------              
                 if (!(data.combat) && (data.level.structure[(int)position.x - 1, (int)position.y].substance == ClipType.WALL))
                 {
-                    Console.WriteLine(4);
                     return false;
                 }
 
                 //------------------------------------------------------------
                 pos.x -= 1;
-                Console.WriteLine("move up? " + position.x + " " + position.y);
 
                 break;
             //------------------------------------------------------------
@@ -144,29 +136,24 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.x + 1 > data.level.structure.GetLength(0) - 1)
                 {
-                    Console.WriteLine(5);
                     return false;
                 }
                 if (data.combat && (selector.position.x + 1 > position.x + XselecRange || selector.position.x + 1 > data.level.structure.GetLength(0) - 1))
                 {
-                    Console.WriteLine(6);
                     return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
                     if (!(data.combat) && (data.collision[i].position.x == position.x + 1 && data.collision[i].position.y == position.y))
                     {
-                        Console.WriteLine(7);
                         return false;
                     }
                 }
                 if (!(data.combat) && (data.level.structure[(int)position.x + 1, (int)position.y].substance == ClipType.WALL))
                 {
-                    Console.WriteLine(8);
                     return false;
                 }
                 pos.x += 1;
-                //Console.WriteLine("move down? " + position.x + " " + position.y);
 
                 break;
 
@@ -174,29 +161,24 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.y - 1 < 0)
                 {
-                    Console.WriteLine(9);
                     return false;
                 }
                 if (data.combat && (selector.position.y - 1 < position.y - XselecRange || selector.position.y - 1 < 0))
                 {
-                    Console.WriteLine(10);
                     return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
                     if (!(data.combat) && (data.collision[i].position.y == position.y - 1 && data.collision[i].position.x == position.x))
                     {
-                        Console.WriteLine(11);
                         return false;
                     }
                 }
                 if (!(data.combat) && (data.level.structure[(int)position.x, (int)position.y - 1].substance == ClipType.WALL))
                 {
-                    Console.WriteLine(12);
                     return false;
                 }
                 pos.y -= 1;
-                //Console.WriteLine("move left? " + position.x + " " + position.y);
 
                 break;
 
@@ -204,29 +186,24 @@ public class Actor : GameObject
 
                 if (!(data.combat) && position.y + 1 > data.level.structure.GetLength(1) - 1)
                 {
-                    Console.WriteLine(13);
                     return false;
                 }
                 if (data.combat && (selector.position.y + 1 > position.y + XselecRange || selector.position.y + 1 > data.level.structure.GetLength(1) - 1))
                 {
-                    Console.WriteLine(14);
                     return false;
                 }
                 for (int i = 0; i < data.level.enemies.Count; i++)
                 {
                     if (!(data.combat) && (data.collision[i].position.y == position.y + 1 && data.collision[i].position.x == position.x))
                     {
-                        Console.WriteLine(15);
                         return false;
                     }
                 }
                 if (!(data.combat) && (data.level.structure[(int)position.x, (int)position.y + 1].substance == ClipType.WALL))
                 {
-                    Console.WriteLine(17);
                     return false;
                 }
                 pos.y += 1;
-                //Console.WriteLine("move right? " + position.x + " " + position.y);
 
                 break;
         }
@@ -237,19 +214,21 @@ public class Actor : GameObject
             position = new Vector2((int)(position.x + pos.x), (int)(position.y + pos.y));
             actions -= 1;
             moved = true;
-            Console.WriteLine("NEW POSITION = " + position.x + "," + position.y);
 
-            for (int i = 0; i < data.level.trigger.Count; i++)
+            if (this == data.player)
             {
-                if (position.x == data.level.trigger[i].position.x && position.y == data.level.trigger[i].position.y)
+                for (int i = 0; i < data.level.trigger.Count; i++)
                 {
-                    if (data.level.trigger[i].name == "subsystem")
+                    if (position.x == data.level.trigger[i].position.x && position.y == data.level.trigger[i].position.y)
                     {
-                        data.combatlog.Add("Ship system reached... End turn to activate");
-                    }
-                    if (data.level.trigger[i].name == "endoflevel")
-                    {
-                        data.combatlog.Add("Escape pod reached... End turn to leave ship");
+                        if (data.level.trigger[i].name == "subsystem")
+                        {
+                            data.combatlog.Add("Ship system reached... End turn to activate");
+                        }
+                        if (data.level.trigger[i].name == "endoflevel")
+                        {
+                            data.combatlog.Add("Escape pod reached... End turn to leave ship");
+                        }
                     }
                 }
             }
@@ -263,7 +242,6 @@ public class Actor : GameObject
 
         for (int i = 0; i < data.level.pickUps.Count; i++)
         {
-            //Console.WriteLine("move to pickup debug: " + position.x + " " + data.level.pickUps[i].position.y);
             if (position.x == data.level.pickUps[i].position.x && position.y == data.level.pickUps[i].position.y)
             {
                 if (this == data.player)
@@ -354,6 +332,7 @@ public class Actor : GameObject
             data.SpawnPlayer();
 
             Console.WriteLine("YOU DIED");
+            Console.WriteLine("Press any key to continue\n");
             Application.ChangeGameState(GameStates.FINISH);
         }
     }
@@ -436,13 +415,26 @@ public class Actor : GameObject
             Random rng = new Random();
             double current = Math.Round(rng.NextDouble(), 2);
 
-            if (dmgtype == "sharp" && current >= 0.2) result = (value) - ((armor.value / 100) * (1 - pen));
+            if (current <= 0.1)
+            {
+                data.combatlog.Add("Enemy attack absorbed(Molecular armor).");
+                return 0;
+            }
+
+
+            if (dmgtype == "sharp" && current >= 0.3) result = (value) - ((armor.value / 100) * (1 - pen));
+            else if (dmgtype == "sharp" && current <= 0.3) result = 0;
+
             if (dmgtype == "bullet" && current >= 0.7) result = (value * 0.5f) - ((armor.value / 10) * (1 - pen / 1.8f));
+            else if (dmgtype == "bullet" && current >= 0.7) result = 0;
+
             if (dmgtype == "flechet" && current >= 0.7)
             {
                 result = (value * 0.9f) - ((armor.value / 10) * (1 - pen / 1.1f));
                 AddTrait(2, "temp", new HeavyInjuryTrait(1));
             }
+            else if (dmgtype == "flechet" && current >= 0.7) result = 0;
+
             if (dmgtype == "hook")
             {
                 result = (value * 0.5f) - ((armor.value / 10));
@@ -453,8 +445,6 @@ public class Actor : GameObject
         }
         #endregion
 
-        //Console.WriteLine(value + " " + dmgtype + " " + armor.armortype);
-        //Console.WriteLine("ARMOR CALC DONE " + result);
         return result;
     }
 
@@ -469,6 +459,7 @@ public class Actor : GameObject
             }
         }
     }
+
     public void AddTrait(Trait trait)
     {
         traits.Add(trait);
@@ -529,8 +520,17 @@ public class Actor : GameObject
             data.combat = false;
         }
 
+        for (int i = 0; i < traits.Count; i++)
+        {
+            if (traits[i].name == "equip")
+            {
+                RemoveTrait(traits[i]);
+            }
+        }
+
         Armor.content = a;
         actions--;
+        AddTrait(Armor.content.trait);
     }
 
 

@@ -41,12 +41,17 @@ public class GameData
         player = new Actor();
         player.health = 10;
         player.maxHealth = 10;
+        
         Application.GetData().inventory.Add(player.Weapon.content, 1);
         Application.GetData().inventory.Add(player.Armor.content, 1);
+
+        Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[1], 1);
+        Application.GetData().inventory.Add(ItemLibrary.Get().armorList[4], 1);
+
+        //DEBUGGING ONLY, DONT TOUCH IF YOU DONT KNOW WHAT YOU'RE DOING
+        /*
         Application.GetData().inventory.Add(ItemLibrary.Get().items[0], 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().weaponList[5], 1);
-
-        
         Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[0], 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().grenadeList[1], 1);
         Application.GetData().inventory.Add(ItemLibrary.Get().usableList[0], 1);
@@ -67,6 +72,13 @@ public class GameData
         Application.GetData().collision.Add(player);
     }
 
+    /// <summary>
+    /// Little help here, since they're named little confusing.
+    /// Those actually don't activate them in level or anything, but happen AFTER a subsystem has been triggered.
+    /// If you want anything special to happen when the player activates a certain number of subsystems, do it here.
+    /// If you have levels that use more/less than 3 subsystems mixed with levels that do use 3, you could rewrite so
+    /// it uses the amount of subsystems in the level found in level.trigger.count(-1 if it has the levelfinish active).
+    /// </summary>
     public void ActivateSubsystem()
     {
         subsystems++;

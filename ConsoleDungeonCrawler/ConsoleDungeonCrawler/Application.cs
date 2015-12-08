@@ -16,6 +16,8 @@ public class Application
     private static readonly HashSet<IGameDataChangeListener> GAMEDATA_CHANGE_LISTENERS = new HashSet<IGameDataChangeListener>();
     private static Dictionary<GameStates, IBaseState> STATE_ARCHIVE;
 
+    public static bool auto;
+
     public static void Load(string filename)
     {
         // TODO implement here
@@ -28,6 +30,7 @@ public class Application
 
     public static void NewGame()
     {
+        auto = false;
         data = new GameData();
         enemyController = new EnemyController();
         ILevelBuilder generator = new LevelGenerator();

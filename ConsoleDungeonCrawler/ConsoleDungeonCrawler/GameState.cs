@@ -6,7 +6,7 @@ using System.Text;
 
 public class GameState : IBaseState
 {
-    private GameStates state = new GameStates();
+    public GameStates state = new GameStates();
 
     public GameState()
     {
@@ -22,9 +22,15 @@ public class GameState : IBaseState
         this.state = state;
 
         if (state == GameStates.GAME) MasterControlProgram.SetController(new ConsolePlayerController());
-        if (state == GameStates.MENU) MasterControlProgram.SetController(new ConsoleMenuController());
+        if (state == GameStates.MENU)
+        {
+            MasterControlProgram.SetController(new ConsoleMenuController());
+        }
         if (state == GameStates.MAPS) MasterControlProgram.SetController(new ConsoleMapSelectionController());
-        if (state == GameStates.FINISH) MasterControlProgram.SetController(null);
+        if (state == GameStates.FINISH)
+        {
+            MasterControlProgram.SetController(null);
+        }
     }
 
     public void Execute()

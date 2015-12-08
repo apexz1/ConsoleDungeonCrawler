@@ -19,12 +19,10 @@ public class Inventory
 
         /*if(item.type == "cons")
         {
-            Console.WriteLine("item consumed");
             return;
         }
         if(item.type == "ammo")
         {
-            Console.WriteLine("ammo added");
         }
          * */
 

@@ -21,7 +21,6 @@ public class Score {
 
     public int GetScore()
     {
-        Console.WriteLine("SCORE COUNT: " + score.Count);
         int result = 0;
         float mult = 1.0f;
 

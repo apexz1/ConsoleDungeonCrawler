@@ -16,7 +16,7 @@ class ConsoleInventoryController : IBaseController
         switch (input)
         {
             case ConsoleKey.W:
-                Console.WriteLine("\nw");
+                //Console.WriteLine("\nw");
                 if (current <= 0)
                 {
                     current = data.inventory.content.Count() - 1;
@@ -28,7 +28,7 @@ class ConsoleInventoryController : IBaseController
                 break;
 
             case ConsoleKey.S:
-                Console.WriteLine("\ns");
+                //Console.WriteLine("\ns");
                 if (current >= data.inventory.content.Count() - 1)
                 {
                     current = 0;
@@ -39,12 +39,12 @@ class ConsoleInventoryController : IBaseController
                 }
                 break;
             case ConsoleKey.Enter:
-                Console.WriteLine("\nenter");
+                //Console.WriteLine("\nenter");
                 UseItem();
                 break;
 
             case ConsoleKey.I:
-                Console.WriteLine("\ni");
+                //Console.WriteLine("\ni");
                 MasterControlProgram.SetController(new ConsolePlayerController());
                 current = -1;
                 data.inv = !data.inv;
@@ -73,7 +73,6 @@ class ConsoleInventoryController : IBaseController
             data.inventory.content[data.currentItem].count -= 1;
             // == 0 for potential abuse with items that have a count of < 0 to allow easier unlimited use items
             bool temp = t.Use();
-            Console.WriteLine(temp);
 
             if (data.inventory.content[data.currentItem].count == 0 && temp)
             {

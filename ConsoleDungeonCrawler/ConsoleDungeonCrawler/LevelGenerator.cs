@@ -103,8 +103,6 @@ public class LevelGenerator : ILevelBuilder
         bool found = false;
         //enemy position
 
-        //Console.WriteLine("ATTEMPTING TO SPAWN PICKUP");
-
         while (!found)
         {
             int a = rng.Next(0, (level.structure.GetLength(0)));
@@ -186,32 +184,26 @@ public class LevelGenerator : ILevelBuilder
         /***/
         //enemy = new Actor(EnemyLibrary.Get().meleeList[0]);
 
-        //Console.WriteLine("ATTEMPTING TO SPAWN ENEMY");
         //enemy position
         while (!found)
         {
             int a = rng.Next(1, (level.structure.GetLength(0)));
             int b = rng.Next(1, (level.structure.GetLength(1)));
 
-            //Console.WriteLine(level.structure[a, b].substance + " " + a + ", " + b);
 
             if (level.structure[a, b].substance == ClipType.FLOOR)
             {
-                //Console.WriteLine("FOUND FLOOR");
 
                 if (level.enemies.Count > 0)
                 {
                     for (int i = 0; i < level.enemies.Count; i++)
                     {
-                        //Console.WriteLine("" + level.enemies[i].position.x + ", " + level.enemies[i].position.y + " " + a + ", " + b);
                         if (!(level.enemies[i].position.x == a && level.enemies[i].position.y == b))
                         {
-                            //Console.WriteLine("FLOOR NOT TAKEN");
                             found = true;
                         }
                         else
                         {
-                            //Console.WriteLine("FLOOR TAKEN");
                             found = false;
                             break;
                         }
@@ -220,14 +212,12 @@ public class LevelGenerator : ILevelBuilder
                 }
                 else
                 {
-                    //Console.WriteLine("SKIPPED SOME STUFF BRO");
                     found = true;
                 }
 
 
                 if (found)
                 {
-                    //Console.WriteLine("ATTEMPTING TO SET ENEMY POSITION");
                     enemy.position = new Vector2(a, b);
                     //Console.Write("| " + enemy.position.x + " " + enemy.position.y);
                 }
@@ -236,7 +226,6 @@ public class LevelGenerator : ILevelBuilder
 
         //enemy.position = new Vector2(19, 2);
         Application.GetData().collision.Add(enemy);
-        //Console.WriteLine(enemy.name);
 
         return enemy;
     }

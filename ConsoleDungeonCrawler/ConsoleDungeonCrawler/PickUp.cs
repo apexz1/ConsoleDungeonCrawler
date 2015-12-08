@@ -45,7 +45,6 @@ public class PickUp : GameObject
             {
                 if (data.inventory.content[i].item.type == "weap")
                 {
-                    Console.WriteLine("WEAPON FOUND");
                     Weapon temp = (Weapon)data.inventory.content[i].item;
 
                     if (temp.ammo == temp.maxAmmo)
@@ -67,7 +66,6 @@ public class PickUp : GameObject
         #region Medkit
         else if (item.type == "med")
         {
-            //Console.WriteLine("MEDKIT FOUND");
             data.combatlog.Add(/*DateTime.Now.Hour + ":" + DateTime.Now.Minute + */"Medkit found. Player health restored.");
             data.player.health = data.player.maxHealth;
             data.score.AddScore(10);
@@ -232,12 +230,10 @@ public class PickUp : GameObject
 
         else
         {
-            //Console.WriteLine("SECOND");
             data.inventory.Add(this.item, this.count);
         }
 
         data.level.pickUps.Remove(this);
-        //Console.WriteLine("item picked up " + item.name);
     }
 
 }

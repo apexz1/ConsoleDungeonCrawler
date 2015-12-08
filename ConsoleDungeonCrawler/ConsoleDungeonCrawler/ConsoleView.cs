@@ -180,22 +180,22 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             }
         }
 
-        content = "GAME OVER : SCORE REACHED";
+        content = "GAME OVER : SCORE REACHED " + data.score.GetScore().ToString();
         label = content.ToCharArray();
         for (int i = 0; i < label.Length; i++)
         {
-            f = ConsoleColor.Green;
+            f = ConsoleColor.White;
             uiContent[0, i] = new ConsolePixel(label[i], f);
         }
 
-        //Process all end game information here
+        //Process all end game information here - I'M VERY SORRY, I KNOW ITS NOT 100% MODEL-VIEW-CONTROL
 
         content = "PRESS ANY KEY TO RETURN TO MAIN MENU";
         label = content.ToCharArray();
         for (int i = 0; i < label.Length; i++)
         {
             f = ConsoleColor.Green;
-            uiContent[0, i] = new ConsolePixel(label[i], f);
+            uiContent[1, i] = new ConsolePixel(label[i], f);
         }
 
         Console.ReadKey();
@@ -205,12 +205,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
     public void RenderGame()
     {
         char symbol = ' ';
-        Console.WriteLine(data.player);
         offset = new Vector2((int)data.player.position.x - (viewH / 2), (int)data.player.position.y - (viewW / 2));
-        Console.WriteLine(offset.x + " " + offset.y);
 
-        Console.WriteLine(Application.GetData().level.enemies.Count);
-        Console.WriteLine(Application.GetData().level.pickUps.Count);
         //Console.Clear();
         ConsoleColor f = ConsoleColor.Gray;
         ConsoleColor b = ConsoleColor.Black;
@@ -239,8 +235,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
         /**/
 
         //Player Actions stuff
-        int debug = 5;  // player.maxActions
-        int debug2 = 2; // player.Actions
+        int debug = data.player.maxActions;  // player.maxActions
+        int debug2 = data.player.actions; // player.Actions
         for (int i = 0; i < debug; i++)
         {
             if (i < debug2)
@@ -277,10 +273,8 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             for (int i = 0; i < label.Length; i++)
             {
-                //Console.WriteLine(label[i]);
                 if (data.player.Weapon.content.currentammo == 0 && label[i].ToString().Equals("0"))
                 {
-                    //Console.WriteLine(label[i]);
                     f = ConsoleColor.Red;
                 }
                 else f = ConsoleColor.Gray;
@@ -297,19 +291,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                 uiContent[0, viewW - content.Length + i] = new ConsolePixel(label[i], f, b);
             }
         }
-        /*
-        if (true)
-        {
-            //Console.WriteLine(data.player.Weapon.content.name);
-            char[] label;
-            string content = data.player.Weapon.content.name;
-            label = content.ToCharArray();
-            for (int i = 0; i < label.Length; i++)
-            {
-                uiContent[1, 0 + i] = new ConsolePixel(label[i], ConsoleColor.Red, ConsoleColor.Black);
-            }
-        }
-        /**/
 
         //Geography Render
         for (int i = 0; i < viewH; i++)
@@ -465,19 +446,17 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             Actor enemy = data.level.enemies[i];
             symbol = 'O';
             f = ConsoleColor.Red;
-            //Console.WriteLine(data.level.enemies[i].name);
-            if (data.level.enemies[i].name == "e_basemelee")
+            if (data.level.enemies[i].name == "alien_assaulter")
             {
-                //Console.WriteLine(i);
                 symbol = 'M';
                 f = ConsoleColor.Red;
             }
-            if (data.level.enemies[i].name == "e_baseranged")
+            if (data.level.enemies[i].name == "alien_trooper")
             {
                 symbol = 'R';
                 f = ConsoleColor.Red;
             }
-            if (data.level.enemies[i].name == "e_cyberbear")
+            if (data.level.enemies[i].name == "cyberbear")
             {
                 symbol = 'B';
                 f = ConsoleColor.Red;
@@ -503,7 +482,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
         if (data.player.actions <= 0)
         {
-            f = ConsoleColor.DarkGreen;
+            f = ConsoleColor.DarkRed;
         }
 
         uiContent[viewH / 2 + (int)loff.x, viewW / 2] = new ConsolePixel(symbol, f, b);
@@ -594,7 +573,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                     inventoryOffset = 4;
                 }
 
-                Console.WriteLine("OUT OF RANGE?: " + inventoryOffset + " " + data.inventory.content.Count);
                 for (int i = 0; i < Math.Min(11, data.inventory.content.Count); i++)
                 {
                     content = data.inventory.content[i+inventoryOffset].item.name;
@@ -630,7 +608,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         f = ConsoleColor.Gray;
                         b = ConsoleColor.Black;
                     }
-                    //Console.WriteLine(data.inventory.content[i].item.name + "   " + data.inventory.content[i].count);
                 }
             }
             else
@@ -654,8 +631,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             if (data.inv && data.currentItem < data.inventory.content.Count)
             {
-                Console.WriteLine("item: " + data.currentItem);
-
                 //data.currentItem = 0;
                 ItemWrapper current = data.inventory.content[data.currentItem];
 
@@ -741,7 +716,6 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
             if (data.combatlog.Count > 0)
             {
-                Console.WriteLine(data.combatlog.Count);
                 for (int i = 0; i < 5; i++)
                 {
                     content = data.combatlog[(data.combatlog.Count - 1) - i];
@@ -751,6 +725,24 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
                         uiContent[viewH + 2 + i, 0 + j] = new ConsolePixel(label[j], f, b);
                     }
                 }
+            }
+        }
+
+        if (Application.auto)
+        {
+            char[] label;
+            string content = "AUTO MODE ACTIVE";
+            label = content.ToCharArray();
+            f = ConsoleColor.White;
+            b = ConsoleColor.Red;
+
+            for (int i = 0; i < viewW; i++)
+            {
+                for (int j = 0; j < label.Length; j++)
+                {
+                    uiContent[viewH + 1, 0 + j] = new ConsolePixel(label[j], f, b);
+                }
+                uiContent[viewH + 1, 0 + i] = new ConsolePixel(f, b);
             }
         }
 

@@ -29,11 +29,20 @@ public class MasterControlProgram : IGameDataChangeListener, IGameStateChangeLis
 
         while (running)
         {
-            controller.Execute();
+            if (controller != null) controller.Execute();
 
-            if (ConsolePlayerController.done && EnemyController.done)
+            if (Application.GetState().state != GameStates.FINISH)
             {
-                EndTurn();
+                if (ConsolePlayerController.done && EnemyController.done)
+                {
+                    EndTurn();
+                }
+                else if (Application.auto == true && data.player.actions <= 0)
+                {
+                    data.player.path.Clear();
+                    Application.GetEnemyController().Execute();
+                    EndTurn();
+                }
             }
 
             view.Execute();

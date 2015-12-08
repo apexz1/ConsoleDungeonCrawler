@@ -17,7 +17,6 @@ public class LevelFromImage : ILevelBuilder
 
     public LevelFromImage()
     {
-        //Console.WriteLine(MasterControlProgram.map);
         if (MasterControlProgram.map != "nomap")
         {
             path = MasterControlProgram.map;

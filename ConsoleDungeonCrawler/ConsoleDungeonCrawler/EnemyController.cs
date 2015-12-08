@@ -42,19 +42,14 @@ public class EnemyController : IBaseController
                     if ((ConsolePseudoRaycast.CastRay(new Vector2(enemies[i].position.x, enemies[i].position.y), new Vector2(p_pos.x, p_pos.y))))
                     {
                         //ConsoleView.errorMessage = "target obscured (RayCast)";
-                        Console.WriteLine("target obscured (RayCast)");
                         hit = true;
                         random = true;
                     }
 
-                    Console.WriteLine("PLAYER DETECTED");
-
                     if (!hit)
                     {
-                        Console.WriteLine("ATTEMPTING MOVE");
                         Direction[] dirArray = new Direction[2];
                         dirArray = enemies[i].DirectionTowards(p_pos);
-                        Console.WriteLine(dirArray[0] + " " + dirArray[1]);
 
                         if (Vector2.Distance(new Vector2(enemies[i].position.x, enemies[i].position.y), p_pos) <= enemies[i].Weapon.content.range)
                         {
@@ -92,11 +87,9 @@ public class EnemyController : IBaseController
                     if ((ConsolePseudoRaycast.CastRay(new Vector2(enemies[i].position.x, enemies[i].position.y), new Vector2(p_pos.x, p_pos.y))))
                     {
                         //ConsoleView.errorMessage = "target obscured (RayCast)";
-                        Console.WriteLine("target obscured (RayCast)");
                         hit = true;
                         random = true;
                     }
-                    Console.WriteLine("PLAYER DETECTED");
                     if (!hit)
                     {
                         Direction[] dirArray = new Direction[2];
@@ -140,18 +133,14 @@ public class EnemyController : IBaseController
                     if ((ConsolePseudoRaycast.CastRay(new Vector2(enemies[i].position.x, enemies[i].position.y), new Vector2(p_pos.x, p_pos.y))))
                     {
                         //ConsoleView.errorMessage = "target obscured (RayCast)";
-                        Console.WriteLine("target obscured (RayCast)");
                         hit = true;
                         random = true;
                     }
-                    Console.WriteLine("PLAYER DETECTED");
 
                     if (!hit)
                     {
-                        Console.WriteLine("ATTEMPTING MOVE");
                         Direction[] dirArray = new Direction[2];
                         dirArray = enemies[i].DirectionTowards(p_pos);
-                        Console.WriteLine(dirArray[0] + " " + dirArray[1]);
 
                         if (Vector2.Distance(new Vector2(enemies[i].position.x, enemies[i].position.y), p_pos) <= enemies[i].Weapon.content.range)
                         {

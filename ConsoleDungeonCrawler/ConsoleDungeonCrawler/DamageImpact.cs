@@ -53,13 +53,6 @@ class DamageImpact : Item, IImpactBehaviour
             }
         }
 
-        /*
-        for (int i = 0; i < Math.Pow((2 * radius) - 1, 2); i++)
-        {
-            Console.WriteLine(result[i].x + " / " + result[i].y);
-        }
-
-        Console.WriteLine(result.Length);
 
         /*MATH STUFF
         

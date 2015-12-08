@@ -15,7 +15,7 @@ public class EnemyLibrary
     public void Init()
     {
         meleeList.Add(new Actor("alien_assaulter", "melee_calm", 5, new Weapon(ItemLibrary.Get().enemyweaponList[0]), new Armor(ItemLibrary.Get().enemyarmorList[0])));
-        rangedList.Add(new Actor("alien_tropper", "ranged", 3, new Weapon(ItemLibrary.Get().enemyweaponList[1]), new Armor(ItemLibrary.Get().enemyarmorList[0])));
+        rangedList.Add(new Actor("alien_trooper", "ranged", 3, new Weapon(ItemLibrary.Get().enemyweaponList[1]), new Armor(ItemLibrary.Get().enemyarmorList[0])));
         bossList.Add(new Actor("cyberbear", "melee_aggressive", 12, new Weapon(ItemLibrary.Get().enemyweaponList[0]), new Armor(ItemLibrary.Get().enemyarmorList[1])));
     }
 

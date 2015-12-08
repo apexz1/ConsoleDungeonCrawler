@@ -47,13 +47,11 @@ public class Door : GameObject
         bool set = false;
         GameData data = Application.GetData();
 
-        //Console.WriteLine("ATTEMPTING TO SETCLIPTYPE");
 
         for (int i = 0; i < data.level.structure.GetLength(0); i++)
         {
             for (int j = 0; j < data.level.structure.GetLength(1); j++)
             {
-                //Console.WriteLine(i + " " + j);
                 if (this.position.x == new Vector2(i, j).x && this.position.y == new Vector2(i, j).y)
                 {
                     {
@@ -62,7 +60,6 @@ public class Door : GameObject
 
                         set = true;
                     }
-                    //Console.WriteLine("SETTING CLIPTYPE TO:" + data.level.structure[i, j].substance);
                 }
             }
         }
@@ -77,7 +74,6 @@ public class Door : GameObject
         for (int i = 0; i < Application.GetData().inventory.content.Count; i++)
         {
             Item current = Application.GetData().inventory.content[i].item;
-            Console.WriteLine(this.type + " " + current.name);
 
             //HIGHLY MODDABLE SYSTEM, YES YES
             if (this.type == "red" && (current.name == "red_keycard" || current.name == "master_key")) hasCard = true;

@@ -40,6 +40,7 @@ public class Armor : Item
         this.type = type;
         this.value = value;
         this.armortype = armortype;
+        this.trait = new Trait();
     }
     public Armor(string name, string type, int value, string armortype, Trait trait)
     {

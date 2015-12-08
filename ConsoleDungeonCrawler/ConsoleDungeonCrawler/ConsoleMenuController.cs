@@ -29,7 +29,6 @@ public class ConsoleMenuController : IBaseController
 
     public void Execute()
     {
-        //Console.WriteLine("IM IN DA CONTROLLER");
         data = Application.GetData();
         state = Application.GetState();
 

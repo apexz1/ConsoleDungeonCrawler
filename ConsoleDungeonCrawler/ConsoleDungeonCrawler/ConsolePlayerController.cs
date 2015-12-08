@@ -23,59 +23,62 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
         switch (input)
         {
             case ConsoleKey.W:
-                Console.WriteLine("\nw");
+                //Console.WriteLine("\nw");
                 data.player.Move(Direction.UP);
                 break;
             case ConsoleKey.A:
-                Console.WriteLine("\na");
+                //Console.WriteLine("\na");
                 data.player.Move(Direction.LEFT);
                 break;
             case ConsoleKey.S:
-                Console.WriteLine("\ns");
+                //Console.WriteLine("\ns");
                 data.player.Move(Direction.DOWN);
                 break;
             case ConsoleKey.D:
-                Console.WriteLine("\nd");
+                //Console.WriteLine("\nd");
                 data.player.Move(Direction.RIGHT);
                 break;
             case ConsoleKey.C:
-                Console.WriteLine("\nc");
+                //Console.WriteLine("\nc");
                 if (data.player.EnterCombat())
                 {
                     CombatSwitch();
                 }
                 break;
             case ConsoleKey.Q:
-                Console.WriteLine("\nq");
+                //Console.WriteLine("\nq");
                 data.player.Weapon.content.Attack();
                 break;
             case ConsoleKey.Backspace:
-                Console.WriteLine("\nbackspace");
+                //Console.WriteLine("\nbackspace");
                 data.player.Undo();
                 break;
             case ConsoleKey.I:
-                Console.WriteLine("\ni");
+                //Console.WriteLine("\ni");
                 InventorySwitch();
                 break;
             case ConsoleKey.Enter:
-                Console.WriteLine("\nenter");
+                //Console.WriteLine("\nenter");
                 End();
                 break;
             case ConsoleKey.R:
-                Console.WriteLine("\nr");
+                //Console.WriteLine("\nr");
                 data.player.Weapon.content.Reload();
                 break;
             case ConsoleKey.O:
-                Console.WriteLine("\no");
+                //Console.WriteLine("\no");
                 OpenDoor();
                 break;
             case ConsoleKey.E:
-                Console.WriteLine("\ne");
+                //Console.WriteLine("\ne");
                 Analyze();
+                break;
+            case ConsoleKey.Tab:
+                //Console.WriteLine("\ntab");
+                Application.auto = !Application.auto;
                 break;
         }
 
-        //Console.WriteLine("" + data.player.position.x + data.player.position.y + data.player.selector.position.x + data.player.selector.position.y);
     }
 
     private void OpenDoor()
@@ -84,7 +87,6 @@ public class ConsolePlayerController : IBaseController, IGameDataChangeListener,
         {
             if (Vector2.Adjacent(data.level.doors[i].position, data.player.position))
             {
-                //Console.WriteLine("OPENING DOOR");
                 data.level.doors[i].Switch();
             }
         }
