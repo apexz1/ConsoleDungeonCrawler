@@ -574,37 +574,52 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
             {
                 uiContent[1, (data.level.structure.GetLength(1) + 1) + i] = new ConsolePixel(label[i]);
             }
+            content = "Current items: " + data.inventory.content.Count.ToString();
+            label = content.ToCharArray();
+            for (int i = 0; i < label.Length; i++)
+            {
+                uiContent[16, (data.level.structure.GetLength(1) + 1) + i] = new ConsolePixel(label[i]);
+            }
 
             if (data.inventory.content.Count > 0)
             {
+                int inventoryOffset = 0;
+
+                if (data.currentItem > 5 && data.currentItem + inventoryOffset < data.inventory.content.Count)
+                {
+                    inventoryOffset += data.currentItem - 5;
+                }
+                if (data.currentItem + inventoryOffset > data.inventory.content.Count-1)
+                {
+                    inventoryOffset = 4;
+                }
+
+                Console.WriteLine("OUT OF RANGE?: " + inventoryOffset + " " + data.inventory.content.Count);
                 for (int i = 0; i < Math.Min(11, data.inventory.content.Count); i++)
                 {
-                    //content = data.inventory.content[i].item.name;
-                    content = data.inventory.content[i].item.name;
+                    content = data.inventory.content[i+inventoryOffset].item.name;
 
                     if (data.inventory.content[i].count > 1)
                     {
-                        content = data.inventory.content[i].item.name + " " + data.inventory.content[i].count.ToString();
+                        content = data.inventory.content[i+inventoryOffset].item.name + " " + data.inventory.content[i+inventoryOffset].count.ToString();
                     }
 
                     label = content.ToCharArray();
 
                     for (int j = 0; j < label.Length; j++)
                     {
-                        if (i == data.currentItem)
+                        if (i+inventoryOffset == data.currentItem)
                         {
                             f = ConsoleColor.Gray;
                             b = ConsoleColor.Magenta;
                         }
-                        if (data.inventory.content[i].item == data.player.Weapon.content)
+                        if (data.inventory.content[i+inventoryOffset].item == data.player.Weapon.content)
                         {
                             f = ConsoleColor.White;
-                            b = b;
                         }
-                        if (data.inventory.content[i].item == data.player.Armor.content)
+                        if (data.inventory.content[i+inventoryOffset].item == data.player.Armor.content)
                         {
                             f = ConsoleColor.White;
-                            b = b;
                         }
 
                         if (true)
