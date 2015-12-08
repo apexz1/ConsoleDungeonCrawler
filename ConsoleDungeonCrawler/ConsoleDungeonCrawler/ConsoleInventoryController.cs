@@ -80,6 +80,7 @@ class ConsoleInventoryController : IBaseController
                 data.currentItem = -1;
             }
 
+            data.player.actions--;
             QuitInventory();
         }
         if (item is Usable)
@@ -95,6 +96,7 @@ class ConsoleInventoryController : IBaseController
             }
 
             u.Use();
+            data.player.actions--;
             QuitInventory();
         }
     }
