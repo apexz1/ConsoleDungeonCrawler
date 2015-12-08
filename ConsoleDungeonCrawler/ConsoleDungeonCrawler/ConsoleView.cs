@@ -30,7 +30,7 @@ public class ConsoleView : IBaseView, IGameDataChangeListener, IGameStateChangeL
 
     public void Execute()
     {
-        //Console.Clear(); //Very important for the view to actually work correctly, uncomment and test first before continuing if somethings looks wrong
+        Console.Clear(); //Very important for the view to actually work correctly, uncomment and test first before continuing if somethings looks wrong
         if (Application.GetState().Get() == GameStates.MENU)
         {
             RenderMenu();
