@@ -50,17 +50,17 @@ public class ItemLibrary
         //Weapons - ALL Weapons in the game
         //PLAYER WEAPONS - split the weapons in enemy and player weapons so the Pickups dont randomize enemy weapons(they're really bad and boring)
         //new Weapon(string n, string t, int d, float r, float a, int ammo, int maxammo, int clip, string ammotype, damagetype, pen) <- super easy, right?
-        weaponList.Add(new Weapon("handgun", "weap", 3, 4, 0.7f, 24, 24, 12, "9mm", "bullet", 0));
-        weaponList.Add(new Weapon("assault_rifle", "weap", 3, 6, 0.8f, 30, 90, 10, "9mm", "bullet", 0));
+        weaponList.Add(new Weapon("handgun", "weap", 3, 3, 0.7f, 24, 24, 12, "9mm", "bullet", 0));
+        weaponList.Add(new Weapon("assault_rifle", "weap", 3, 4, 0.8f, 30, 90, 10, "9mm", "bullet", 0));
         weaponList.Add(new Weapon("combat_shotgun", "weap", 6, 2, 0.95f, 4, 16, 4, "12-gauge", "bullet", 0));
         weaponList.Add(new Weapon("sniper_rifle", "weap", 12, 9, 0.99f, 2, 6, 1, ".50", "bullet", 0));
-        weaponList.Add(new Weapon("submachine_gun", "weap", 3, 4, 0.6f, 150, 300, 60, "5.7x28mm", "bullet", 0));
+        weaponList.Add(new Weapon("submachine_gun", "weap", 3, 3, 0.6f, 150, 300, 60, "5.7x28mm", "bullet", 0));
         weaponList.Add(new Weapon("EHF_osc_blade", "weap", 5, 1, 1.0f, -1, -1, -1, "mechanical", "sharp", 1));
 
         //ENEMY WEAPONS - Weapons used by the enemies. Not needed, but makes it alot easier to use the constructor for new enemies if you split 'em up a little
-        enemyweaponList.Add(new Weapon("claws", "weap", 3, 1, 0.95f, -1, -1, -1, "none", "sharp", 0.3f));
-        enemyweaponList.Add(new Weapon("bolter", "weap", 2, 3, 0.7f, -1, -1, -1, "raw", "bullet", 0));
-        enemyweaponList.Add(new Weapon("bearpaw", "weap", 6, 1, 0.6f, -1, -1, -1, "none", "blunt", 0.1f));
+        enemyweaponList.Add(new Weapon("claws", "weap", 7, 1, 0.95f, -1, -1, -1, "none", "sharp", 0.3f));
+        enemyweaponList.Add(new Weapon("bolter", "weap", 5, 3, 0.7f, -1, -1, -1, "raw", "bullet", 0));
+        enemyweaponList.Add(new Weapon("bearpaw", "weap", 11, 1, 0.6f, -1, -1, -1, "none", "blunt", 0.1f));
 
         //Armor - ALL Armor in the game - Same as with the weapons. Split player and enemy for convenience
         armorList.Add(new Armor("uniform", "armor", 0, "fabric"));

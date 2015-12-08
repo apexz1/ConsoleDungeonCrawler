@@ -294,7 +294,7 @@ public class Actor : GameObject
 
         //DAMAGE CALC WITH DAMAGE TYPE AND ARMOR TYPE AND STUFF
         value = ApplyArmor(value, dmgtype, armor, pen);
-        health -= (int)value;
+        health -= Math.Max((int)value, 0);
 
         if (this != data.player)
         {
@@ -544,7 +544,7 @@ public class Actor : GameObject
         data.combatlog.Add(exp.ToString() + " experience gained.");
         experience += exp;
 
-        if (experience >= level*1 + (level-1*1))
+        if (experience >= level*50 + (level-50*1))
         {
             LevelUp();
         }
@@ -552,7 +552,7 @@ public class Actor : GameObject
 
     public void LevelUp()
     {
-        experience -= level * 1 + (level - 1 * 1);
+        experience -= level * 50 + (level - 50 * 1);
         level++;
 
         data.combatlog.Add("LEVEL UP! Level " + level.ToString() + " reached");
@@ -564,6 +564,16 @@ public class Actor : GameObject
 
         AddTrait(new Trait(new AccuracyTrait(0.05f)));
         maxHealth++;
+        
+        if(level == 3)
+        {
+            maxActions++;
+        }
+
+        if(level == 6)
+        {
+            maxActions++;
+        }
 
         if (level == 10)
         {
