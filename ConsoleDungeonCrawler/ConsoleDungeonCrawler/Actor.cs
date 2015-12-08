@@ -65,6 +65,8 @@ public class Actor : GameObject
     public int maxHealth;
     public int actions;
     public int maxActions = 3;
+    public int level = 1;
+    public int experience = 0;
     public Slot<Weapon> Weapon;
     public Slot<Armor> Armor;
     public List<Trait> traits = new List<Trait>();
@@ -307,18 +309,22 @@ public class Actor : GameObject
 
         if (this != data.player && health <= 0)
         {
+            data.combatlog.Add(name + " defeated");
             #region scores
             if (this.name == "alien_assaulter")
             {
                 data.score.AddScore(25);
+                data.player.AddExperience(10);
             }
             if (this.name == "alien_trooper")
             {
                 data.score.AddScore(20);
+                data.player.AddExperience(10);
             }
             if (this.name == "cyberbear")
             {
                 data.score.AddScore(75);
+                data.player.AddExperience(50);
             }
             #endregion
 
@@ -533,6 +539,38 @@ public class Actor : GameObject
         AddTrait(Armor.content.trait);
     }
 
+    public void AddExperience(int exp)
+    {
+        data.combatlog.Add(exp.ToString() + " experience gained.");
+        experience += exp;
+
+        if (experience >= level*1 + (level-1*1))
+        {
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        experience -= level * 1 + (level - 1 * 1);
+        level++;
+
+        data.combatlog.Add("LEVEL UP! Level " + level.ToString() + " reached");
+
+        if (level > 10)
+        {
+            return;
+        }
+
+        AddTrait(new Trait(new AccuracyTrait(0.05f)));
+        maxHealth++;
+
+        if (level == 10)
+        {
+            data.combatlog.Add("Max enhancement reached.");
+            data.combatlog.Add("Further leveling will not increase stats.");
+        }
+    }
 
     public void Undo()
     {
